@@ -1,0 +1,82 @@
+{
+    "type": "Ext.app.ViewModel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "myviewport",
+        "designer|userClassName": "MyViewportViewModel"
+    },
+    "designerId": "f0c78d6f-b5da-4b2f-9746-e6c831e349a4",
+    "cn": [
+        {
+            "type": "Ext.data.Store",
+            "reference": {
+                "name": "stores",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "JobStore"
+            },
+            "name": "MyStore",
+            "designerId": "8e4d97b9-60cb-4f3e-bf68-921e0de23996",
+            "cn": [
+                {
+                    "type": "Ext.data.field.Field",
+                    "reference": {
+                        "name": "fields",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "id"
+                    },
+                    "name": "MyField",
+                    "designerId": "ca3add67-4589-4c68-be39-fb7680e5f961"
+                },
+                {
+                    "type": "Ext.data.field.Field",
+                    "reference": {
+                        "name": "fields",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "name"
+                    },
+                    "name": "MyField1",
+                    "designerId": "39618ef1-04e2-43cc-8d87-bdbe72f71a58"
+                },
+                {
+                    "type": "Ext.data.field.Field",
+                    "reference": {
+                        "name": "fields",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "description"
+                    },
+                    "name": "MyField2",
+                    "designerId": "e4cf772c-632c-4b59-b0c6-3aec33c27a36"
+                },
+                {
+                    "type": "Ext.data.field.Field",
+                    "reference": {
+                        "name": "fields",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "exec"
+                    },
+                    "name": "MyField3",
+                    "designerId": "a8072f1b-eef9-4579-a122-ca25c03933bb"
+                }
+            ]
+        }
+    ]
+}

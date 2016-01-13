@@ -1,0 +1,51 @@
+{
+    "name": "Senkins",
+    "settings": {
+        "cmd": {
+            "license": "commercial"
+        },
+        "canvasControls": {
+            "viewportSize": {
+                "name": "Auto Expand",
+                "builtIn": true,
+                "height": null,
+                "width": null
+            }
+        },
+        "urlPrefix": "http://dev.local/Wenkins/www",
+        "exportPath": "L:/Senkins/www",
+        "projectHasEnabledWebServer": false,
+        "lockUrlPrefix": false,
+        "buildShouldOverwriteIndex": true,
+        "generateArchitectVersion": true,
+        "spacesToIndent": 4,
+        "lineEnding": "CRLF",
+        "genTimestamps": false,
+        "cacheBust": false,
+        "installStatus": "Not Installed"
+    },
+    "xdsVersion": "3.2.0",
+    "xdsBuild": 339,
+    "schemaVersion": 1,
+    "upgradeVersion": 310000000001,
+    "framework": "ext51",
+    "viewOrderMap": {
+        "view": [
+            "f0c78d6f-b5da-4b2f-9746-e6c831e349a4",
+            "3e44ecb5-5d81-4a09-a0b5-255fe2e5dc32",
+            "fe7fdc86-35b4-411e-9a5a-bd777740d0fc"
+        ],
+        "store": [],
+        "controller": [],
+        "model": [],
+        "resource": [
+            "a625c198-7807-49bf-972b-cf4dc224b195",
+            "1194177d-33c2-484d-a961-279b466656ef",
+            "cc769fa0-d1d0-46eb-ba86-661648e5860f",
+            "e19ca938-9b9a-4c0e-aca0-16ad129307a8"
+        ],
+        "app": [
+            "application"
+        ]
+    }
+}
