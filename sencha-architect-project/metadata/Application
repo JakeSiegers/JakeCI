@@ -8,7 +8,10 @@
     "userConfig": {
         "name": "Senkins",
         "views": [
-            "MyViewport"
+            "MyViewport",
+            "JobForm",
+            "Settings",
+            "Senkins"
         ]
     },
     "name": "Application",

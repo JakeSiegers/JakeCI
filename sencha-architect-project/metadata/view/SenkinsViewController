@@ -1,0 +1,13 @@
+{
+    "type": "Ext.app.ViewController",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "senkins",
+        "designer|userClassName": "SenkinsViewController"
+    },
+    "designerId": "1b53b1d7-5913-4ac7-998e-515eadea392d"
+}

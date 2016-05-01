@@ -1,0 +1,289 @@
+{
+    "type": "Ext.panel.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "container|align": "stretch",
+        "designer|userAlias": "senkins",
+        "designer|userClassName": "Senkins",
+        "height": 407,
+        "layout": "hbox",
+        "title": "SenkinsCI",
+        "width": 692
+    },
+    "name": "MyPanel",
+    "designerId": "2d62bcac-e0cf-4ff4-be1e-a6cfe9531784",
+    "viewControllerInstanceId": "1b53b1d7-5913-4ac7-998e-515eadea392d",
+    "viewModelInstanceId": "8a75c16e-5f5b-4134-80aa-088115286083",
+    "cn": [
+        {
+            "type": "Ext.grid.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "height": 214,
+                "itemId": "jobGrid",
+                "layout|flex": 1,
+                "store": [
+                    "{JobStore}"
+                ],
+                "title": "",
+                "width": 400
+            },
+            "name": "MyGridPanel",
+            "configAlternates": {
+                "store": "binding"
+            },
+            "designerId": "0d164643-0f1a-4f51-bfcb-3150d6dd520a",
+            "cn": [
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "name",
+                        "text": "Job Name"
+                    },
+                    "name": "MyColumn",
+                    "designerId": "41c26bc4-3bc8-43c4-9f92-20b0048e3c21"
+                },
+                {
+                    "type": "Ext.grid.column.Date",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "lastRun",
+                        "text": "Last Run"
+                    },
+                    "name": "MyDateColumn1",
+                    "designerId": "1509ab9e-714d-4a56-b7c5-9b3b6124c4e2"
+                },
+                {
+                    "type": "Ext.grid.column.Date",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "lastRunError",
+                        "text": "Last Error"
+                    },
+                    "name": "MyDateColumn",
+                    "designerId": "b5188c34-a0c5-4f34-83a2-f036b39b82e0"
+                },
+                {
+                    "type": "Ext.view.Table",
+                    "reference": {
+                        "name": "viewConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "name": "MyTable",
+                    "designerId": "28348b03-39d6-4448-8361-f9f8e4a3ccb5"
+                },
+                {
+                    "type": "Ext.toolbar.Toolbar",
+                    "reference": {
+                        "name": "dockedItems",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dock": "top"
+                    },
+                    "name": "MyToolbar",
+                    "designerId": "279ec1fc-f1ae-4f12-a4cf-99933eacb6eb",
+                    "cn": [
+                        {
+                            "type": "Ext.button.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "cls": null,
+                                "icon": null,
+                                "iconCls": null,
+                                "layout|flex": null,
+                                "text": "<i class=\"fa fa-plus-circle\"></i> Add New Job"
+                            },
+                            "name": "MyButton",
+                            "designerId": "f1b54ea2-0396-4bdf-8c2f-4ca75cdf2c2e",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onButtonClick1",
+                                        "implHandler": [
+                                            "this.showJobWindow();"
+                                        ],
+                                        "name": "click",
+                                        "scope": "me"
+                                    },
+                                    "name": "onButtonClick1",
+                                    "designerId": "3b0f8a1a-222d-4346-8982-5269b4f6ae3f"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.button.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "layout|flex": null,
+                                "text": "<i class=\"fa fa-wrench\"></i> Settings"
+                            },
+                            "name": "MyButton4",
+                            "designerId": "398f54b3-0a6d-434c-93b5-19a6a28f7c1b",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onButtonClick3",
+                                        "implHandler": [
+                                            "this.changeState('settings');"
+                                        ],
+                                        "name": "click",
+                                        "scope": "me"
+                                    },
+                                    "name": "onButtonClick3",
+                                    "designerId": "7d8a5771-9eef-40f8-8b33-2d74b1c15a8f"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onJobGridRowDblClick",
+                        "implHandler": [
+                            "this.showJobWindow();",
+                            "this.jobWindow.jobForm.loadJob(record.get('name'));"
+                        ],
+                        "name": "rowdblclick",
+                        "scope": "me"
+                    },
+                    "name": "onJobGridRowDblClick",
+                    "designerId": "faa1254a-444d-439d-878b-b6052b58eef0"
+                }
+            ]
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "getAllJobs",
+                "implHandler": [
+                    "this.mask(\"Loading Jobs...\");",
+                    "",
+                    "AERP.Ajax.request({",
+                    "    url:'getAllJobs',",
+                    "    success:function(result){",
+                    "        this.unmask();",
+                    "        this.lookupViewModel().getStore('JobStore').loadData(result.jobs);",
+                    "    },",
+                    "    failure:function(){",
+                    "        this.unmask();",
+                    "    },",
+                    "    scope:this",
+                    "});"
+                ]
+            },
+            "name": "getAllJobs",
+            "designerId": "d5a2b767-d088-4744-808f-947272c97f7a"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onViewportRender",
+                "implHandler": [
+                    "this.getAllJobs();"
+                ],
+                "name": "render",
+                "scope": "me"
+            },
+            "name": "onViewportRender",
+            "designerId": "00e4552f-ac00-4d6d-8d57-6e38d95ae141"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "showJobWindow",
+                "implHandler": [
+                    "var activityGrid = this.queryById('ActivityGrid');",
+                    "if(!this.jobWindow){",
+                    "    var form = Ext.create('widget.jobform',{",
+                    "        listeners:{",
+                    "            scope:this,",
+                    "            activityformsave:function(){",
+                    "                activityGrid.getStore().load();",
+                    "            },",
+                    "            activityformnew:function(){",
+                    "                activityGrid.getStore().load();",
+                    "            }",
+                    "        }",
+                    "    });",
+                    "    this.jobWindow = Ext.create('Ext.window.Window', {",
+                    "        resizable: false,",
+                    "        layout: 'fit',",
+                    "        closeAction: 'hide',",
+                    "        title: 'Job Editor',",
+                    "        items: form",
+                    "    });",
+                    "    this.jobWindow.jobForm = form;",
+                    "}",
+                    "this.jobWindow.show();"
+                ]
+            },
+            "name": "showJobWindow",
+            "designerId": "5f61b628-2479-43fb-b1a3-60216dd1103c"
+        }
+    ]
+}

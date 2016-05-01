@@ -12,20 +12,23 @@
                 "width": null
             }
         },
-        "urlPrefix": "http://dev.local/Wenkins/www",
-        "exportPath": "L:/Senkins/www",
+        "urlPrefix": "http://localhost:3000",
+        "exportPath": "C:/Users/Jake/Desktop/SenkinsCI/www",
         "projectHasEnabledWebServer": false,
         "lockUrlPrefix": false,
         "buildShouldOverwriteIndex": true,
-        "generateArchitectVersion": true,
+        "generateArchitectVersion": false,
         "spacesToIndent": 4,
         "lineEnding": "CRLF",
         "genTimestamps": false,
         "cacheBust": false,
-        "installStatus": "Not Installed"
+        "installStatus": "Not Installed",
+        "displayfield-ExtBox1-1119-inputEl": "a new version of the framework is available",
+        "displayfield-ExtBox1-1174-inputEl": "a new version of the framework is available",
+        "displayfield-ExtBox1-1306-inputEl": "a new version of the framework is available"
     },
-    "xdsVersion": "3.2.0",
-    "xdsBuild": 339,
+    "xdsVersion": "3.5.0",
+    "xdsBuild": 279,
     "schemaVersion": 1,
     "upgradeVersion": 310000000001,
     "framework": "ext51",
@@ -33,7 +36,16 @@
         "view": [
             "f0c78d6f-b5da-4b2f-9746-e6c831e349a4",
             "3e44ecb5-5d81-4a09-a0b5-255fe2e5dc32",
-            "fe7fdc86-35b4-411e-9a5a-bd777740d0fc"
+            "fe7fdc86-35b4-411e-9a5a-bd777740d0fc",
+            "ab404ff4-4acc-4b7d-80b2-0a233db83bde",
+            "6952602a-04e6-4643-b064-270b31dc0ec2",
+            "d0ec1f85-40be-438d-b2ac-3c1c0321156c",
+            "081fcff5-62a2-4369-bd6c-72af652cc70e",
+            "580dc1fc-78ab-468b-810a-af9d4852834a",
+            "e1c016d9-84c5-4f63-b975-4e7c7361e349",
+            "2d62bcac-e0cf-4ff4-be1e-a6cfe9531784",
+            "8a75c16e-5f5b-4134-80aa-088115286083",
+            "1b53b1d7-5913-4ac7-998e-515eadea392d"
         ],
         "store": [],
         "controller": [],
@@ -42,7 +54,8 @@
             "a625c198-7807-49bf-972b-cf4dc224b195",
             "1194177d-33c2-484d-a961-279b466656ef",
             "cc769fa0-d1d0-46eb-ba86-661648e5860f",
-            "e19ca938-9b9a-4c0e-aca0-16ad129307a8"
+            "e19ca938-9b9a-4c0e-aca0-16ad129307a8",
+            "b1a21bd9-4f73-41d9-bef6-f7c632ea902f"
         ],
         "app": [
             "application"

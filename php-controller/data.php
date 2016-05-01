@@ -1,1 +1,0 @@
-<?php $data = '{"jobs":[],"settings":[]}';

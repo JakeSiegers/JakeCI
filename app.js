@@ -1,4 +1,4 @@
-var Senkins = require('./Senkins.js');
+var Senkins = require('./src/Senkins.js');
 var senkinsObj = new Senkins();
 
 process.on('uncaughtException', function(error) {
