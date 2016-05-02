@@ -1,2 +1,2 @@
 # SenkinsCI
-A Sencha &amp; Node Powered JenkinsCI Clone
+A Sencha & NodeJS Powered Continous Integration
