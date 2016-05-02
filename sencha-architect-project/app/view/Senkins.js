@@ -52,16 +52,19 @@ Ext.define('Senkins.view.Senkins', {
             columns: [
                 {
                     xtype: 'gridcolumn',
+                    width: 193,
                     dataIndex: 'name',
                     text: 'Job Name'
                 },
                 {
                     xtype: 'datecolumn',
+                    width: 198,
                     dataIndex: 'lastRun',
                     text: 'Last Run'
                 },
                 {
                     xtype: 'datecolumn',
+                    width: 249,
                     dataIndex: 'lastRunError',
                     text: 'Last Error'
                 }
@@ -131,27 +134,31 @@ Ext.define('Senkins.view.Senkins', {
     },
 
     showJobWindow: function() {
-        var activityGrid = this.queryById('ActivityGrid');
         if(!this.jobWindow){
             var form = Ext.create('widget.jobform',{
                 listeners:{
                     scope:this,
-                    activityformsave:function(){
-                        activityGrid.getStore().load();
+                    someeventhere:function(){
+
                     },
-                    activityformnew:function(){
-                        activityGrid.getStore().load();
+                    lookanotherevent:function(){
                     }
                 }
             });
+            var history = Ext.create('widget.jobhistory',{});
+
             this.jobWindow = Ext.create('Ext.window.Window', {
-                resizable: false,
+                resizable: true,
                 layout: 'fit',
                 closeAction: 'hide',
                 title: 'Job Editor',
-                items: form
+                liveDrag:true,
+                items: Ext.create('Ext.tab.Panel',{
+                    items: [form,history]
+                })
             });
             this.jobWindow.jobForm = form;
+            this.jobWindow.jobHistory = history;
         }
         this.jobWindow.show();
     }

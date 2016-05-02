@@ -11,7 +11,8 @@
         "designer|userClassName": "JobForm",
         "height": 556,
         "itemId": "jobPanel",
-        "title": "Editing Job [INSRT JOB HERE]",
+        "title": "Job Details",
+        "trackResetOnLoad": true,
         "width": 629
     },
     "name": "MyForm3",
@@ -61,7 +62,27 @@
                         "text": "Execute Job Now"
                     },
                     "name": "MyButton5",
-                    "designerId": "9ec50ca1-5021-4546-bfcb-5f476de8c153"
+                    "designerId": "9ec50ca1-5021-4546-bfcb-5f476de8c153",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onExecuteJobBtnClick",
+                                "implHandler": [
+                                    "this.runLoadedJob();"
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "name": "onExecuteJobBtnClick",
+                            "designerId": "d7da290d-e001-4718-ba56-71091f8d9634"
+                        }
+                    ]
                 },
                 {
                     "type": "Ext.container.Container",
@@ -115,11 +136,7 @@
                             "userConfig": {
                                 "fn": "onButtonClick4",
                                 "implHandler": [
-                                    "if(this.state == 'new'){",
-                                    "    this.addNewJob();",
-                                    "}else if (this.state == 'edit'){",
-                                    "    this.editJob();",
-                                    "}"
+                                    "this.saveJob();"
                                 ],
                                 "name": "click",
                                 "scope": "me"
@@ -141,21 +158,6 @@
                     },
                     "name": "MySpacer2",
                     "designerId": "afec88a7-5c3f-443a-b9bc-cf25b584e78d"
-                },
-                {
-                    "type": "Ext.button.Button",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "itemId": "deleteBtn",
-                        "layout|flex": null,
-                        "text": "<i class=\"fa fa-trash\"></i> Delete"
-                    },
-                    "name": "MyButton3",
-                    "designerId": "85967de7-cdef-42bc-aba4-21fca79f755b"
                 }
             ]
         },
@@ -167,8 +169,9 @@
             },
             "codeClass": null,
             "userConfig": {
+                "container|align": "stretch",
                 "itemId": null,
-                "layout": "form",
+                "layout": "vbox",
                 "title": "Description"
             },
             "name": "MyFieldSet",
@@ -187,6 +190,68 @@
                     },
                     "name": "MyTextField1",
                     "designerId": "8fbddd71-582c-41e8-a9c4-947c923609b1"
+                },
+                {
+                    "type": "Ext.container.Container",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "container|align": "stretch",
+                        "layout": "hbox",
+                        "margin": "0 0 5 0 ",
+                        "width": 304
+                    },
+                    "name": "MyContainer3",
+                    "designerId": "7b5ed433-85dd-4e1f-8cf7-4c253388f2d1",
+                    "cn": [
+                        {
+                            "type": "Ext.form.field.ComboBox",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "displayField": "repoType",
+                                "editable": false,
+                                "fieldLabel": "Repo Type",
+                                "forceSelection": true,
+                                "layout|flex": 1,
+                                "maxWidth": 200,
+                                "name": "repoType",
+                                "queryMode": "local",
+                                "store": [
+                                    "{RepoTypeStore}"
+                                ],
+                                "valueField": "repoType",
+                                "width": null
+                            },
+                            "name": "MyComboBox",
+                            "configAlternates": {
+                                "store": "binding"
+                            },
+                            "designerId": "81f931f5-b9ed-4c90-a134-09e6153a29f8"
+                        },
+                        {
+                            "type": "Ext.form.field.Text",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fieldLabel": "Repo Url",
+                                "layout|flex": 1,
+                                "margin": "0 0 0 5",
+                                "name": "repoUrl"
+                            },
+                            "name": "MyTextField3",
+                            "designerId": "362429cf-db6c-4e8e-b239-3be89214ebfb"
+                        }
+                    ]
                 },
                 {
                     "type": "Ext.form.field.TextArea",
@@ -233,22 +298,6 @@
             "designerId": "d3e18c44-2dc4-4c01-8d16-0f054cd9654c",
             "cn": [
                 {
-                    "type": "Ext.form.field.Checkbox",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "boxLabel": "",
-                        "checked": null,
-                        "fieldLabel": "Scheduled Job",
-                        "name": "useCron"
-                    },
-                    "name": "MyCheckbox",
-                    "designerId": "a8ad1efd-c100-4514-91da-1552820a124a"
-                },
-                {
                     "type": "Ext.form.field.Text",
                     "reference": {
                         "name": "items",
@@ -279,22 +328,6 @@
             "designerId": "7a04019a-3bdc-4b5e-a6d1-bf64b79361d7",
             "cn": [
                 {
-                    "type": "Ext.form.field.Checkbox",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "boxLabel": "",
-                        "checked": true,
-                        "fieldLabel": "Use Default",
-                        "name": "useDefaultEmail"
-                    },
-                    "name": "MyCheckbox1",
-                    "designerId": "d69c0208-ba46-4f27-a771-3088552244ad"
-                },
-                {
                     "type": "Ext.form.field.Text",
                     "reference": {
                         "name": "items",
@@ -319,55 +352,11 @@
             "codeClass": null,
             "userConfig": {
                 "designer|params": [
-                    "newState"
-                ],
-                "fn": "changeState",
-                "implHandler": [
-                    "var jobPanel = this.queryById(\"jobPanel\");",
-                    "var settingsPanel = this.queryById(\"settingsPanel\");",
-                    "var executeJobBtn = this.queryById(\"executeJobBtn\");",
-                    "var deleteBtn = this.queryById(\"deleteBtn\");",
-                    "",
-                    "switch(newState){",
-                    "    case 'init':",
-                    "        jobPanel.hide();",
-                    "        jobPanel.reset();",
-                    "",
-                    "        settingsPanel.hide();",
-                    "        break;",
-                    "    case 'new':",
-                    "        jobPanel.setTitle(\"Create New Job\");",
-                    "        jobPanel.show();",
-                    "",
-                    "        executeJobBtn.hide();",
-                    "        deleteBtn.hide();",
-                    "        break;",
-                    "    case 'settings':",
-                    "        settingsPanel.show();",
-                    "        jobPanel.hide();",
-                    "        jobPanel.reset();",
-                    "        break;",
-                    "}",
-                    "",
-                    "this.state = newState;"
-                ]
-            },
-            "name": "changeState",
-            "designerId": "3a97aaa5-be70-4509-8398-bc58d13c94bb"
-        },
-        {
-            "type": "basicfunction",
-            "reference": {
-                "name": "items",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "designer|params": [
                     "jobName"
                 ],
                 "fn": "loadJob",
                 "implHandler": [
+                    "",
                     "this.mask('Loading Job...');",
                     "",
                     "AERP.Ajax.request({",
@@ -375,7 +364,8 @@
                     "    params:{job:jobName},",
                     "    success:function(reply){",
                     "        this.unmask();",
-                    "        console.log(reply);",
+                    "        this.getForm().setValues(reply.data);",
+                    "        this.currentJob = reply.data.name;",
                     "    },",
                     "    failure:function(){",
                     "        this.unmask();",
@@ -417,6 +407,67 @@
             },
             "name": "addNewJob",
             "designerId": "0e1f976b-f046-4dc3-a891-d7f6fa901f8e"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "saveJob",
+                "implHandler": [
+                    "this.mask('Saving...');",
+                    "AERP.Ajax.request({",
+                    "    url:'saveJob',",
+                    "    params:{",
+                    "        job:this.currentJob,",
+                    "        data:Ext.encode(this.getValues(false,false,true,true)) //[asString], [dirtyOnly], [includeEmptyText], [useDataValues",
+                    "    },",
+                    "    success:function(reply){",
+                    "        this.unmask();",
+                    "        this.getForm().setValues(reply.data);",
+                    "        this.currentJob = reply.data.name;",
+                    "    },",
+                    "    failure:function(){",
+                    "        this.unmask();",
+                    "    },",
+                    "    scope:this",
+                    "});"
+                ]
+            },
+            "name": "saveJob",
+            "designerId": "148698c9-dbfe-4d9a-ae82-9789635d54db"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "runLoadedJob",
+                "implHandler": [
+                    "this.mask('Starting Job...');",
+                    "AERP.Ajax.request({",
+                    "    url:'runJobManually',",
+                    "    params:{",
+                    "        job:this.currentJob,",
+                    "    },",
+                    "    success:function(reply){",
+                    "        this.unmask();",
+                    "    },",
+                    "    failure:function(){",
+                    "        this.unmask();",
+                    "    },",
+                    "    scope:this",
+                    "});"
+                ]
+            },
+            "name": "runLoadedJob",
+            "designerId": "7e5b4880-4050-4a1d-876f-7bcfc154c393"
         }
     ]
 }

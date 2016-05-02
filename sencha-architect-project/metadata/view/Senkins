@@ -51,7 +51,8 @@
                     "codeClass": null,
                     "userConfig": {
                         "dataIndex": "name",
-                        "text": "Job Name"
+                        "text": "Job Name",
+                        "width": 193
                     },
                     "name": "MyColumn",
                     "designerId": "41c26bc4-3bc8-43c4-9f92-20b0048e3c21"
@@ -65,7 +66,8 @@
                     "codeClass": null,
                     "userConfig": {
                         "dataIndex": "lastRun",
-                        "text": "Last Run"
+                        "text": "Last Run",
+                        "width": 198
                     },
                     "name": "MyDateColumn1",
                     "designerId": "1509ab9e-714d-4a56-b7c5-9b3b6124c4e2"
@@ -79,7 +81,8 @@
                     "codeClass": null,
                     "userConfig": {
                         "dataIndex": "lastRunError",
-                        "text": "Last Error"
+                        "text": "Last Error",
+                        "width": 249
                     },
                     "name": "MyDateColumn",
                     "designerId": "b5188c34-a0c5-4f34-83a2-f036b39b82e0"
@@ -257,27 +260,31 @@
             "userConfig": {
                 "fn": "showJobWindow",
                 "implHandler": [
-                    "var activityGrid = this.queryById('ActivityGrid');",
                     "if(!this.jobWindow){",
                     "    var form = Ext.create('widget.jobform',{",
                     "        listeners:{",
                     "            scope:this,",
-                    "            activityformsave:function(){",
-                    "                activityGrid.getStore().load();",
+                    "            someeventhere:function(){",
+                    "",
                     "            },",
-                    "            activityformnew:function(){",
-                    "                activityGrid.getStore().load();",
+                    "            lookanotherevent:function(){",
                     "            }",
                     "        }",
                     "    });",
+                    "    var history = Ext.create('widget.jobhistory',{});",
+                    "",
                     "    this.jobWindow = Ext.create('Ext.window.Window', {",
-                    "        resizable: false,",
+                    "        resizable: true,",
                     "        layout: 'fit',",
                     "        closeAction: 'hide',",
                     "        title: 'Job Editor',",
-                    "        items: form",
+                    "        liveDrag:true,",
+                    "        items: Ext.create('Ext.tab.Panel',{",
+                    "            items: [form,history]",
+                    "        })",
                     "    });",
                     "    this.jobWindow.jobForm = form;",
+                    "    this.jobWindow.jobHistory = history;",
                     "}",
                     "this.jobWindow.show();"
                 ]

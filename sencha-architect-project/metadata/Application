@@ -11,7 +11,8 @@
             "MyViewport",
             "JobForm",
             "Settings",
-            "Senkins"
+            "Senkins",
+            "JobHistory"
         ]
     },
     "name": "Application",

@@ -1,0 +1,13 @@
+{
+    "type": "Ext.app.ViewController",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "jobhistory",
+        "designer|userClassName": "JobHistoryViewController"
+    },
+    "designerId": "1b4769d9-4400-42ce-b10e-4078755ad75c"
+}

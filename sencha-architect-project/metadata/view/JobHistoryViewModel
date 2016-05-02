@@ -1,0 +1,13 @@
+{
+    "type": "Ext.app.ViewModel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "jobhistory",
+        "designer|userClassName": "JobHistoryViewModel"
+    },
+    "designerId": "67b40d86-e6f3-4d53-bade-179f4a534cc0"
+}

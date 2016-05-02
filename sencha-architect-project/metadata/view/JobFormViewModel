@@ -9,5 +9,45 @@
         "designer|userAlias": "jobform",
         "designer|userClassName": "JobFormViewModel"
     },
-    "designerId": "6952602a-04e6-4643-b064-270b31dc0ec2"
+    "designerId": "6952602a-04e6-4643-b064-270b31dc0ec2",
+    "cn": [
+        {
+            "type": "Ext.data.Store",
+            "reference": {
+                "name": "stores",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "data": [
+                    "[",
+                    "    {",
+                    "        \"repoType\": \"SVN\"",
+                    "    },",
+                    "    {",
+                    "        \"repoType\": \"GIT\"",
+                    "    }",
+                    "]"
+                ],
+                "name": "RepoTypeStore"
+            },
+            "name": "MyStore1",
+            "designerId": "c8ac96d3-bc89-4dec-8016-5854fb19d8a7",
+            "cn": [
+                {
+                    "type": "Ext.data.field.Field",
+                    "reference": {
+                        "name": "fields",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "repoType"
+                    },
+                    "name": "MyField5",
+                    "designerId": "cfb45970-ffd6-47a1-8b5b-4b1232a89e9c"
+                }
+            ]
+        }
+    ]
 }

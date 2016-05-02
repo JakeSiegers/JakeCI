@@ -22,15 +22,27 @@ Senkins.prototype.initExpress = function () {
         extended: true
     }));
 
+
+
     //Web Accessible Directory
     this.app.use('/',Express.static(__dirname + '/../www'));
+
+
+
+
 
     //Post Endpoints
     this.app.post('/getAllJobs',this.getAllJobs.bind(this));
     this.app.post('/addNewJob',this.addNewJob.bind(this));
     this.app.post('/getJob',this.getJob.bind(this));
+    this.app.post('/saveJob',this.saveJob.bind(this));
+    this.app.post('/runJobManually',this.runJobManually.bind(this));
 
-    /*
+
+    var port = 3000;
+    this.app.listen(port);
+    this.log('info','Listening on port '+port+'...');
+
     //Error Handling
     var sThis = this;
     this.app.use(function(error, request, response, next) {
@@ -40,19 +52,15 @@ Senkins.prototype.initExpress = function () {
                 error: 'Server Error!'
             })
         );
-
         sThis.error(error);
     });
-    */
-
-    var port = 3000;
-    this.app.listen(port);
-    this.log('info','Listening on port '+port+'...');
 };
 
 Senkins.prototype.getAllJobs = function(request, response){
     var jobs = this.model.getAllJobs();
 
+    this.model.
+    
     response.send(JSON.stringify({
         success:true,
         jobs:this.convertJobObjectArrayIntoRawArray(jobs)
@@ -64,7 +72,7 @@ Senkins.prototype.getJob = function(request, response){
     if(errors !== ''){
         response.send(JSON.stringify({
             success: false,
-            data: errors
+            error: errors
         }));
         return;
     }
@@ -72,6 +80,48 @@ Senkins.prototype.getJob = function(request, response){
     var job = request.body.job;
 
     this.model.getJob(job,this.sendResponse.bind(this,response));
+};
+
+Senkins.prototype.saveJob = function(request, response){
+
+    var errors = this.verifyRequiredPostFields(request.body,['job','data']);
+    if(errors !== ''){
+        this.sendError(response,errors);
+        return;
+    }
+
+    var job = request.body.job;
+    var data = "";
+    try {
+        data = JSON.parse(request.body.data);
+    }catch(e){
+        this.sendError(response,"Bad Form Data");
+        return;
+    }
+
+    if(/[^a-zA-Z0-9 ]/.test(data.name) || data.name.length > 20){
+        this.sendError(response,"Job Name Must Be less than <= 20 characters and only contain alpha-numeric characters, plus spaces and dashes.");
+        return;
+    }
+
+    this.model.saveJob(job,data,this.sendResponse.bind(this,response));
+};
+
+Senkins.prototype.runJobManually = function(request, response){
+    var errors = this.verifyRequiredPostFields(request.body,['job']);
+    if(errors !== ''){
+        this.sendError(response,errors);
+        return;
+    }
+    var job = request.body.job;
+    this.model.runJobManually(job,this.sendResponse.bind(this,response));
+};
+
+Senkins.prototype.sendError = function(response,error){
+    response.send(JSON.stringify({
+        success: false,
+        error: error
+    }));
 };
 
 Senkins.prototype.sendResponse = function(response,data){

@@ -15,6 +15,29 @@
 
 Ext.define('Senkins.view.JobFormViewModel', {
     extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.jobform'
+    alias: 'viewmodel.jobform',
+
+    requires: [
+        'Ext.data.Store',
+        'Ext.data.field.Field'
+    ],
+
+    stores: {
+        RepoTypeStore: {
+            data: [
+                {
+                    repoType: 'SVN'
+                },
+                {
+                    repoType: 'GIT'
+                }
+            ],
+            fields: [
+                {
+                    name: 'repoType'
+                }
+            ]
+        }
+    }
 
 });

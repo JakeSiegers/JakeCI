@@ -23,8 +23,8 @@ Ext.define('Senkins.view.JobForm', {
         'Ext.toolbar.Toolbar',
         'Ext.toolbar.Spacer',
         'Ext.form.FieldSet',
-        'Ext.form.field.TextArea',
-        'Ext.form.field.Checkbox'
+        'Ext.form.field.ComboBox',
+        'Ext.form.field.TextArea'
     ],
 
     viewModel: {
@@ -34,7 +34,8 @@ Ext.define('Senkins.view.JobForm', {
     itemId: 'jobPanel',
     width: 629,
     bodyPadding: 10,
-    title: 'Editing Job [INSRT JOB HERE]',
+    title: 'Job Details',
+    trackResetOnLoad: true,
     defaultListenerScope: true,
 
     items: [
@@ -54,7 +55,10 @@ Ext.define('Senkins.view.JobForm', {
                     xtype: 'button',
                     itemId: 'executeJobBtn',
                     scale: 'large',
-                    text: 'Execute Job Now'
+                    text: 'Execute Job Now',
+                    listeners: {
+                        click: 'onExecuteJobBtnClick'
+                    }
                 },
                 {
                     xtype: 'container',
@@ -64,13 +68,49 @@ Ext.define('Senkins.view.JobForm', {
         },
         {
             xtype: 'fieldset',
-            layout: 'form',
             title: 'Description',
+            layout: {
+                type: 'vbox',
+                align: 'stretch'
+            },
             items: [
                 {
                     xtype: 'textfield',
                     fieldLabel: 'Name',
                     name: 'name'
+                },
+                {
+                    xtype: 'container',
+                    margin: '0 0 5 0 ',
+                    width: 304,
+                    layout: {
+                        type: 'hbox',
+                        align: 'stretch'
+                    },
+                    items: [
+                        {
+                            xtype: 'combobox',
+                            flex: 1,
+                            maxWidth: 200,
+                            fieldLabel: 'Repo Type',
+                            name: 'repoType',
+                            editable: false,
+                            displayField: 'repoType',
+                            forceSelection: true,
+                            queryMode: 'local',
+                            valueField: 'repoType',
+                            bind: {
+                                store: '{RepoTypeStore}'
+                            }
+                        },
+                        {
+                            xtype: 'textfield',
+                            flex: 1,
+                            margin: '0 0 0 5',
+                            fieldLabel: 'Repo Url',
+                            name: 'repoUrl'
+                        }
+                    ]
                 },
                 {
                     xtype: 'textareafield',
@@ -90,12 +130,6 @@ Ext.define('Senkins.view.JobForm', {
             title: 'Cron',
             items: [
                 {
-                    xtype: 'checkboxfield',
-                    fieldLabel: 'Scheduled Job',
-                    name: 'useCron',
-                    boxLabel: ''
-                },
-                {
                     xtype: 'textfield',
                     fieldLabel: 'Cron Schedule',
                     name: 'cron'
@@ -107,13 +141,6 @@ Ext.define('Senkins.view.JobForm', {
             layout: 'form',
             title: 'Email',
             items: [
-                {
-                    xtype: 'checkboxfield',
-                    fieldLabel: 'Use Default',
-                    name: 'useDefaultEmail',
-                    boxLabel: '',
-                    checked: true
-                },
                 {
                     xtype: 'textfield',
                     fieldLabel: 'Email',
@@ -137,55 +164,21 @@ Ext.define('Senkins.view.JobForm', {
                 {
                     xtype: 'tbspacer',
                     flex: 1
-                },
-                {
-                    xtype: 'button',
-                    itemId: 'deleteBtn',
-                    text: '<i class="fa fa-trash"></i> Delete'
                 }
             ]
         }
     ],
 
-    onButtonClick4: function(button, e, eOpts) {
-        if(this.state == 'new'){
-            this.addNewJob();
-        }else if (this.state == 'edit'){
-            this.editJob();
-        }
+    onExecuteJobBtnClick: function(button, e, eOpts) {
+        this.runLoadedJob();
     },
 
-    changeState: function(newState) {
-        var jobPanel = this.queryById("jobPanel");
-        var settingsPanel = this.queryById("settingsPanel");
-        var executeJobBtn = this.queryById("executeJobBtn");
-        var deleteBtn = this.queryById("deleteBtn");
-
-        switch(newState){
-            case 'init':
-                jobPanel.hide();
-                jobPanel.reset();
-
-                settingsPanel.hide();
-                break;
-            case 'new':
-                jobPanel.setTitle("Create New Job");
-                jobPanel.show();
-
-                executeJobBtn.hide();
-                deleteBtn.hide();
-                break;
-            case 'settings':
-                settingsPanel.show();
-                jobPanel.hide();
-                jobPanel.reset();
-                break;
-        }
-
-        this.state = newState;
+    onButtonClick4: function(button, e, eOpts) {
+        this.saveJob();
     },
 
     loadJob: function(jobName) {
+
         this.mask('Loading Job...');
 
         AERP.Ajax.request({
@@ -193,7 +186,8 @@ Ext.define('Senkins.view.JobForm', {
             params:{job:jobName},
             success:function(reply){
                 this.unmask();
-                console.log(reply);
+                this.getForm().setValues(reply.data);
+                this.currentJob = reply.data.name;
             },
             failure:function(){
                 this.unmask();
@@ -213,6 +207,43 @@ Ext.define('Senkins.view.JobForm', {
             success:function(result){
                 this.unmask();
                 console.log(result);
+            },
+            failure:function(){
+                this.unmask();
+            },
+            scope:this
+        });
+    },
+
+    saveJob: function() {
+        this.mask('Saving...');
+        AERP.Ajax.request({
+            url:'saveJob',
+            params:{
+                job:this.currentJob,
+                data:Ext.encode(this.getValues(false,false,true,true)) //[asString], [dirtyOnly], [includeEmptyText], [useDataValues
+            },
+            success:function(reply){
+                this.unmask();
+                this.getForm().setValues(reply.data);
+                this.currentJob = reply.data.name;
+            },
+            failure:function(){
+                this.unmask();
+            },
+            scope:this
+        });
+    },
+
+    runLoadedJob: function() {
+        this.mask('Starting Job...');
+        AERP.Ajax.request({
+            url:'runJobManually',
+            params:{
+                job:this.currentJob,
+            },
+            success:function(reply){
+                this.unmask();
             },
             failure:function(){
                 this.unmask();
