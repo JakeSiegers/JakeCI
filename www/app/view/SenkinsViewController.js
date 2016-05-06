@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('Senkins.view.SenkinsViewController', {
+Ext.define('JakeCI.view.SenkinsViewController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.senkins'
 });

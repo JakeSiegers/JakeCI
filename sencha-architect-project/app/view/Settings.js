@@ -13,12 +13,12 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('Senkins.view.Settings', {
+Ext.define('JakeCI.view.Settings', {
     extend: 'Ext.form.Panel',
     alias: 'widget.settings',
 
     requires: [
-        'Senkins.view.SettingsViewModel',
+        'JakeCI.view.SettingsViewModel',
         'Ext.toolbar.Toolbar',
         'Ext.button.Button',
         'Ext.form.field.Text'

@@ -13,13 +13,13 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('Senkins.view.MyViewport', {
+Ext.define('JakeCI.view.MyViewport', {
     extend: 'Ext.container.Viewport',
     alias: 'widget.myviewport',
 
     requires: [
-        'Senkins.view.MyViewportViewModel',
-        'Senkins.view.Senkins',
+        'JakeCI.view.MyViewportViewModel',
+        'JakeCI.view.Senkins',
         'Ext.panel.Panel'
     ],
 

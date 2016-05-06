@@ -1,5 +1,5 @@
 {
-    "name": "Senkins",
+    "name": "JakeCI",
     "settings": {
         "cmd": {
             "license": "commercial"
@@ -13,7 +13,7 @@
             }
         },
         "urlPrefix": "http://localhost:3000",
-        "exportPath": "C:/Users/Jake/Desktop/SenkinsCI/www",
+        "exportPath": "C:/Users/Jake/Desktop/JakeCI/www",
         "projectHasEnabledWebServer": false,
         "lockUrlPrefix": false,
         "buildShouldOverwriteIndex": true,

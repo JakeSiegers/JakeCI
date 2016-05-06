@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('Senkins.view.MyViewportViewModel', {
+Ext.define('JakeCI.view.MyViewportViewModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.myviewport'
 

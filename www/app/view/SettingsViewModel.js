@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('Senkins.view.SettingsViewModel', {
+Ext.define('JakeCI.view.SettingsViewModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.settings'
 

@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('Senkins.view.JobHistoryViewController', {
+Ext.define('JakeCI.view.JobHistoryViewController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.jobhistory'
 });

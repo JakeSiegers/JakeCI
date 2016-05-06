@@ -13,12 +13,12 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('Senkins.view.JobHistory', {
+Ext.define('JakeCI.view.JobHistory', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.jobhistory',
 
     requires: [
-        'Senkins.view.JobHistoryViewModel',
+        'JakeCI.view.JobHistoryViewModel',
         'Ext.grid.Panel',
         'Ext.grid.column.Number',
         'Ext.grid.column.Date',

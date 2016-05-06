@@ -27,10 +27,10 @@ Ext.application({
         'Senkins',
         'JobHistory'
     ],
-    name: 'Senkins',
+    name: 'JakeCI',
 
     launch: function() {
-        Ext.create('Senkins.view.MyViewport');
+        Ext.create('JakeCI.view.MyViewport');
     }
 
 });

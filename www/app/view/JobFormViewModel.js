@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('Senkins.view.JobFormViewModel', {
+Ext.define('JakeCI.view.JobFormViewModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.jobform',
 

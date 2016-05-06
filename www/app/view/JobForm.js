@@ -13,12 +13,12 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('Senkins.view.JobForm', {
+Ext.define('JakeCI.view.JobForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.jobform',
 
     requires: [
-        'Senkins.view.JobFormViewModel',
+        'JakeCI.view.JobFormViewModel',
         'Ext.button.Button',
         'Ext.toolbar.Toolbar',
         'Ext.toolbar.Spacer',

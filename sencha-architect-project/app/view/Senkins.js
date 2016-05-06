@@ -13,12 +13,12 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('Senkins.view.Senkins', {
+Ext.define('JakeCI.view.Senkins', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.senkins',
 
     requires: [
-        'Senkins.view.SenkinsViewModel',
+        'JakeCI.view.SenkinsViewModel',
         'Ext.grid.Panel',
         'Ext.grid.column.Date',
         'Ext.view.Table',

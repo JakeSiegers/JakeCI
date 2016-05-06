@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('Senkins.view.JobFormViewController', {
+Ext.define('JakeCI.view.JobFormViewController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.jobform'
 });

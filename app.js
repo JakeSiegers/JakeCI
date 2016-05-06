@@ -1,13 +1,13 @@
-var Senkins = require('./src/Senkins.js');
-var senkinsObj = new Senkins();
+var JakeCI = require('./src/Jake.js');
+var jakeObj = new JakeCI();
 
 
 process.on('uncaughtException', function(error) {
-    senkinsObj.error(error);
+    jakeObj.error(error);
 });
 
 
 process.on('SIGINT', function() {
-    senkinsObj.log('info','SIGINT Closing, bye!');
+    jakeObj.log('info','SIGINT Closing, bye!');
     process.exit(0);
 });

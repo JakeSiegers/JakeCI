@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('Senkins.view.JobHistoryViewModel', {
+Ext.define('JakeCI.view.JobHistoryViewModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.jobhistory'
 

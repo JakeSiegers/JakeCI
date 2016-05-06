@@ -18,7 +18,7 @@ Ext.define('Senkins.view.EmailOptionsForm', {
     alias: 'widget.emailoptionsform',
 
     requires: [
-        'Senkins.view.EmailOptionsFormViewModel',
+        'Jake.view.EmailOptionsFormViewModel',
         'Ext.form.field.TextArea'
     ],
 

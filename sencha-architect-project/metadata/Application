@@ -6,7 +6,7 @@
     },
     "codeClass": null,
     "userConfig": {
-        "name": "Senkins",
+        "name": "JakeCI",
         "views": [
             "MyViewport",
             "JobForm",
