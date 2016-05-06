@@ -148,6 +148,19 @@
                             ]
                         },
                         {
+                            "type": "Ext.toolbar.Spacer",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "layout|flex": 1
+                            },
+                            "name": "MySpacer",
+                            "designerId": "67d3ad87-2412-45b1-926e-7c1b7c18f17e"
+                        },
+                        {
                             "type": "Ext.button.Button",
                             "reference": {
                                 "name": "items",
@@ -156,7 +169,7 @@
                             "codeClass": null,
                             "userConfig": {
                                 "layout|flex": null,
-                                "text": "<i class=\"fa fa-wrench\"></i> Settings"
+                                "text": "<i class=\"fa fa-wrench\"></i> Jake CI Settings"
                             },
                             "name": "MyButton4",
                             "designerId": "398f54b3-0a6d-434c-93b5-19a6a28f7c1b",
@@ -171,7 +184,7 @@
                                     "userConfig": {
                                         "fn": "onButtonClick3",
                                         "implHandler": [
-                                            "this.changeState('settings');"
+                                            "this.showSettingsWindow();"
                                         ],
                                         "name": "click",
                                         "scope": "me"
@@ -289,6 +302,77 @@
             },
             "name": "showJobWindow",
             "designerId": "5f61b628-2479-43fb-b1a3-60216dd1103c"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "showCredWindow",
+                "implHandler": [
+                    "if(!this.credWindow){",
+                    "    var grid = Ext.create('widget.credseditor',{",
+                    "        listeners:{",
+                    "            scope:this,",
+                    "        }",
+                    "    });",
+                    "",
+                    "",
+                    "    this.credWindow = Ext.create('Ext.window.Window', {",
+                    "        resizable: true,",
+                    "        layout: 'fit',",
+                    "        closeAction: 'hide',",
+                    "        title: 'Saved Credentials',",
+                    "        liveDrag:true,",
+                    "        items: grid",
+                    "    });",
+                    "    this.credWindow.credGrid = grid;",
+                    "}",
+                    "this.credWindow.show();"
+                ]
+            },
+            "name": "showCredWindow",
+            "designerId": "94aea55a-2722-432d-b1e4-c4e045ad2a86"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "showSettingsWindow",
+                "implHandler": [
+                    "if(!this.settingsWindow){",
+                    "    var panel = Ext.create('widget.settings',{",
+                    "        listeners:{",
+                    "            scope:this,",
+                    "            showcredwindow:function(){",
+                    "                this.showCredWindow();",
+                    "            }",
+                    "        }",
+                    "    });",
+                    "",
+                    "",
+                    "    this.settingsWindow = Ext.create('Ext.window.Window', {",
+                    "        resizable: true,",
+                    "        layout: 'fit',",
+                    "        closeAction: 'hide',",
+                    "        title: 'Settings',",
+                    "        liveDrag:true,",
+                    "        items: panel",
+                    "    });",
+                    "    this.settingsWindow.settingsPanel = panel;",
+                    "}",
+                    "this.settingsWindow.show();"
+                ]
+            },
+            "name": "showSettingsWindow",
+            "designerId": "9dfac99d-af4f-4d21-af0e-8ed0584d73a3"
         }
     ]
 }

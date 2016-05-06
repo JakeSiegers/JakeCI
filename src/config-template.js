@@ -1,3 +1,4 @@
 module.exports = {
-    jobPath:'./jobs'
+    jobPath:'./jobs',
+    credFile:'./src/creds.js'
 };

@@ -2,20 +2,25 @@ var Express = require('express');
 var BodyParser = require('body-parser');
 var JobReader = require('./JobReader.js');
 var JobRunner = require('./JobRunner');
+var CredEditor = require('./CredEditor');
 var fs = require("fs");
 
 
 function Jake(){
     this.jobReader = new JobReader(this);
     this.jobRunner = new JobRunner(this);
+    this.credEditor = new CredEditor(this);
     if (!fs.existsSync('./src/config.js')) {
         throw "No config file found. Please Copy the config-template.js file located in src.";
     }
-
     this.config = require('./config');
 
+    //Create Cred File
+    if (!fs.existsSync(this.config.credFile)){
+        fs.writeFileSync(this.config.credFile,'{}');
+    }
 
-
+    //Create Job Directory
     if (!fs.existsSync(this.config.jobPath)){
         fs.mkdirSync(this.config.jobPath);
     }
@@ -41,6 +46,7 @@ Jake.prototype.initExpress = function () {
     this.app.post('/getJob',this.getJob.bind(this));
     this.app.post('/saveJob',this.saveJob.bind(this));
     this.app.post('/runJobManually',this.runJobManually.bind(this));
+    this.app.post('/addCred',this.credEditor.addCred.bind(this));
 
 
     var port = 3000;

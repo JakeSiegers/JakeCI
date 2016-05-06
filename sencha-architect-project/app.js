@@ -25,7 +25,8 @@ Ext.application({
         'JobForm',
         'Settings',
         'JakeCI',
-        'JobHistory'
+        'JobHistory',
+        'CredsEditor'
     ],
     name: 'JakeCI',
 

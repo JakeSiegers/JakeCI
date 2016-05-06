@@ -23,7 +23,8 @@ Ext.define('JakeCI.view.JakeCI', {
         'Ext.grid.column.Date',
         'Ext.view.Table',
         'Ext.toolbar.Toolbar',
-        'Ext.button.Button'
+        'Ext.button.Button',
+        'Ext.toolbar.Spacer'
     ],
 
     viewModel: {
@@ -82,8 +83,12 @@ Ext.define('JakeCI.view.JakeCI', {
                             }
                         },
                         {
+                            xtype: 'tbspacer',
+                            flex: 1
+                        },
+                        {
                             xtype: 'button',
-                            text: '<i class="fa fa-wrench"></i> Settings',
+                            text: '<i class="fa fa-wrench"></i> Jake CI Settings',
                             listeners: {
                                 click: 'onButtonClick3'
                             }
@@ -105,7 +110,7 @@ Ext.define('JakeCI.view.JakeCI', {
     },
 
     onButtonClick3: function(button, e, eOpts) {
-        this.changeState('settings');
+        this.showSettingsWindow();
     },
 
     onJobGridRowDblClick: function(tableview, record, tr, rowIndex, e, eOpts) {
@@ -159,6 +164,53 @@ Ext.define('JakeCI.view.JakeCI', {
             this.jobWindow.jobHistory = history;
         }
         this.jobWindow.show();
+    },
+
+    showCredWindow: function() {
+        if(!this.credWindow){
+            var grid = Ext.create('widget.credseditor',{
+                listeners:{
+                    scope:this,
+                }
+            });
+
+
+            this.credWindow = Ext.create('Ext.window.Window', {
+                resizable: true,
+                layout: 'fit',
+                closeAction: 'hide',
+                title: 'Saved Credentials',
+                liveDrag:true,
+                items: grid
+            });
+            this.credWindow.credGrid = grid;
+        }
+        this.credWindow.show();
+    },
+
+    showSettingsWindow: function() {
+        if(!this.settingsWindow){
+            var panel = Ext.create('widget.settings',{
+                listeners:{
+                    scope:this,
+                    showcredwindow:function(){
+                        this.showCredWindow();
+                    }
+                }
+            });
+
+
+            this.settingsWindow = Ext.create('Ext.window.Window', {
+                resizable: true,
+                layout: 'fit',
+                closeAction: 'hide',
+                title: 'Settings',
+                liveDrag:true,
+                items: panel
+            });
+            this.settingsWindow.settingsPanel = panel;
+        }
+        this.settingsWindow.show();
     }
 
 });

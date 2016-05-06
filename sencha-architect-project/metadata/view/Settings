@@ -9,10 +9,10 @@
         "bodyPadding": 10,
         "designer|userAlias": "settings",
         "designer|userClassName": "Settings",
-        "height": 244,
+        "height": 369,
         "itemId": "settingsPanel",
-        "title": "Settings",
-        "width": 348
+        "title": "",
+        "width": 626
     },
     "name": "MyForm4",
     "designerId": "081fcff5-62a2-4369-bd6c-72af652cc70e",
@@ -61,6 +61,39 @@
             },
             "name": "MyTextField",
             "designerId": "9dba7393-236f-4dee-8ffb-42c2b772cbec"
+        },
+        {
+            "type": "Ext.button.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "text": "Edit Creds"
+            },
+            "name": "MyButton3",
+            "designerId": "a8ebab26-3605-46ca-8bcf-87489fcf9d28",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onButtonClick",
+                        "implHandler": [
+                            "this.fireEvent('showcredwindow');"
+                        ],
+                        "name": "click",
+                        "scope": "me"
+                    },
+                    "name": "onButtonClick",
+                    "designerId": "ca70ff1a-de8c-4ccb-a956-aebc5b606084"
+                }
+            ]
         }
     ]
 }

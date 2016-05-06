@@ -12,7 +12,8 @@
             "JobForm",
             "Settings",
             "JakeCI",
-            "JobHistory"
+            "JobHistory",
+            "CredsEditor"
         ]
     },
     "name": "Application",

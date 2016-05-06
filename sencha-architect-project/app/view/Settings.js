@@ -27,11 +27,12 @@ Ext.define('JakeCI.view.Settings', {
     viewModel: {
         type: 'settings'
     },
-    height: 244,
+    height: 369,
     itemId: 'settingsPanel',
-    width: 348,
+    width: 626,
     bodyPadding: 10,
-    title: 'Settings',
+    title: '',
+    defaultListenerScope: true,
 
     dockedItems: [
         {
@@ -50,7 +51,18 @@ Ext.define('JakeCI.view.Settings', {
             xtype: 'textfield',
             anchor: '100%',
             fieldLabel: 'Default Email'
+        },
+        {
+            xtype: 'button',
+            text: 'Edit Creds',
+            listeners: {
+                click: 'onButtonClick'
+            }
         }
-    ]
+    ],
+
+    onButtonClick: function(button, e, eOpts) {
+        this.fireEvent('showcredwindow');
+    }
 
 });

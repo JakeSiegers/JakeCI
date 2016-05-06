@@ -1,0 +1,356 @@
+{
+    "type": "Ext.grid.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "credseditor",
+        "designer|userClassName": "CredsEditor",
+        "height": 329,
+        "store": [
+            "{CredStore}"
+        ],
+        "title": "",
+        "width": 657
+    },
+    "name": "MyGridPanel2",
+    "configAlternates": {
+        "store": "binding"
+    },
+    "designerId": "9a1966c2-5868-4fd5-b4be-bb93494271af",
+    "viewControllerInstanceId": "b98ae64c-4b7e-4106-b41c-9bfabc74414a",
+    "viewModelInstanceId": "20926529-3195-4b6d-9278-e2bf0ad2fbf7",
+    "cn": [
+        {
+            "type": "Ext.grid.column.Column",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "credId",
+                "text": "ID",
+                "width": 80
+            },
+            "name": "MyColumn2",
+            "designerId": "8260b7db-df6a-4baa-b465-687c4c3fdaf7"
+        },
+        {
+            "type": "Ext.grid.column.Column",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "credName",
+                "text": "Cred Name",
+                "width": 160
+            },
+            "name": "MyColumn5",
+            "designerId": "a99bd813-7313-4658-ada8-ca9b87dc4d26",
+            "cn": [
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "editor",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "name": "MyTextField5",
+                    "designerId": "24b9519b-1f0b-49ba-b9b3-e4d5da3445b7"
+                }
+            ]
+        },
+        {
+            "type": "Ext.grid.column.Column",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "username",
+                "text": "Username",
+                "width": 183
+            },
+            "name": "MyColumn4",
+            "designerId": "fc690fac-6c74-4baf-8dfe-69fbee484f47",
+            "cn": [
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "editor",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "name": "MyTextField6",
+                    "designerId": "dbe03828-f383-40f5-9ac8-fd2f321da8ca"
+                }
+            ]
+        },
+        {
+            "type": "Ext.grid.column.Column",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "password",
+                "text": "Password",
+                "width": 212
+            },
+            "name": "MyColumn3",
+            "designerId": "d44821ac-942d-4183-8b24-b336a65797b2",
+            "cn": [
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "editor",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "inputType": null
+                    },
+                    "name": "MyTextField7",
+                    "designerId": "be40bebe-f820-427b-acb6-dba67d085cce"
+                },
+                {
+                    "type": "fixedfunction",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|params": [
+                            "value",
+                            "metaData",
+                            "record",
+                            "rowIndex",
+                            "colIndex",
+                            "store",
+                            "view"
+                        ],
+                        "fn": "editRenderer",
+                        "implHandler": [
+                            "return \"[Hidden]\";"
+                        ]
+                    },
+                    "name": "editRenderer",
+                    "designerId": "ac02547b-a336-4883-b7b8-a98d6c655ebe"
+                }
+            ]
+        },
+        {
+            "type": "Ext.view.Table",
+            "reference": {
+                "name": "viewConfig",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "width": 590
+            },
+            "name": "MyTable2",
+            "designerId": "3f54c1cd-e894-4b49-b57f-20780cdfe100"
+        },
+        {
+            "type": "Ext.toolbar.Toolbar",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dock": "top"
+            },
+            "name": "MyToolbar3",
+            "designerId": "39ddbe5e-5c99-41b1-9e46-5210733149c6",
+            "cn": [
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": null,
+                        "text": "Add New"
+                    },
+                    "name": "MyButton2",
+                    "designerId": "3cedf680-7330-434b-afc7-1ee4a2a593bb",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onButtonClick",
+                                "implHandler": [
+                                    "this.lookupViewModel().getStore('CredStore').insert(0,{credName:'',userame:'',password:''});",
+                                    "this.getPlugin('credRowEditing').startEdit(0);",
+                                    "this.currentState = 'new';"
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "name": "onButtonClick",
+                            "designerId": "b5562238-b255-40c0-9a2e-a85069ca0ec6"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.toolbar.Spacer",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": 1
+                    },
+                    "name": "MySpacer",
+                    "designerId": "99a54ce5-b235-4df5-973d-470ecf8fa91e"
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": null,
+                        "text": "Delete Selected"
+                    },
+                    "name": "MyButton",
+                    "designerId": "41092d3f-7201-417f-96ef-90339013f14e",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onButtonClick1",
+                                "implHandler": [
+                                    "this.lookupViewModel().getStore('CredStore').insert(0,{credName:'',userame:'',password:''});"
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "name": "onButtonClick1",
+                            "designerId": "d34d6e7e-e79a-4b8d-a09b-24a3fa5b54d2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Ext.grid.plugin.RowEditing",
+            "reference": {
+                "name": "plugins",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "autoCancel": false,
+                "pluginId": "credRowEditing"
+            },
+            "name": "MyRowEditingPlugin",
+            "designerId": "33ba3c90-320c-4c9d-a37f-c3fe00b2630d",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onRowEditingEdit",
+                        "implHandler": [
+                            "this.currentState = 'edit';"
+                        ],
+                        "name": "edit",
+                        "scope": "me"
+                    },
+                    "name": "onRowEditingEdit",
+                    "designerId": "e6e7b320-accd-4cf6-a13f-1de76ad3c7a0"
+                },
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onRowEditingCanceledit",
+                        "implHandler": [
+                            "var record = context.record;",
+                            "var rowIdx = context.rowIdx;",
+                            "",
+                            "if(this.currentState === \"new\"){",
+                            "    this.lookupViewModel().getStore('CredStore').removeAt(rowIdx);",
+                            "}"
+                        ],
+                        "name": "canceledit",
+                        "scope": "me"
+                    },
+                    "name": "onRowEditingCanceledit",
+                    "designerId": "3e655a59-e946-48cc-8536-39badbdd249b"
+                },
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onRowEditingBeforeEdit",
+                        "implHandler": [
+                            "//Don't try and edit anything else if we're already editing something!",
+                            "if(this.getPlugin('credRowEditing').editing){",
+                            "    return false;",
+                            "}"
+                        ],
+                        "name": "beforeedit",
+                        "scope": "me"
+                    },
+                    "name": "onRowEditingBeforeEdit",
+                    "designerId": "fb36868c-88e5-4e7b-9527-af06576b67b8"
+                }
+            ]
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "addCred",
+                "implHandler": [
+                    ""
+                ]
+            },
+            "name": "addCred",
+            "designerId": "8f041fdc-8e1b-41eb-86fa-3565f00b2896"
+        }
+    ]
+}
