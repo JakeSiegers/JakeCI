@@ -3,13 +3,15 @@ var BodyParser = require('body-parser');
 var JobReader = require('./JobReader.js');
 var JobRunner = require('./JobRunner');
 var fs = require("fs");
-var config = require('./config');
+
 
 function Jake(){
-    this.jobReader = new JobReader();
+    this.jobReader = new JobReader(this);
     this.jobRunner = new JobRunner(this);
-    if (!fs.existsSync(config.jobPath)){
-        fs.mkdirSync(config.jobPath);
+    this.config = require('./config');
+
+    if (!fs.existsSync(this.config.jobPath)){
+        fs.mkdirSync(this.config.jobPath);
     }
     this.initExpress();
 }
@@ -108,7 +110,7 @@ Jake.prototype.runJobManually = function(request, response){
         return;
     }
     var job = request.body.job;
-    this.jobReader.runJobManually(job,this.sendResponse.bind(this,response));
+    this.jobRunner.runJobManually(job,this.sendResponse.bind(this,response));
 };
 
 Jake.prototype.sendError = function(response, error){

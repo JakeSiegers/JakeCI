@@ -1,14 +1,12 @@
 var fs = require('fs');
 var path = require('path');
-var sqlite3 = require('sqlite3').verbose();
-const exec = require('child_process').exec;
 
 
-function JakeModel(JakeCI){
+function JobReader(JakeCI){
     this.JakeCI = JakeCI;
 }
 
-JakeModel.prototype.checkIfJobValid = function(jobName){
+JobReader.prototype.checkIfJobValid = function(jobName){
     try {
         fs.accessSync(path.join(this.JakeCI.config.jobPath,jobName,'config.json'), fs.R_OK);
     }catch(e){
@@ -17,9 +15,10 @@ JakeModel.prototype.checkIfJobValid = function(jobName){
     return true;
 }
 
-JakeModel.prototype.getAllJobs = function(){
+JobReader.prototype.getAllJobs = function(){
+    var sThis = this;
     var goodJobs = fs.readdirSync(this.JakeCI.config.jobPath).filter(function(file) {
-        return fs.statSync(path.join(this.JakeCI.config.jobPath, file)).isDirectory();
+        return fs.statSync(path.join(sThis.JakeCI.config.jobPath, file)).isDirectory();
     });
 
     var allJobs = [];
@@ -42,7 +41,7 @@ JakeModel.prototype.getAllJobs = function(){
 };
 
 
-JakeModel.prototype.getJob = function(jobName, callback){
+JobReader.prototype.getJob = function(jobName, callback){
     fs.readFile(
         path.join(this.JakeCI.config.jobPath,jobName,'config.json'),
         'utf8',
@@ -53,17 +52,17 @@ JakeModel.prototype.getJob = function(jobName, callback){
     );
 };
 
-JakeModel.prototype.getJobFileRead = function(callback, data){
+JobReader.prototype.getJobFileRead = function(callback, data){
     data = JSON.parse(data);
     callback(data);
 };
 
-JakeModel.prototype.saveJob = function(jobName, newJobData, callback){
+JobReader.prototype.saveJob = function(jobName, newJobData, callback){
     var newJobName = newJobData.name;
     fs.rename(path.join(this.JakeCI.config.jobPath,jobName),path.join(this.JakeCI.config.jobPath,newJobName),this.renameFileCallback.bind(this,this.saveJobFolderRename.bind(this,newJobName,newJobData,callback)));
 };
 
-JakeModel.prototype.saveJobFolderRename = function(jobName, newJobData, callback){
+JobReader.prototype.saveJobFolderRename = function(jobName, newJobData, callback){
     fs.readFile(
         path.join(this.JakeCI.config.jobPath,jobName,'config.json'),
         'utf8',
@@ -79,7 +78,7 @@ JakeModel.prototype.saveJobFolderRename = function(jobName, newJobData, callback
     );
 };
 
-JakeModel.prototype.saveJobFileRead = function(jobName, newJobData, callback, data){
+JobReader.prototype.saveJobFileRead = function(jobName, newJobData, callback, data){
     data = JSON.parse(data);
     for(var key in newJobData){
         data[key] = newJobData[key];
@@ -96,21 +95,21 @@ JakeModel.prototype.saveJobFileRead = function(jobName, newJobData, callback, da
 
 
 
-JakeModel.prototype.readFileCallback = function (callback, error, data){
+JobReader.prototype.readFileCallback = function (callback, error, data){
     if(error){
         throw error;
     }
     callback(data);
 };
 
-JakeModel.prototype.writeFileCallback = function (callback, error){
+JobReader.prototype.writeFileCallback = function (callback, error){
     if(error){
         throw error;
     }
     callback();
 };
 
-JakeModel.prototype.renameFileCallback = function (callback, error){
+JobReader.prototype.renameFileCallback = function (callback, error){
     if(error){
         throw error;
     }
@@ -118,4 +117,4 @@ JakeModel.prototype.renameFileCallback = function (callback, error){
 };
 
 
-module.exports = JakeModel;
+module.exports = JobReader;
