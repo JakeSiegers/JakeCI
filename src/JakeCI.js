@@ -1,13 +1,13 @@
 var Express = require('express');
 var BodyParser = require('body-parser');
-var JobReader = require('./JobReader.js');
+var JobEditor = require('./JobEditor.js');
 var JobRunner = require('./JobRunner');
 var CredEditor = require('./CredEditor');
 var fs = require("fs");
 
 
 function Jake(){
-    this.jobReader = new JobReader(this);
+    this.jobEditor = new JobEditor(this);
     this.jobRunner = new JobRunner(this);
     this.credEditor = new CredEditor(this);
     if (!fs.existsSync('./src/config.js')) {
@@ -67,7 +67,7 @@ Jake.prototype.initExpress = function () {
 };
 
 Jake.prototype.getAllJobs = function(request, response){
-    var jobs = this.jobReader.getAllJobs();
+    var jobs = this.jobEditor.getAllJobs();
     
     response.send(JSON.stringify({
         success:true,
@@ -87,7 +87,7 @@ Jake.prototype.getJob = function(request, response){
 
     var job = request.body.job;
 
-    this.jobReader.getJob(job,this.sendResponse.bind(this,response));
+    this.jobEditor.getJob(job,this.sendResponse.bind(this,response));
 };
 
 Jake.prototype.saveJob = function(request, response){
@@ -112,7 +112,7 @@ Jake.prototype.saveJob = function(request, response){
         return;
     }
 
-    this.jobReader.saveJob(job,data,this.sendResponse.bind(this,response));
+    this.jobEditor.saveJob(job,data,this.sendResponse.bind(this,response));
 };
 
 Jake.prototype.runJobManually = function(request, response){
@@ -146,8 +146,8 @@ Jake.prototype.addNewJob = function(request, response){
     if(errors.length > 0){
         response.send(JSON.stringify({success:false,error:errors}));
     }
-    this.jobReader.addJob(request.body);
-    var jobs = this.jobReader.getAllJobs();
+    this.jobEditor.addJob(request.body);
+    var jobs = this.jobEditor.getAllJobs();
     response.send(JSON.stringify({
         success:true,
         jobs:this.convertJobObjectIntoRawArray(jobs)

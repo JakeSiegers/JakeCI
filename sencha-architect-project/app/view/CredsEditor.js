@@ -120,13 +120,16 @@ Ext.define('JakeCI.view.CredsEditor', {
     ],
 
     onButtonClick: function(button, e, eOpts) {
+        if(this.getPlugin('credRowEditing').editing){
+            return false;
+        }
         this.lookupViewModel().getStore('CredStore').insert(0,{credName:'',userame:'',password:''});
         this.getPlugin('credRowEditing').startEdit(0);
         this.currentState = 'new';
     },
 
     onButtonClick1: function(button, e, eOpts) {
-        this.lookupViewModel().getStore('CredStore').insert(0,{credName:'',userame:'',password:''});
+        console.log('Program Delete Cred');
     },
 
     onRowEditingEdit: function(editor, context, eOpts) {

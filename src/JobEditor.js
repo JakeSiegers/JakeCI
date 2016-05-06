@@ -2,11 +2,11 @@ var fs = require('fs');
 var path = require('path');
 
 
-function JobReader(JakeCI){
+function JobEditor(JakeCI){
     this.JakeCI = JakeCI;
 }
 
-JobReader.prototype.checkIfJobValid = function(jobName){
+JobEditor.prototype.checkIfJobValid = function(jobName){
     try {
         fs.accessSync(path.join(this.JakeCI.config.jobPath,jobName,'config.json'), fs.R_OK);
     }catch(e){
@@ -15,7 +15,7 @@ JobReader.prototype.checkIfJobValid = function(jobName){
     return true;
 }
 
-JobReader.prototype.getAllJobs = function(){
+JobEditor.prototype.getAllJobs = function(){
     var sThis = this;
     var goodJobs = fs.readdirSync(this.JakeCI.config.jobPath).filter(function(file) {
         return fs.statSync(path.join(sThis.JakeCI.config.jobPath, file)).isDirectory();
@@ -41,7 +41,7 @@ JobReader.prototype.getAllJobs = function(){
 };
 
 
-JobReader.prototype.getJob = function(jobName, callback){
+JobEditor.prototype.getJob = function(jobName, callback){
     fs.readFile(
         path.join(this.JakeCI.config.jobPath,jobName,'config.json'),
         'utf8',
@@ -52,17 +52,17 @@ JobReader.prototype.getJob = function(jobName, callback){
     );
 };
 
-JobReader.prototype.getJobFileRead = function(callback, data){
+JobEditor.prototype.getJobFileRead = function(callback, data){
     data = JSON.parse(data);
     callback(data);
 };
 
-JobReader.prototype.saveJob = function(jobName, newJobData, callback){
+JobEditor.prototype.saveJob = function(jobName, newJobData, callback){
     var newJobName = newJobData.name;
     fs.rename(path.join(this.JakeCI.config.jobPath,jobName),path.join(this.JakeCI.config.jobPath,newJobName),this.renameFileCallback.bind(this,this.saveJobFolderRename.bind(this,newJobName,newJobData,callback)));
 };
 
-JobReader.prototype.saveJobFolderRename = function(jobName, newJobData, callback){
+JobEditor.prototype.saveJobFolderRename = function(jobName, newJobData, callback){
     fs.readFile(
         path.join(this.JakeCI.config.jobPath,jobName,'config.json'),
         'utf8',
@@ -78,7 +78,7 @@ JobReader.prototype.saveJobFolderRename = function(jobName, newJobData, callback
     );
 };
 
-JobReader.prototype.saveJobFileRead = function(jobName, newJobData, callback, data){
+JobEditor.prototype.saveJobFileRead = function(jobName, newJobData, callback, data){
     data = JSON.parse(data);
     for(var key in newJobData){
         data[key] = newJobData[key];
@@ -95,21 +95,21 @@ JobReader.prototype.saveJobFileRead = function(jobName, newJobData, callback, da
 
 
 
-JobReader.prototype.readFileCallback = function (callback, error, data){
+JobEditor.prototype.readFileCallback = function (callback, error, data){
     if(error){
         throw error;
     }
     callback(data);
 };
 
-JobReader.prototype.writeFileCallback = function (callback, error){
+JobEditor.prototype.writeFileCallback = function (callback, error){
     if(error){
         throw error;
     }
     callback();
 };
 
-JobReader.prototype.renameFileCallback = function (callback, error){
+JobEditor.prototype.renameFileCallback = function (callback, error){
     if(error){
         throw error;
     }
@@ -117,4 +117,4 @@ JobReader.prototype.renameFileCallback = function (callback, error){
 };
 
 
-module.exports = JobReader;
+module.exports = JobEditor;

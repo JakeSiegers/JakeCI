@@ -6,7 +6,7 @@ function JobRunner(JakeCI){
 }
 
 JobRunner.prototype.runJobManually = function(job, callback){
-    this.JakeCI.jobReader.getJob(job,this.startJob.bind(this,callback));
+    this.JakeCI.jobEditor.getJob(job,this.startJob.bind(this,callback));
 };
 
 JobRunner.prototype.startJob = function(callback, data){
