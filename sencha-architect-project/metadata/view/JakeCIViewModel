@@ -6,8 +6,8 @@
     },
     "codeClass": null,
     "userConfig": {
-        "designer|userAlias": "senkins",
-        "designer|userClassName": "SenkinsViewModel"
+        "designer|userAlias": "jakeci",
+        "designer|userClassName": "JakeCIViewModel"
     },
     "designerId": "8a75c16e-5f5b-4134-80aa-088115286083",
     "cn": [

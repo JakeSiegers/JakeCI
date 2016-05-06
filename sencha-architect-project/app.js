@@ -24,7 +24,7 @@ Ext.application({
         'MyViewport',
         'JobForm',
         'Settings',
-        'Senkins',
+        'JakeCI',
         'JobHistory'
     ],
     name: 'JakeCI',

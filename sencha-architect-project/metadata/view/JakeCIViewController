@@ -6,8 +6,8 @@
     },
     "codeClass": null,
     "userConfig": {
-        "designer|userAlias": "senkins",
-        "designer|userClassName": "SenkinsViewController"
+        "designer|userAlias": "jakeci",
+        "designer|userClassName": "JakeCIViewController"
     },
     "designerId": "1b53b1d7-5913-4ac7-998e-515eadea392d"
 }

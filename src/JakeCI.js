@@ -8,7 +8,13 @@ var fs = require("fs");
 function Jake(){
     this.jobReader = new JobReader(this);
     this.jobRunner = new JobRunner(this);
+    if (!fs.existsSync('./src/config.js')) {
+        throw "No config file found. Please Copy the config-template.js file located in src.";
+    }
+
     this.config = require('./config');
+
+
 
     if (!fs.existsSync(this.config.jobPath)){
         fs.mkdirSync(this.config.jobPath);

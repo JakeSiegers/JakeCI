@@ -19,7 +19,7 @@ Ext.define('JakeCI.view.MyViewport', {
 
     requires: [
         'JakeCI.view.MyViewportViewModel',
-        'JakeCI.view.Senkins',
+        'JakeCI.view.JakeCI',
         'Ext.panel.Panel'
     ],
 
@@ -30,7 +30,7 @@ Ext.define('JakeCI.view.MyViewport', {
 
     items: [
         {
-            xtype: 'senkins'
+            xtype: 'jakeci'
         }
     ]
 

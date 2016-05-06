@@ -1,4 +1,5 @@
 .idea/
 jobs/
 .gitignore
+/src/config.js
 node_modules/

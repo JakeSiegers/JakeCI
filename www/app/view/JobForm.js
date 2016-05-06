@@ -227,6 +227,7 @@ Ext.define('JakeCI.view.JobForm', {
                 this.unmask();
                 this.getForm().setValues(reply.data);
                 this.currentJob = reply.data.name;
+                this.fireEvent('savejob');
             },
             failure:function(){
                 this.unmask();
