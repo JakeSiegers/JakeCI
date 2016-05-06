@@ -1,11 +1,13 @@
 var Express = require('express');
 var BodyParser = require('body-parser');
-var JakeModel = require('./JakeModel.js');
+var JobReader = require('./JobReader.js');
+var JobRunner = require('./JobRunner');
 var fs = require("fs");
 var config = require('./config');
 
 function Jake(){
-    this.model = new JakeModel();
+    this.jobReader = new JobReader();
+    this.jobRunner = new JobRunner(this);
     if (!fs.existsSync(config.jobPath)){
         fs.mkdirSync(config.jobPath);
     }
@@ -21,15 +23,9 @@ Jake.prototype.initExpress = function () {
     this.app.use(BodyParser.urlencoded({
         extended: true
     }));
-
-
-
+    
     //Web Accessible Directory
     this.app.use('/',Express.static(__dirname + '/../www'));
-
-
-
-
 
     //Post Endpoints
     this.app.post('/getAllJobs',this.getAllJobs.bind(this));
@@ -57,7 +53,7 @@ Jake.prototype.initExpress = function () {
 };
 
 Jake.prototype.getAllJobs = function(request, response){
-    var jobs = this.model.getAllJobs();
+    var jobs = this.jobReader.getAllJobs();
     
     response.send(JSON.stringify({
         success:true,
@@ -77,7 +73,7 @@ Jake.prototype.getJob = function(request, response){
 
     var job = request.body.job;
 
-    this.model.getJob(job,this.sendResponse.bind(this,response));
+    this.jobReader.getJob(job,this.sendResponse.bind(this,response));
 };
 
 Jake.prototype.saveJob = function(request, response){
@@ -102,7 +98,7 @@ Jake.prototype.saveJob = function(request, response){
         return;
     }
 
-    this.model.saveJob(job,data,this.sendResponse.bind(this,response));
+    this.jobReader.saveJob(job,data,this.sendResponse.bind(this,response));
 };
 
 Jake.prototype.runJobManually = function(request, response){
@@ -112,7 +108,7 @@ Jake.prototype.runJobManually = function(request, response){
         return;
     }
     var job = request.body.job;
-    this.model.runJobManually(job,this.sendResponse.bind(this,response));
+    this.jobReader.runJobManually(job,this.sendResponse.bind(this,response));
 };
 
 Jake.prototype.sendError = function(response, error){
@@ -136,8 +132,8 @@ Jake.prototype.addNewJob = function(request, response){
     if(errors.length > 0){
         response.send(JSON.stringify({success:false,error:errors}));
     }
-    this.model.addJob(request.body);
-    var jobs = this.model.getAllJobs();
+    this.jobReader.addJob(request.body);
+    var jobs = this.jobReader.getAllJobs();
     response.send(JSON.stringify({
         success:true,
         jobs:this.convertJobObjectIntoRawArray(jobs)

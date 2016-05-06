@@ -1,4 +1,4 @@
-var JakeCI = require('./src/Jake.js');
+var JakeCI = require('./src/JakeCI.js');
 var jakeObj = new JakeCI();
 
 
