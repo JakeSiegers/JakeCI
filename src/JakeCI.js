@@ -62,7 +62,16 @@ Jake.prototype.initExpress = function () {
 
         });
         */
+    }
 
+    //Loop Over Controller Folder for endpoints ~ ooh magic!
+    var modelFiles = fs.readdirSync('./src/models');
+    this.models = {};
+    for(var i=0;i<modelFiles.length;i++){
+        var modelFileName = modelFiles[i];
+        var modelName = modelFileName.substring(0,modelFileName.indexOf("."));
+        var modelCls = require('./models/'+modelName);
+        this.models[modelName] = new modelCls(this);
     }
 
     var port = 3000;

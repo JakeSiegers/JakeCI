@@ -14,4 +14,12 @@ Functions.prototype.verifyRequiredPostFields = function(post, expected){
     return errors;
 };
 
+Functions.prototype.commandParser = function(message) {
+    var params = message.match(/'([^']*)'|"([^"]*)"|(\S+)/g) || [];
+    for(var i=0;i<params.length;i++){
+        params[i] = params[i].replace(/"/g, "");
+    }
+    return params;
+};
+
 module.exports = Functions;
