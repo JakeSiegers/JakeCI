@@ -137,7 +137,8 @@
                                     "userConfig": {
                                         "fn": "onButtonClick1",
                                         "implHandler": [
-                                            "this.showJobWindow();"
+                                            "this.showJobWindow();",
+                                            "this.jobWindow.jobForm.setState('new');"
                                         ],
                                         "name": "click",
                                         "scope": "me"

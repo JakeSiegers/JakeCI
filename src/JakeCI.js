@@ -3,6 +3,7 @@ var BodyParser = require('body-parser');
 var JobEditor = require('./JobEditor.js');
 var JobRunner = require('./JobRunner');
 var CredEditor = require('./CredEditor');
+var Functions = require('./Functions');
 var fs = require("fs");
 
 
@@ -10,6 +11,7 @@ function Jake(){
     this.jobEditor = new JobEditor(this);
     this.jobRunner = new JobRunner(this);
     this.credEditor = new CredEditor(this);
+    this.functions = new Functions(this);
     if (!fs.existsSync('./src/config.js')) {
         throw "No config file found. Please Copy the config-template.js file located in src.";
     }
@@ -42,12 +44,22 @@ Jake.prototype.initExpress = function () {
 
     //Post Endpoints
     this.app.post('/getAllJobs',this.getAllJobs.bind(this));
-    this.app.post('/addNewJob',this.addNewJob.bind(this));
+    //this.app.post('/addNewJob',this.jobEditor.addNewJob.bind(this));
     this.app.post('/getJob',this.getJob.bind(this));
     this.app.post('/saveJob',this.saveJob.bind(this));
     this.app.post('/runJobManually',this.runJobManually.bind(this));
     this.app.post('/addCred',this.credEditor.addCred.bind(this));
 
+    //Loop Over Controller Folder for endpoints ~ ooh magic!
+    var controllerFiles = fs.readdirSync('./src/controllers');
+    this.controllers = {};
+    for(var i=0;i<controllerFiles.length;i++){
+        var fileName = controllerFiles[i];
+        var controllerName = fileName.substring(0,fileName.indexOf("."));
+        var cls = require('./controllers/'+controllerName);
+        this.controllers[controllerName] = new cls(this);
+        this.app.post('/'+controllerName,this.controllers[controllerName].expressRequest.bind(this.controllers[controllerName]));
+    }
 
     var port = 3000;
     this.app.listen(port);
@@ -76,7 +88,7 @@ Jake.prototype.getAllJobs = function(request, response){
 };
 
 Jake.prototype.getJob = function(request, response){
-    var errors = this.verifyRequiredPostFields(request.body,['job']);
+    var errors = this.functions.verifyRequiredPostFields(request.body,['job']);
     if(errors !== ''){
         response.send(JSON.stringify({
             success: false,
@@ -92,7 +104,7 @@ Jake.prototype.getJob = function(request, response){
 
 Jake.prototype.saveJob = function(request, response){
 
-    var errors = this.verifyRequiredPostFields(request.body,['job','data']);
+    var errors = this.functions.verifyRequiredPostFields(request.body,['job','data']);
     if(errors !== ''){
         this.sendError(response,errors);
         return;
@@ -116,7 +128,7 @@ Jake.prototype.saveJob = function(request, response){
 };
 
 Jake.prototype.runJobManually = function(request, response){
-    var errors = this.verifyRequiredPostFields(request.body,['job']);
+    var errors = this.functions.verifyRequiredPostFields(request.body,['job']);
     if(errors !== ''){
         this.sendError(response,errors);
         return;
@@ -139,22 +151,6 @@ Jake.prototype.sendResponse = function(response, data){
     }));
 };
 
-Jake.prototype.addNewJob = function(request, response){
-    /*
-    console.log();
-    var errors = this.verifyRequiredPostFields(request.body,["name","useCron","useDefaultEmail"]);
-    if(errors.length > 0){
-        response.send(JSON.stringify({success:false,error:errors}));
-    }
-    this.jobEditor.addJob(request.body);
-    var jobs = this.jobEditor.getAllJobs();
-    response.send(JSON.stringify({
-        success:true,
-        jobs:this.convertJobObjectIntoRawArray(jobs)
-    }));
-    */
-};
-
 Jake.prototype.convertJobObjectArrayIntoRawArray = function(jobs){
     var allJobs = [];
     for(var i=0;i<jobs.length;i++){
@@ -165,17 +161,6 @@ Jake.prototype.convertJobObjectArrayIntoRawArray = function(jobs){
         allJobs.push(job);
     }
     return allJobs;
-};
-
-Jake.prototype.verifyRequiredPostFields = function(post, expected){
-    var errors = "";
-    var foundPost = Object.keys(post);
-    for(var i=0;i<expected.length;i++){
-        if(foundPost.indexOf(expected[i]) == -1 || post[expected[i]].length == 0){
-            errors += expected[i]+" is required<br />";
-        }
-    }
-    return errors;
 };
 
 Jake.prototype.error = function(error){

@@ -156,9 +156,18 @@ Ext.define('JakeCI.view.JobForm', {
             items: [
                 {
                     xtype: 'button',
-                    text: '<i class="fa fa-floppy-o"></i> Save',
+                    itemId: 'saveJobBtn',
+                    text: '<i class="fa fa-floppy-o"></i> Save Job',
                     listeners: {
                         click: 'onButtonClick4'
+                    }
+                },
+                {
+                    xtype: 'button',
+                    itemId: 'newJobBtn',
+                    text: '<i class="fa fa-plus"></i> Add New Job',
+                    listeners: {
+                        click: 'onButtonClick41'
                     }
                 },
                 {
@@ -177,6 +186,10 @@ Ext.define('JakeCI.view.JobForm', {
         this.saveJob();
     },
 
+    onButtonClick41: function(button, e, eOpts) {
+        this.addNewJob();
+    },
+
     loadJob: function(jobName) {
 
         this.mask('Loading Job...');
@@ -186,6 +199,7 @@ Ext.define('JakeCI.view.JobForm', {
             params:{job:jobName},
             success:function(reply){
                 this.unmask();
+                this.setState('edit');
                 this.getForm().setValues(reply.data);
                 this.currentJob = reply.data.name;
             },
@@ -197,16 +211,14 @@ Ext.define('JakeCI.view.JobForm', {
     },
 
     addNewJob: function() {
-        var jobPanel = this.queryById("jobPanel");
-
         this.mask("Adding New Job...");
 
         AERP.Ajax.request({
-            url:'addNewJob',
-            params:jobPanel.getValues(false,false,true,true), //[asString], [dirtyOnly], [includeEmptyText], [useDataValues]
-            success:function(result){
+            url:'NewJob',
+            params:this.getValues(false,false,true,true), //[asString], [dirtyOnly], [includeEmptyText], [useDataValues]
+            success:function(reply){
                 this.unmask();
-                console.log(result);
+                this.loadJob(reply.data.name);
             },
             failure:function(){
                 this.unmask();
@@ -251,6 +263,34 @@ Ext.define('JakeCI.view.JobForm', {
             },
             scope:this
         });
+    },
+
+    setState: function(newState) {
+        this.currentState = newState;
+
+        this.currentJob = null;
+        this.getForm().getFields().each(function(field){
+            field.setValue('');
+            field.resetOriginalValue();
+        });
+
+        var executeJobBtn = this.queryById('executeJobBtn');
+        var newJobBtn = this.queryById('newJobBtn');
+        var saveJobBtn = this.queryById('saveJobBtn');
+
+        executeJobBtn.disable();
+        newJobBtn.hide();
+        saveJobBtn.hide();
+
+        switch(newState){
+            case 'new':
+                newJobBtn.show();
+                break;
+            case 'edit':
+                executeJobBtn.enable();
+                saveJobBtn.show();
+                break;
+        }
     }
 
 });

@@ -107,6 +107,7 @@ Ext.define('JakeCI.view.JakeCI', {
 
     onButtonClick1: function(button, e, eOpts) {
         this.showJobWindow();
+        this.jobWindow.jobForm.setState('new');
     },
 
     onButtonClick3: function(button, e, eOpts) {

@@ -42,8 +42,8 @@ Ext.define('JakeCI.view.CredsEditor', {
     columns: [
         {
             xtype: 'gridcolumn',
-            dataIndex: 'credId',
             width: 80,
+            dataIndex: 'credId',
             text: 'ID'
         },
         {
