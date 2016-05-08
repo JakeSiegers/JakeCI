@@ -16,11 +16,11 @@ RunJob.prototype.expressRequest = function(request, response){
     }
     var job = request.body.job;
 
-    this.JakeCI.jobEditor.getJob(job,this.startJob.bind(this,callback));
+    this.JakeCI.jobEditor.getJob(job,this.startJob.bind(this,response));
 
 };
 
-RunJob.prototype.startJob = function(callback, data){
+RunJob.prototype.startJob = function(response, data){
     callback("Job Started");
 
     var cmd  = spawn(data.exec);
