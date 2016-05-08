@@ -7,13 +7,7 @@ function NewJob(JakeCI){
     this.JakeCI = JakeCI;
 }
 
-NewJob.prototype.test = function(){
-    console.log("welcome to fun zone");
-}
-
 NewJob.prototype.expressRequest = function(request, response){
-
-    //console.log(request.body);
 
     var errors = this.JakeCI.functions.verifyRequiredPostFields(request.body,['name']);
     if(errors !== ''){
@@ -24,17 +18,14 @@ NewJob.prototype.expressRequest = function(request, response){
 
     var sThis = this;
     var newJobFolder = path.join(this.JakeCI.config.jobPath,data.name);
-    console.log(newJobFolder);
     fs.stat(newJobFolder, function(err, stats) {
         //Check if error defined and the error code is "not exists"
-        if (err && err.errno === 34) {
+        if (err && err.code === 'ENOENT') {
             mkdirp(newJobFolder,sThis.folderMade.bind(sThis,data,response));
         } else {
-            sThis.JakeCI.sendError(response,'Failed to create Job Folder (does it already exist?');
+            sThis.JakeCI.sendError(response,'Failed to create Job Folder (does it already exist?)');
         }
     });
-
-
 };
 
 NewJob.prototype.folderMade = function(data,response,error){
@@ -42,9 +33,6 @@ NewJob.prototype.folderMade = function(data,response,error){
         this.JakeCI.sendError(response,'Failed to create Job Folder');
         return false;
     }
-
-    console.log('writing config.json file');
-
     fs.writeFile(
         path.join(this.JakeCI.config.jobPath,data.name,'config.json'),
         JSON.stringify(data),

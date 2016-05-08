@@ -1,15 +1,26 @@
+var fs = require('fs');
+var path = require('path');
 const exec = require('child_process').exec;
 const spawn = require('child_process').spawn;
 
-function JobRunner(JakeCI){
+function RunJob(JakeCI){
     this.JakeCI = JakeCI;
 }
 
-JobRunner.prototype.runJobManually = function(job, callback){
+RunJob.prototype.expressRequest = function(request, response){
+
+    var errors = this.JakeCI.functions.verifyRequiredPostFields(request.body,['job']);
+    if(errors !== ''){
+        this.JakeCI.sendError(response,errors);
+        return;
+    }
+    var job = request.body.job;
+
     this.JakeCI.jobEditor.getJob(job,this.startJob.bind(this,callback));
+
 };
 
-JobRunner.prototype.startJob = function(callback, data){
+RunJob.prototype.startJob = function(callback, data){
     callback("Job Started");
 
     var cmd  = spawn(data.exec);
@@ -29,14 +40,14 @@ JobRunner.prototype.startJob = function(callback, data){
     });
 
     /*
-    exec(data.exec, function(err, stdout, stderr) {
-        if (err) {
-            console.error(err);
-            return;
-        }
-        console.log(stdout);
-    });
-    */
+     exec(data.exec, function(err, stdout, stderr) {
+     if (err) {
+     console.error(err);
+     return;
+     }
+     console.log(stdout);
+     });
+     */
 };
 
-module.exports = JobRunner;
+module.exports = RunJob;

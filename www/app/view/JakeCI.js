@@ -144,6 +144,9 @@ Ext.define('JakeCI.view.JakeCI', {
             var form = Ext.create('widget.jobform',{
                 listeners:{
                     scope:this,
+                    addjob:function(){
+                        this.getAllJobs();
+                    },
                     savejob:function(){
                         this.getAllJobs();
                     }

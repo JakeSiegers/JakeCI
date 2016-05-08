@@ -218,7 +218,8 @@ Ext.define('JakeCI.view.JobForm', {
             params:this.getValues(false,false,true,true), //[asString], [dirtyOnly], [includeEmptyText], [useDataValues]
             success:function(reply){
                 this.unmask();
-                this.loadJob(reply.data.name);
+                this.loadJob(reply.data.jobName);
+                this.fireEvent('addjob');
             },
             failure:function(){
                 this.unmask();
@@ -251,7 +252,7 @@ Ext.define('JakeCI.view.JobForm', {
     runLoadedJob: function() {
         this.mask('Starting Job...');
         AERP.Ajax.request({
-            url:'runJobManually',
+            url:'RunJob',
             params:{
                 job:this.currentJob,
             },

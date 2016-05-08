@@ -1,7 +1,6 @@
 var Express = require('express');
 var BodyParser = require('body-parser');
 var JobEditor = require('./JobEditor.js');
-var JobRunner = require('./JobRunner');
 var CredEditor = require('./CredEditor');
 var Functions = require('./Functions');
 var fs = require("fs");
@@ -9,11 +8,10 @@ var fs = require("fs");
 
 function Jake(){
     this.jobEditor = new JobEditor(this);
-    this.jobRunner = new JobRunner(this);
     this.credEditor = new CredEditor(this);
     this.functions = new Functions(this);
     if (!fs.existsSync('./src/config.js')) {
-        throw "No config file found. Please Copy the config-template.js file located in src.";
+        throw "No config file found.";
     }
     this.config = require('./config');
 
@@ -44,10 +42,8 @@ Jake.prototype.initExpress = function () {
 
     //Post Endpoints
     this.app.post('/getAllJobs',this.getAllJobs.bind(this));
-    //this.app.post('/addNewJob',this.jobEditor.addNewJob.bind(this));
     this.app.post('/getJob',this.getJob.bind(this));
     this.app.post('/saveJob',this.saveJob.bind(this));
-    this.app.post('/runJobManually',this.runJobManually.bind(this));
     this.app.post('/addCred',this.credEditor.addCred.bind(this));
 
     //Loop Over Controller Folder for endpoints ~ ooh magic!
@@ -59,6 +55,14 @@ Jake.prototype.initExpress = function () {
         var cls = require('./controllers/'+controllerName);
         this.controllers[controllerName] = new cls(this);
         this.app.post('/'+controllerName,this.controllers[controllerName].expressRequest.bind(this.controllers[controllerName]));
+
+        /*
+        //Maybe add support for calling methods from the router?
+        this.app.get('/'+controllerName+'/:method',function(request,response){
+
+        });
+        */
+
     }
 
     var port = 3000;
@@ -125,16 +129,6 @@ Jake.prototype.saveJob = function(request, response){
     }
 
     this.jobEditor.saveJob(job,data,this.sendResponse.bind(this,response));
-};
-
-Jake.prototype.runJobManually = function(request, response){
-    var errors = this.functions.verifyRequiredPostFields(request.body,['job']);
-    if(errors !== ''){
-        this.sendError(response,errors);
-        return;
-    }
-    var job = request.body.job;
-    this.jobRunner.runJobManually(job,this.sendResponse.bind(this,response));
 };
 
 Jake.prototype.sendError = function(response, error){
