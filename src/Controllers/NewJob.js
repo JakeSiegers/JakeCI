@@ -1,7 +1,9 @@
 var fs = require('fs');
 var path = require('path');
 var mkdirp = require('mkdirp'); //A better folder creator.
-
+var Promise = require("bluebird");
+fs.mkdir = Promise.promisify(fs.mkdir);
+fs.writeFile = Promise.promisify(fs.writeFile);
 
 function NewJob(JakeCI){
     this.JakeCI = JakeCI;
@@ -18,35 +20,25 @@ NewJob.prototype.expressRequest = function(request, response){
 
     var sThis = this;
     var newJobFolder = path.join(this.JakeCI.config.jobPath,data.name);
+    var buildsFolder = path.join(this.JakeCI.config.jobPath,data.name,'builds');
+    var workspaceFolder = path.join(this.JakeCI.config.jobPath,data.name,'workspace');
+    
     fs.stat(newJobFolder, function(err, stats) {
         //Check if error defined and the error code is "not exists"
         if (err && err.code === 'ENOENT') {
-            mkdirp(newJobFolder,sThis.folderMade.bind(sThis,data,response));
+            fs.mkdir(newJobFolder)
+                .then(fs.mkdir(buildsFolder))
+                .then(fs.mkdir(workspaceFolder))
+                .then(fs.writeFile(path.join(sThis.JakeCI.config.jobPath,data.name,'config.json'), JSON.stringify(data)))
+                .then(function(){
+                    sThis.JakeCI.sendResponse(response,{jobName:data.name});
+                }).catch(function(e){
+                    sThis.JakeCI.sendError(response,e);
+                });
         } else {
             sThis.JakeCI.sendError(response,'Failed to create Job Folder (does it already exist?)');
         }
     });
-};
-
-NewJob.prototype.folderMade = function(data,response,error){
-    if(error){
-        this.JakeCI.sendError(response,'Failed to create Job Folder');
-        return false;
-    }
-    fs.writeFile(
-        path.join(this.JakeCI.config.jobPath,data.name,'config.json'),
-        JSON.stringify(data),
-        this.configFileWritten.bind(this,data,response)
-    );
-};
-
-NewJob.prototype.configFileWritten = function(data,response,error){
-    if(error){
-        this.JakeCI.sendError(response,'Failed to create and write to config.json');
-        return false;
-    }
-
-    this.JakeCI.sendResponse(response,{jobName:data.name});
 };
 
 module.exports = NewJob;

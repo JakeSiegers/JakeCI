@@ -1,6 +1,5 @@
-var util  = require('util'),
-    spawn = require('child_process').spawn,
-    parseArgs = require('minimist').argv;
+var spawn = require('child_process').spawn;
+var SVN = require('svn');
 
 function JobRunner(JakeCI){
     this.JakeCI = JakeCI;
@@ -17,6 +16,7 @@ JobRunner.prototype.startJob = function(response, data){
     }
 
     //var cmd = spawn('ls', ['-lh', '/usr']);
+    var 
     var cmd = spawn(program,programArgs);
 
     cmd.stdout.on('data', function (data) {

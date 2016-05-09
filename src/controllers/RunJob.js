@@ -11,7 +11,6 @@ RunJob.prototype.expressRequest = function(request, response){
     }
     var job = request.body.job;
 
-
     this.JakeCI.jobEditor.getJob(
         job,
         this.JakeCI.models['JobRunner'].startJob.bind(this,response)
