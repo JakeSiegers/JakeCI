@@ -13,7 +13,7 @@ RunJob.prototype.expressRequest = function(request, response){
 
     this.JakeCI.jobEditor.getJob(
         job,
-        this.JakeCI.models['JobRunner'].startJob.bind(this,response)
+        this.JakeCI.models['JobRunner'].addJobToQueue.bind(this.JakeCI.models['JobRunner'],response)
     );
 };
 

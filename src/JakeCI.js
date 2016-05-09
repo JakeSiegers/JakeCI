@@ -1,34 +1,42 @@
-var Express = require('express');
-var BodyParser = require('body-parser');
-var JobEditor = require('./JobEditor.js');
-var CredEditor = require('./CredEditor');
-var Functions = require('./Functions');
-var fs = require("fs");
-
-
 function Jake(){
+
+    //These will go away soon. And become controllers.
+    var JobEditor = require('./JobEditor.js');
+    var CredEditor = require('./CredEditor');
+    var Functions = require('./Functions');
+
     this.jobEditor = new JobEditor(this);
     this.credEditor = new CredEditor(this);
     this.functions = new Functions(this);
-    if (!fs.existsSync('./src/config.js')) {
+
+    //Standard Libraries are now baked into the core.
+    this.fs = require("fs");
+    this.path = require('path');
+    this.Promise = require("bluebird");
+    this.Promise.promisifyAll(this.fs);
+
+    if (!this.fs.existsSync('./src/config.js')) {
         throw "No config file found.";
     }
     this.config = require('./config');
 
     //Create Cred File
-    if (!fs.existsSync(this.config.credFile)){
-        fs.writeFileSync(this.config.credFile,'{}');
+    if (!this.fs.existsSync(this.config.credFile)){
+        this.fs.writeFileSync(this.config.credFile,'{}');
     }
 
     //Create Job Directory
-    if (!fs.existsSync(this.config.jobPath)){
-        fs.mkdirSync(this.config.jobPath);
+    if (!this.fs.existsSync(this.config.jobPath)){
+        this.fs.mkdirSync(this.config.jobPath);
     }
     this.initExpress();
 }
 
 Jake.prototype.initExpress = function () {
+    var Express = require('express');
     this.app = Express();
+
+    var BodyParser = require('body-parser');
 
     //to support JSON-encoded bodies
     this.app.use(BodyParser.json());
@@ -47,7 +55,7 @@ Jake.prototype.initExpress = function () {
     this.app.post('/addCred',this.credEditor.addCred.bind(this));
 
     //Loop Over Controller Folder for endpoints ~ ooh magic!
-    var controllerFiles = fs.readdirSync('./src/controllers');
+    var controllerFiles = this.fs.readdirSync('./src/controllers');
     this.controllers = {};
     for(var i=0;i<controllerFiles.length;i++){
         var fileName = controllerFiles[i];
@@ -65,7 +73,7 @@ Jake.prototype.initExpress = function () {
     }
 
     //Loop Over Controller Folder for endpoints ~ ooh magic!
-    var modelFiles = fs.readdirSync('./src/models');
+    var modelFiles = this.fs.readdirSync('./src/models');
     this.models = {};
     for(var i=0;i<modelFiles.length;i++){
         var modelFileName = modelFiles[i];
