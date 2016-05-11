@@ -31,22 +31,7 @@
             },
             "codeClass": null,
             "userConfig": {
-                "dataIndex": "credId",
-                "text": "ID",
-                "width": 80
-            },
-            "name": "MyColumn2",
-            "designerId": "8260b7db-df6a-4baa-b465-687c4c3fdaf7"
-        },
-        {
-            "type": "Ext.grid.column.Column",
-            "reference": {
-                "name": "columns",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "dataIndex": "credName",
+                "dataIndex": "cred",
                 "text": "Cred Name",
                 "width": 160
             },
@@ -283,24 +268,6 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "fn": "onRowEditingEdit",
-                        "implHandler": [
-                            "this.currentState = 'edit';"
-                        ],
-                        "name": "edit",
-                        "scope": "me"
-                    },
-                    "name": "onRowEditingEdit",
-                    "designerId": "e6e7b320-accd-4cf6-a13f-1de76ad3c7a0"
-                },
-                {
-                    "type": "basiceventbinding",
-                    "reference": {
-                        "name": "listeners",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
                         "fn": "onRowEditingCanceledit",
                         "implHandler": [
                             "var record = context.record;",
@@ -329,13 +296,40 @@
                             "//Don't try and edit anything else if we're already editing something!",
                             "if(this.getPlugin('credRowEditing').editing){",
                             "    return false;",
-                            "}"
+                            "}",
+                            "this.currentState = 'edit';"
                         ],
                         "name": "beforeedit",
                         "scope": "me"
                     },
                     "name": "onRowEditingBeforeEdit",
                     "designerId": "fb36868c-88e5-4e7b-9527-af06576b67b8"
+                },
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onRowEditingEdit",
+                        "implHandler": [
+                            "if(this.currentState == 'new'){",
+                            "    console.log(context);",
+                            "    if(context.newValues == context.originalValues){",
+                            "        return;",
+                            "    }",
+                            "    this.addCred(context.newValues);",
+                            "}else{",
+                            "    this.editCred();",
+                            "}"
+                        ],
+                        "name": "edit",
+                        "scope": "me"
+                    },
+                    "name": "onRowEditingEdit",
+                    "designerId": "7eaaf400-f614-4561-b960-8e9f63c7d7e5"
                 }
             ]
         },
@@ -347,13 +341,46 @@
             },
             "codeClass": null,
             "userConfig": {
+                "designer|params": [
+                    "data"
+                ],
                 "fn": "addCred",
                 "implHandler": [
-                    ""
+                    "this.mask('Adding...');",
+                    "AERP.Ajax.request({",
+                    "    url:'AddCred',",
+                    "    params:data,",
+                    "    success:function(reply){",
+                    "        this.unmask();",
+                    "        this.getStore().commitChanges();",
+                    "    },",
+                    "    failure:function(){",
+                    "        this.unmask();",
+                    "        this.getPlugin('credRowEditing').startEdit(0);",
+                    "        this.currentState = 'new';",
+                    "    },",
+                    "    scope:this",
+                    "});"
                 ]
             },
             "name": "addCred",
             "designerId": "8f041fdc-8e1b-41eb-86fa-3565f00b2896"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "editCred",
+                "implHandler": [
+                    ""
+                ]
+            },
+            "name": "editCred",
+            "designerId": "7ccaf76d-ff7a-4428-aa22-4d49ee452742"
         }
     ]
 }

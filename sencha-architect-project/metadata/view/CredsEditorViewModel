@@ -32,20 +32,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "name": "credId"
-                    },
-                    "name": "MyField6",
-                    "designerId": "51874dc4-baa1-4ec9-8697-bcd228db900a"
-                },
-                {
-                    "type": "Ext.data.field.Field",
-                    "reference": {
-                        "name": "fields",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "name": "credName"
+                        "name": "cred"
                     },
                     "name": "MyField9",
                     "designerId": "9ddca2ca-b71d-4076-8487-2e6f44de6dee"

@@ -2,18 +2,19 @@ function Jake(){
 
     //These will go away soon. And become controllers.
     var JobEditor = require('./JobEditor.js');
-    var CredEditor = require('./CredEditor');
     var Functions = require('./Functions');
 
     this.jobEditor = new JobEditor(this);
-    this.credEditor = new CredEditor(this);
     this.functions = new Functions(this);
 
     //Standard Libraries are now baked into the core.
     this.fs = require("fs");
     this.path = require('path');
     this.Promise = require("bluebird");
-    this.Promise.promisifyAll(this.fs);
+    this.Promise.promisifyAll(this.fs); //Way too much memory
+    //this.fs.mkdirAsync = this.Promise.promisify(this.fs.mkdir);
+    //this.fs.writeFileAsync = this.Promise.promisify(this.fs.writeFile);
+
 
     if (!this.fs.existsSync('./src/config.js')) {
         throw "No config file found.";
@@ -52,7 +53,6 @@ Jake.prototype.initExpress = function () {
     this.app.post('/getAllJobs',this.getAllJobs.bind(this));
     this.app.post('/getJob',this.getJob.bind(this));
     this.app.post('/saveJob',this.saveJob.bind(this));
-    this.app.post('/addCred',this.credEditor.addCred.bind(this));
 
     //Loop Over Controller Folder for endpoints ~ ooh magic!
     var controllerFiles = this.fs.readdirSync('./src/controllers');
@@ -147,6 +147,7 @@ Jake.prototype.saveJob = function(request, response){
 
     this.jobEditor.saveJob(job,data,this.sendResponse.bind(this,response));
 };
+
 
 Jake.prototype.sendError = function(response, error){
     response.send(JSON.stringify({

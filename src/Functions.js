@@ -22,4 +22,5 @@ Functions.prototype.commandParser = function(message) {
     return params;
 };
 
+
 module.exports = Functions;

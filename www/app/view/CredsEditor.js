@@ -42,14 +42,8 @@ Ext.define('JakeCI.view.CredsEditor', {
     columns: [
         {
             xtype: 'gridcolumn',
-            width: 80,
-            dataIndex: 'credId',
-            text: 'ID'
-        },
-        {
-            xtype: 'gridcolumn',
             width: 160,
-            dataIndex: 'credName',
+            dataIndex: 'cred',
             text: 'Cred Name',
             editor: {
                 xtype: 'textfield'
@@ -112,9 +106,9 @@ Ext.define('JakeCI.view.CredsEditor', {
             pluginId: 'credRowEditing',
             autoCancel: false,
             listeners: {
-                edit: 'onRowEditingEdit',
                 canceledit: 'onRowEditingCanceledit',
-                beforeedit: 'onRowEditingBeforeEdit'
+                beforeedit: 'onRowEditingBeforeEdit',
+                edit: 'onRowEditingEdit'
             }
         }
     ],
@@ -132,10 +126,6 @@ Ext.define('JakeCI.view.CredsEditor', {
         console.log('Program Delete Cred');
     },
 
-    onRowEditingEdit: function(editor, context, eOpts) {
-        this.currentState = 'edit';
-    },
-
     onRowEditingCanceledit: function(editor, context, eOpts) {
         var record = context.record;
         var rowIdx = context.rowIdx;
@@ -150,9 +140,40 @@ Ext.define('JakeCI.view.CredsEditor', {
         if(this.getPlugin('credRowEditing').editing){
             return false;
         }
+        this.currentState = 'edit';
     },
 
-    addCred: function() {
+    onRowEditingEdit: function(editor, context, eOpts) {
+        if(this.currentState == 'new'){
+            console.log(context);
+            if(context.newValues == context.originalValues){
+                return;
+            }
+            this.addCred(context.newValues);
+        }else{
+            this.editCred();
+        }
+    },
+
+    addCred: function(data) {
+        this.mask('Adding...');
+        AERP.Ajax.request({
+            url:'AddCred',
+            params:data,
+            success:function(reply){
+                this.unmask();
+                this.getStore().commitChanges();
+            },
+            failure:function(){
+                this.unmask();
+                this.getPlugin('credRowEditing').startEdit(0);
+                this.currentState = 'new';
+            },
+            scope:this
+        });
+    },
+
+    editCred: function() {
 
     }
 

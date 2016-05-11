@@ -300,9 +300,6 @@
             "id": "9a1966c2-5868-4fd5-b4be-bb93494271af",
             "cn": [
                 {
-                    "id": "8260b7db-df6a-4baa-b465-687c4c3fdaf7"
-                },
-                {
                     "id": "a99bd813-7313-4658-ada8-ca9b87dc4d26",
                     "cn": [
                         {
@@ -360,18 +357,21 @@
                     "id": "33ba3c90-320c-4c9d-a37f-c3fe00b2630d",
                     "cn": [
                         {
-                            "id": "e6e7b320-accd-4cf6-a13f-1de76ad3c7a0"
-                        },
-                        {
                             "id": "3e655a59-e946-48cc-8536-39badbdd249b"
                         },
                         {
                             "id": "fb36868c-88e5-4e7b-9527-af06576b67b8"
+                        },
+                        {
+                            "id": "7eaaf400-f614-4561-b960-8e9f63c7d7e5"
                         }
                     ]
                 },
                 {
                     "id": "8f041fdc-8e1b-41eb-86fa-3565f00b2896"
+                },
+                {
+                    "id": "7ccaf76d-ff7a-4428-aa22-4d49ee452742"
                 }
             ]
         },
@@ -381,9 +381,6 @@
                 {
                     "id": "6b000fb8-88df-4552-8856-2c7c69b0a124",
                     "cn": [
-                        {
-                            "id": "51874dc4-baa1-4ec9-8697-bcd228db900a"
-                        },
                         {
                             "id": "9ddca2ca-b71d-4076-8487-2e6f44de6dee"
                         },
@@ -424,8 +421,8 @@
         "topInstance": null
     },
     "inspectorState": {
-        "topInstance": "ab404ff4-4acc-4b7d-80b2-0a233db83bde",
-        "selectedInstance": "7e5b4880-4050-4a1d-876f-7bcfc154c393"
+        "topInstance": "9a1966c2-5868-4fd5-b4be-bb93494271af",
+        "selectedInstance": "8f041fdc-8e1b-41eb-86fa-3565f00b2896"
     },
     "editMode": "code",
     "userSettings": {

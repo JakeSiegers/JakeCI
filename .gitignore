@@ -2,5 +2,5 @@
 jobs/
 .gitignore
 /src/config.js
-/src/creds.js
+creds
 node_modules/
