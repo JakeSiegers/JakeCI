@@ -1,6 +1,5 @@
 .idea/
 jobs/
 .gitignore
-/src/config.js
 creds
 node_modules/
