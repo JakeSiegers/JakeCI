@@ -9,7 +9,7 @@ CredEditor.prototype.addCred = function(params){
         return;
     }
 
-    sThis = this;
+    var sThis = this;
     this.JakeCI.fs.readFileAsync(this.JakeCI.config.credFile,'utf8')
         .then(function(currentCreds) {
             currentCreds = JSON.parse(currentCreds);
@@ -26,15 +26,17 @@ CredEditor.prototype.addCred = function(params){
 
 };
 
-CredEditor.prototype.getAllCreds = function(){
-    sThis = this;
+CredEditor.prototype.getAllCreds = function(params){
+    var sThis = this;
     this.JakeCI.fs.readFileAsync(this.JakeCI.config.credFile,'utf8')
         .then(function(currentCreds) {
             currentCreds = JSON.parse(currentCreds);
             var credKeys = Object.keys(currentCreds);
+            var creds = [];
             for(var i=0;i<credKeys.length;i++){
-
+                creds.push(currentCreds[credKeys[i]]);
             }
+            params.success(creds);
         }).catch(function(e){
             params.error(e);
         });

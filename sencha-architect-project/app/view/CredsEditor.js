@@ -112,6 +112,9 @@ Ext.define('JakeCI.view.CredsEditor', {
             }
         }
     ],
+    listeners: {
+        render: 'onGridpanelRender'
+    },
 
     onButtonClick: function(button, e, eOpts) {
         if(this.getPlugin('credRowEditing').editing){
@@ -155,10 +158,23 @@ Ext.define('JakeCI.view.CredsEditor', {
         }
     },
 
+    onGridpanelRender: function(component, eOpts) {
+        AERP.Ajax.request({
+            url:'GetAllCreds',
+            success:function(){
+
+            },
+            failure:function(){
+
+            },
+            scope:this
+        });
+    },
+
     addCred: function(data) {
         this.mask('Adding...');
         AERP.Ajax.request({
-            url:'AddCred',
+            url:'GetAllCreds',
             params:data,
             success:function(reply){
                 this.unmask();

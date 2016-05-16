@@ -11,10 +11,10 @@ function Jake(){
     this.fs = require("fs");
     this.path = require('path');
     this.Promise = require("bluebird");
-    this.Promise.promisifyAll(this.fs); //Way too much memory
-    //this.fs.mkdirAsync = this.Promise.promisify(this.fs.mkdir);
-    //this.fs.writeFileAsync = this.Promise.promisify(this.fs.writeFile);
-
+    //this.Promise.promisifyAll(this.fs); //Way too much memory
+    this.fs.mkdirAsync = this.Promise.promisify(this.fs.mkdir);
+    this.fs.writeFileAsync = this.Promise.promisify(this.fs.writeFile);
+    this.fs.readFileAsync = this.Promise.promisify(this.fs.readFile);
 
     if (!this.fs.existsSync('./src/config.js')) {
         throw "No config file found.";

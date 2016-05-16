@@ -381,6 +381,33 @@
             },
             "name": "editCred",
             "designerId": "7ccaf76d-ff7a-4428-aa22-4d49ee452742"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onGridpanelRender",
+                "implHandler": [
+                    "AERP.Ajax.request({",
+                    "    url:'GetAllCreds',",
+                    "    success:function(){",
+                    "        ",
+                    "    },",
+                    "    failure:function(){",
+                    "",
+                    "    },",
+                    "    scope:this",
+                    "});"
+                ],
+                "name": "render",
+                "scope": "me"
+            },
+            "name": "onGridpanelRender",
+            "designerId": "f8fd12ed-dabc-450a-ae51-190cd066787f"
         }
     ]
 }
