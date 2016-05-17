@@ -1,5 +1,6 @@
 .idea/
 jobs/
 .gitignore
-creds
+creds.json
+appSettings.json
 node_modules/
