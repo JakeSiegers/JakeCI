@@ -23,14 +23,13 @@ Ext.define('JakeCI.view.JobForm', {
         'Ext.toolbar.Toolbar',
         'Ext.toolbar.Spacer',
         'Ext.form.FieldSet',
-        'Ext.form.field.ComboBox',
-        'Ext.form.field.TextArea'
+        'Ext.form.field.TextArea',
+        'Ext.form.field.ComboBox'
     ],
 
     viewModel: {
         type: 'jobform'
     },
-    height: 556,
     itemId: 'jobPanel',
     width: 629,
     bodyPadding: 10,
@@ -77,73 +76,101 @@ Ext.define('JakeCI.view.JobForm', {
                 {
                     xtype: 'textfield',
                     fieldLabel: 'Name',
+                    labelAlign: 'right',
                     name: 'name'
-                },
-                {
-                    xtype: 'container',
-                    margin: '0 0 5 0 ',
-                    width: 304,
-                    layout: {
-                        type: 'hbox',
-                        align: 'stretch'
-                    },
-                    items: [
-                        {
-                            xtype: 'combobox',
-                            flex: 1,
-                            maxWidth: 200,
-                            fieldLabel: 'Repo Type',
-                            name: 'repoType',
-                            editable: false,
-                            displayField: 'repoType',
-                            forceSelection: true,
-                            queryMode: 'local',
-                            valueField: 'repoType',
-                            bind: {
-                                store: '{RepoTypeStore}'
-                            }
-                        },
-                        {
-                            xtype: 'textfield',
-                            flex: 1,
-                            margin: '0 0 0 5',
-                            fieldLabel: 'Repo Url',
-                            name: 'repoUrl'
-                        }
-                    ]
                 },
                 {
                     xtype: 'textareafield',
                     fieldLabel: 'Description',
+                    labelAlign: 'right',
                     name: 'description'
+                }
+            ]
+        },
+        {
+            xtype: 'fieldset',
+            title: 'Source Control',
+            layout: {
+                type: 'vbox',
+                align: 'stretch'
+            },
+            items: [
+                {
+                    xtype: 'combobox',
+                    flex: 1,
+                    maxWidth: 200,
+                    fieldLabel: 'Repo Type',
+                    labelAlign: 'right',
+                    name: 'repoType',
+                    editable: false,
+                    displayField: 'repoType',
+                    forceSelection: true,
+                    queryMode: 'local',
+                    valueField: 'repoType',
+                    bind: {
+                        store: '{RepoTypeStore}'
+                    }
                 },
+                {
+                    xtype: 'textfield',
+                    flex: 1,
+                    fieldLabel: 'Repo Url',
+                    labelAlign: 'right',
+                    name: 'repoUrl'
+                },
+                {
+                    xtype: 'combobox',
+                    flex: 1,
+                    maxWidth: 400,
+                    fieldLabel: 'Credentials',
+                    labelAlign: 'right'
+                }
+            ]
+        },
+        {
+            xtype: 'fieldset',
+            title: 'Actions',
+            layout: {
+                type: 'vbox',
+                align: 'stretch'
+            },
+            items: [
                 {
                     xtype: 'textareafield',
                     fieldLabel: 'Exec',
+                    labelAlign: 'right',
                     name: 'exec'
                 }
             ]
         },
         {
             xtype: 'fieldset',
-            layout: 'form',
             title: 'Cron',
+            layout: {
+                type: 'vbox',
+                align: 'stretch'
+            },
             items: [
                 {
                     xtype: 'textfield',
                     fieldLabel: 'Cron Schedule',
+                    labelAlign: 'right',
                     name: 'cron'
                 }
             ]
         },
         {
             xtype: 'fieldset',
-            layout: 'form',
             title: 'Email',
+            layout: {
+                type: 'vbox',
+                align: 'stretch'
+            },
             items: [
                 {
                     xtype: 'textfield',
                     fieldLabel: 'Email',
+                    labelAlign: 'right',
                     name: 'email'
                 }
             ]

@@ -27,7 +27,6 @@ CredEditor.prototype.addCred = function(params){
 };
 
 CredEditor.prototype.getAllCreds = function(params){
-    var sThis = this;
     this.JakeCI.fs.readFileAsync(this.JakeCI.config.credFile,'utf8')
         .then(function(currentCreds) {
             currentCreds = JSON.parse(currentCreds);

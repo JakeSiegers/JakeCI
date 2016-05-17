@@ -9,7 +9,8 @@
         "bodyPadding": 10,
         "designer|userAlias": "jobform",
         "designer|userClassName": "JobForm",
-        "height": 556,
+        "frame": null,
+        "height": null,
         "itemId": "jobPanel",
         "title": "Job Details",
         "trackResetOnLoad": true,
@@ -222,72 +223,11 @@
                     "codeClass": null,
                     "userConfig": {
                         "fieldLabel": "Name",
+                        "labelAlign": "right",
                         "name": "name"
                     },
                     "name": "MyTextField1",
                     "designerId": "8fbddd71-582c-41e8-a9c4-947c923609b1"
-                },
-                {
-                    "type": "Ext.container.Container",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "container|align": "stretch",
-                        "layout": "hbox",
-                        "margin": "0 0 5 0 ",
-                        "width": 304
-                    },
-                    "name": "MyContainer3",
-                    "designerId": "7b5ed433-85dd-4e1f-8cf7-4c253388f2d1",
-                    "cn": [
-                        {
-                            "type": "Ext.form.field.ComboBox",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "displayField": "repoType",
-                                "editable": false,
-                                "fieldLabel": "Repo Type",
-                                "forceSelection": true,
-                                "layout|flex": 1,
-                                "maxWidth": 200,
-                                "name": "repoType",
-                                "queryMode": "local",
-                                "store": [
-                                    "{RepoTypeStore}"
-                                ],
-                                "valueField": "repoType",
-                                "width": null
-                            },
-                            "name": "MyComboBox",
-                            "configAlternates": {
-                                "store": "binding"
-                            },
-                            "designerId": "81f931f5-b9ed-4c90-a134-09e6153a29f8"
-                        },
-                        {
-                            "type": "Ext.form.field.Text",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "fieldLabel": "Repo Url",
-                                "layout|flex": 1,
-                                "margin": "0 0 0 5",
-                                "name": "repoUrl"
-                            },
-                            "name": "MyTextField3",
-                            "designerId": "362429cf-db6c-4e8e-b239-3be89214ebfb"
-                        }
-                    ]
                 },
                 {
                     "type": "Ext.form.field.TextArea",
@@ -298,11 +238,108 @@
                     "codeClass": null,
                     "userConfig": {
                         "fieldLabel": "Description",
+                        "labelAlign": "right",
                         "name": "description"
                     },
                     "name": "MyTextArea",
                     "designerId": "aa807449-3b18-4d7c-a669-fe190d2544bc"
+                }
+            ]
+        },
+        {
+            "type": "Ext.form.FieldSet",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "container|align": "stretch",
+                "layout": "vbox",
+                "title": "Source Control"
+            },
+            "name": "MyFieldSet1",
+            "designerId": "4353cc52-b285-48cf-9b21-59344fab1d0b",
+            "cn": [
+                {
+                    "type": "Ext.form.field.ComboBox",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "displayField": "repoType",
+                        "editable": false,
+                        "fieldLabel": "Repo Type",
+                        "forceSelection": true,
+                        "labelAlign": "right",
+                        "layout|flex": 1,
+                        "maxWidth": 200,
+                        "name": "repoType",
+                        "queryMode": "local",
+                        "store": [
+                            "{RepoTypeStore}"
+                        ],
+                        "valueField": "repoType",
+                        "width": null
+                    },
+                    "name": "MyComboBox",
+                    "configAlternates": {
+                        "store": "binding"
+                    },
+                    "designerId": "81f931f5-b9ed-4c90-a134-09e6153a29f8"
                 },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Repo Url",
+                        "labelAlign": "right",
+                        "layout|flex": 1,
+                        "margin": null,
+                        "name": "repoUrl"
+                    },
+                    "name": "MyTextField3",
+                    "designerId": "362429cf-db6c-4e8e-b239-3be89214ebfb"
+                },
+                {
+                    "type": "Ext.form.field.ComboBox",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Credentials",
+                        "labelAlign": "right",
+                        "layout|flex": 1,
+                        "maxWidth": 400
+                    },
+                    "name": "MyComboBox1",
+                    "designerId": "1009ee85-dea1-4380-a20e-507b65d2fa2c"
+                }
+            ]
+        },
+        {
+            "type": "Ext.form.FieldSet",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "container|align": "stretch",
+                "layout": "vbox",
+                "title": "Actions"
+            },
+            "name": "MyFieldSet4",
+            "designerId": "c495e184-7611-48f9-98e6-1c5fe817453f",
+            "cn": [
                 {
                     "type": "Ext.form.field.TextArea",
                     "reference": {
@@ -312,6 +349,7 @@
                     "codeClass": null,
                     "userConfig": {
                         "fieldLabel": "Exec",
+                        "labelAlign": "right",
                         "name": "exec"
                     },
                     "name": "MyTextArea2",
@@ -327,7 +365,8 @@
             },
             "codeClass": null,
             "userConfig": {
-                "layout": "form",
+                "container|align": "stretch",
+                "layout": "vbox",
                 "title": "Cron"
             },
             "name": "MyFieldSet2",
@@ -342,6 +381,8 @@
                     "codeClass": null,
                     "userConfig": {
                         "fieldLabel": "Cron Schedule",
+                        "labelAlign": "right",
+                        "labelWidth": null,
                         "name": "cron"
                     },
                     "name": "MyTextField4",
@@ -357,7 +398,8 @@
             },
             "codeClass": null,
             "userConfig": {
-                "layout": "form",
+                "container|align": "stretch",
+                "layout": "vbox",
                 "title": "Email"
             },
             "name": "MyFieldSet3",
@@ -372,6 +414,8 @@
                     "codeClass": null,
                     "userConfig": {
                         "fieldLabel": "Email",
+                        "labelAlign": "right",
+                        "labelWidth": null,
                         "name": "email"
                     },
                     "name": "MyTextField2",

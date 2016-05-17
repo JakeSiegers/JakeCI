@@ -32,6 +32,7 @@ Ext.define('JakeCI.view.Settings', {
     width: 626,
     bodyPadding: 10,
     title: '',
+    trackResetOnLoad: true,
     defaultListenerScope: true,
 
     dockedItems: [
@@ -42,6 +43,13 @@ Ext.define('JakeCI.view.Settings', {
                 {
                     xtype: 'button',
                     text: '<i class="fa fa-floppy-o"></i> Save'
+                },
+                {
+                    xtype: 'button',
+                    text: 'Edit Creds',
+                    listeners: {
+                        click: 'onButtonClick'
+                    }
                 }
             ]
         }
@@ -51,18 +59,29 @@ Ext.define('JakeCI.view.Settings', {
             xtype: 'textfield',
             anchor: '100%',
             fieldLabel: 'Default Email'
-        },
-        {
-            xtype: 'button',
-            text: 'Edit Creds',
-            listeners: {
-                click: 'onButtonClick'
-            }
         }
     ],
+    listeners: {
+        render: 'onSettingsPanelRender'
+    },
 
     onButtonClick: function(button, e, eOpts) {
         this.fireEvent('showcredwindow');
+    },
+
+    onSettingsPanelRender: function(component, eOpts) {
+        this.mask('Loading Settings...');
+        AERP.Ajax.request({
+            url:'GetSettings',
+            success:function(reply){
+                this.getForm().setValues(reply.data);
+                this.unmask();
+            },
+            failure:function(){
+                this.unmask();
+            },
+            scope:this
+        });
     }
 
 });

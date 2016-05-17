@@ -21,6 +21,11 @@ function Jake(){
     }
     this.config = require('./config');
 
+    //Create Settings File
+    if (!this.fs.existsSync(this.config.settingsFile)){
+        this.fs.writeFileSync(this.config.settingsFile,'{}');
+    }
+
     //Create Cred File
     if (!this.fs.existsSync(this.config.credFile)){
         this.fs.writeFileSync(this.config.credFile,'{}');

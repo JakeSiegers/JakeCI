@@ -12,6 +12,7 @@
         "height": 369,
         "itemId": "settingsPanel",
         "title": "",
+        "trackResetOnLoad": true,
         "width": 626
     },
     "name": "MyForm4",
@@ -45,6 +46,40 @@
                     },
                     "name": "MyButton7",
                     "designerId": "73457c23-baab-43b4-8723-700284b9510e"
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": null,
+                        "text": "Edit Creds"
+                    },
+                    "name": "MyButton3",
+                    "designerId": "a8ebab26-3605-46ca-8bcf-87489fcf9d28",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onButtonClick",
+                                "implHandler": [
+                                    "this.fireEvent('showcredwindow');"
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "name": "onButtonClick",
+                            "designerId": "ca70ff1a-de8c-4ccb-a956-aebc5b606084"
+                        }
+                    ]
                 }
             ]
         },
@@ -63,37 +98,33 @@
             "designerId": "9dba7393-236f-4dee-8ffb-42c2b772cbec"
         },
         {
-            "type": "Ext.button.Button",
+            "type": "basiceventbinding",
             "reference": {
-                "name": "items",
+                "name": "listeners",
                 "type": "array"
             },
             "codeClass": null,
             "userConfig": {
-                "text": "Edit Creds"
+                "fn": "onSettingsPanelRender",
+                "implHandler": [
+                    "this.mask('Loading Settings...');",
+                    "AERP.Ajax.request({",
+                    "    url:'GetSettings',",
+                    "    success:function(reply){",
+                    "        this.getForm().setValues(reply.data);",
+                    "        this.unmask();",
+                    "    },",
+                    "    failure:function(){",
+                    "        this.unmask();",
+                    "    },",
+                    "    scope:this",
+                    "});"
+                ],
+                "name": "render",
+                "scope": "me"
             },
-            "name": "MyButton3",
-            "designerId": "a8ebab26-3605-46ca-8bcf-87489fcf9d28",
-            "cn": [
-                {
-                    "type": "basiceventbinding",
-                    "reference": {
-                        "name": "listeners",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "fn": "onButtonClick",
-                        "implHandler": [
-                            "this.fireEvent('showcredwindow');"
-                        ],
-                        "name": "click",
-                        "scope": "me"
-                    },
-                    "name": "onButtonClick",
-                    "designerId": "ca70ff1a-de8c-4ccb-a956-aebc5b606084"
-                }
-            ]
+            "name": "onSettingsPanelRender",
+            "designerId": "cd430514-0f88-4200-b045-8a31a01c762a"
         }
     ]
 }

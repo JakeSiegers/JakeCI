@@ -122,13 +122,13 @@
                             "store",
                             "view"
                         ],
-                        "fn": "editRenderer",
+                        "fn": "renderer",
                         "implHandler": [
-                            "return \"[Hidden]\";"
+                            "return Array(value.length+1).join(\"*\");"
                         ]
                     },
-                    "name": "editRenderer",
-                    "designerId": "ac02547b-a336-4883-b7b8-a98d6c655ebe"
+                    "name": "renderer",
+                    "designerId": "58c27e17-50e6-449c-8d73-39860b8f930a"
                 }
             ]
         },
@@ -383,6 +383,31 @@
             "designerId": "7ccaf76d-ff7a-4428-aa22-4d49ee452742"
         },
         {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "loadCreds",
+                "implHandler": [
+                    "AERP.Ajax.request({",
+                    "    url:'GetAllCreds',",
+                    "    success:function(reply){",
+                    "        this.lookupViewModel().getStore('CredStore').setData(reply.data);",
+                    "    },",
+                    "    failure:function(){",
+                    "",
+                    "    },",
+                    "    scope:this",
+                    "});"
+                ]
+            },
+            "name": "loadCreds",
+            "designerId": "d0d6a33a-3eff-4a82-8806-e35643a5f846"
+        },
+        {
             "type": "basiceventbinding",
             "reference": {
                 "name": "listeners",
@@ -392,16 +417,7 @@
             "userConfig": {
                 "fn": "onGridpanelRender",
                 "implHandler": [
-                    "AERP.Ajax.request({",
-                    "    url:'GetAllCreds',",
-                    "    success:function(){",
-                    "        ",
-                    "    },",
-                    "    failure:function(){",
-                    "",
-                    "    },",
-                    "    scope:this",
-                    "});"
+                    "this.loadCreds();"
                 ],
                 "name": "render",
                 "scope": "me"

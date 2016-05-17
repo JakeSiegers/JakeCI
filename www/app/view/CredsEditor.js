@@ -60,11 +60,11 @@ Ext.define('JakeCI.view.CredsEditor', {
         },
         {
             xtype: 'gridcolumn',
-            editRenderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                return "[Hidden]";
+            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                return Array(value.length+1).join("*");
             },
-            width: 212,
             dataIndex: 'password',
+            width: 212,
             text: 'Password',
             editor: {
                 xtype: 'textfield'
@@ -159,22 +159,13 @@ Ext.define('JakeCI.view.CredsEditor', {
     },
 
     onGridpanelRender: function(component, eOpts) {
-        AERP.Ajax.request({
-            url:'getAllCreds',
-            success:function(){
-
-            },
-            failure:function(){
-
-            },
-            scope:this
-        });
+        this.loadCreds();
     },
 
     addCred: function(data) {
         this.mask('Adding...');
         AERP.Ajax.request({
-            url:'GetAllCreds',
+            url:'AddCred',
             params:data,
             success:function(reply){
                 this.unmask();
@@ -191,6 +182,19 @@ Ext.define('JakeCI.view.CredsEditor', {
 
     editCred: function() {
 
+    },
+
+    loadCreds: function() {
+        AERP.Ajax.request({
+            url:'GetAllCreds',
+            success:function(reply){
+                this.lookupViewModel().getStore('CredStore').setData(reply.data);
+            },
+            failure:function(){
+
+            },
+            scope:this
+        });
     }
 
 });

@@ -1,4 +1,5 @@
 module.exports = {
     jobPath:'./jobs',
-    credFile:'creds'
+    credFile:'creds.json',
+    settingsFile:'appSettings.json'
 };
