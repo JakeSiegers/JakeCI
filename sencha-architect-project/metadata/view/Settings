@@ -45,7 +45,40 @@
                         "text": "<i class=\"fa fa-floppy-o\"></i> Save"
                     },
                     "name": "MyButton7",
-                    "designerId": "73457c23-baab-43b4-8723-700284b9510e"
+                    "designerId": "73457c23-baab-43b4-8723-700284b9510e",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onButtonClick1",
+                                "implHandler": [
+                                    "this.saveSettings();"
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "name": "onButtonClick1",
+                            "designerId": "0c792bc6-bbf1-4975-9623-d336f4a00f10"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.toolbar.Spacer",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": 1
+                    },
+                    "name": "MySpacer1",
+                    "designerId": "f7efba62-d536-4229-a98b-3494e9b54d19"
                 },
                 {
                     "type": "Ext.button.Button",
@@ -91,8 +124,10 @@
             },
             "codeClass": null,
             "userConfig": {
+                "designer|displayName": null,
                 "fieldLabel": "Default Email",
-                "layout|anchor": "100%"
+                "layout|anchor": "100%",
+                "name": "defaultEmail"
             },
             "name": "MyTextField",
             "designerId": "9dba7393-236f-4dee-8ffb-42c2b772cbec"
@@ -107,6 +142,24 @@
             "userConfig": {
                 "fn": "onSettingsPanelRender",
                 "implHandler": [
+                    "this.loadSettings();"
+                ],
+                "name": "render",
+                "scope": "me"
+            },
+            "name": "onSettingsPanelRender",
+            "designerId": "cd430514-0f88-4200-b045-8a31a01c762a"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "loadSettings",
+                "implHandler": [
                     "this.mask('Loading Settings...');",
                     "AERP.Ajax.request({",
                     "    url:'GetSettings',",
@@ -119,12 +172,38 @@
                     "    },",
                     "    scope:this",
                     "});"
-                ],
-                "name": "render",
-                "scope": "me"
+                ]
             },
-            "name": "onSettingsPanelRender",
-            "designerId": "cd430514-0f88-4200-b045-8a31a01c762a"
+            "name": "loadSettings",
+            "designerId": "e33a3c5e-a306-4b4a-9f2a-33c029b04894"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "saveSettings",
+                "implHandler": [
+                    "this.mask('Saving...');",
+                    "AERP.Ajax.request({",
+                    "    url:'SaveSettings',",
+                    "    params:this.getForm().getValues(false,false,true,false),",
+                    "    success:function(reply){",
+                    "        this.getForm().setValues(reply.data);",
+                    "        this.unmask();",
+                    "    },",
+                    "    failure:function(){",
+                    "        this.unmask();",
+                    "    },",
+                    "    scope:this",
+                    "});"
+                ]
+            },
+            "name": "saveSettings",
+            "designerId": "8540df55-b723-4960-bab6-a1b2fa36bb5b"
         }
     ]
 }

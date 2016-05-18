@@ -149,6 +149,9 @@ Ext.define('JakeCI.view.JakeCI', {
                     },
                     savejob:function(){
                         this.getAllJobs();
+                    },
+                    showcredwindow:function(){
+                        this.showCredWindow();
                     }
                 }
             });

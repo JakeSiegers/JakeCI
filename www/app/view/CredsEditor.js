@@ -63,8 +63,8 @@ Ext.define('JakeCI.view.CredsEditor', {
             renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                 return Array(value.length+1).join("*");
             },
-            dataIndex: 'password',
             width: 212,
+            dataIndex: 'password',
             text: 'Password',
             editor: {
                 xtype: 'textfield'

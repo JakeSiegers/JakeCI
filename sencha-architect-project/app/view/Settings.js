@@ -21,6 +21,7 @@ Ext.define('JakeCI.view.Settings', {
         'JakeCI.view.SettingsViewModel',
         'Ext.toolbar.Toolbar',
         'Ext.button.Button',
+        'Ext.toolbar.Spacer',
         'Ext.form.field.Text'
     ],
 
@@ -42,7 +43,14 @@ Ext.define('JakeCI.view.Settings', {
             items: [
                 {
                     xtype: 'button',
-                    text: '<i class="fa fa-floppy-o"></i> Save'
+                    text: '<i class="fa fa-floppy-o"></i> Save',
+                    listeners: {
+                        click: 'onButtonClick1'
+                    }
+                },
+                {
+                    xtype: 'tbspacer',
+                    flex: 1
                 },
                 {
                     xtype: 'button',
@@ -58,11 +66,16 @@ Ext.define('JakeCI.view.Settings', {
         {
             xtype: 'textfield',
             anchor: '100%',
-            fieldLabel: 'Default Email'
+            fieldLabel: 'Default Email',
+            name: 'defaultEmail'
         }
     ],
     listeners: {
         render: 'onSettingsPanelRender'
+    },
+
+    onButtonClick1: function(button, e, eOpts) {
+        this.saveSettings();
     },
 
     onButtonClick: function(button, e, eOpts) {
@@ -70,9 +83,29 @@ Ext.define('JakeCI.view.Settings', {
     },
 
     onSettingsPanelRender: function(component, eOpts) {
+        this.loadSettings();
+    },
+
+    loadSettings: function() {
         this.mask('Loading Settings...');
         AERP.Ajax.request({
             url:'GetSettings',
+            success:function(reply){
+                this.getForm().setValues(reply.data);
+                this.unmask();
+            },
+            failure:function(){
+                this.unmask();
+            },
+            scope:this
+        });
+    },
+
+    saveSettings: function() {
+        this.mask('Saving...');
+        AERP.Ajax.request({
+            url:'SaveSettings',
+            params:this.getForm().getValues(false,false,true,false),
             success:function(reply){
                 this.getForm().setValues(reply.data);
                 this.unmask();

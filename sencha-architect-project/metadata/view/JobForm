@@ -308,20 +308,84 @@
                     "designerId": "362429cf-db6c-4e8e-b239-3be89214ebfb"
                 },
                 {
-                    "type": "Ext.form.field.ComboBox",
+                    "type": "Ext.container.Container",
                     "reference": {
                         "name": "items",
                         "type": "array"
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "fieldLabel": "Credentials",
-                        "labelAlign": "right",
+                        "container|align": "stretch",
+                        "layout": "hbox",
                         "layout|flex": 1,
-                        "maxWidth": 400
+                        "margin": "0 0 5 0"
                     },
-                    "name": "MyComboBox1",
-                    "designerId": "1009ee85-dea1-4380-a20e-507b65d2fa2c"
+                    "name": "MyContainer3",
+                    "designerId": "00f6becc-03ac-4a7b-85dd-1899e5548071",
+                    "cn": [
+                        {
+                            "type": "Ext.form.field.ComboBox",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "displayField": "cred",
+                                "editable": false,
+                                "fieldLabel": "Credentials",
+                                "forceSelection": true,
+                                "labelAlign": "right",
+                                "layout|flex": 1,
+                                "maxWidth": null,
+                                "queryMode": "local",
+                                "store": [
+                                    "{CredStore}"
+                                ],
+                                "valueField": "cred"
+                            },
+                            "name": "MyComboBox1",
+                            "configAlternates": {
+                                "store": "binding"
+                            },
+                            "designerId": "1009ee85-dea1-4380-a20e-507b65d2fa2c"
+                        },
+                        {
+                            "type": "Ext.button.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "layout|flex": null,
+                                "margin": "0 0 0 5",
+                                "text": "Edit Creds"
+                            },
+                            "name": "MyButton4",
+                            "designerId": "d8322287-45cf-4ab0-8133-90284c1f1f57",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onButtonClick",
+                                        "implHandler": [
+                                            "this.fireEvent('showcredwindow');"
+                                        ],
+                                        "name": "click",
+                                        "scope": "me"
+                                    },
+                                    "name": "onButtonClick",
+                                    "designerId": "ed580a02-167b-48ec-9498-a302404f48c0"
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         },
@@ -592,6 +656,49 @@
             },
             "name": "setState",
             "designerId": "66ae136e-b9da-4539-8082-202b0e4936c2"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "loadCreds",
+                "implHandler": [
+                    "AERP.Ajax.request({",
+                    "    url:'GetAllCreds',",
+                    "    success:function(reply){",
+                    "        this.lookupViewModel().getStore('CredStore').setData(reply.data);",
+                    "    },",
+                    "    failure:function(){",
+                    "",
+                    "    },",
+                    "    scope:this",
+                    "});"
+                ]
+            },
+            "name": "loadCreds",
+            "designerId": "10d7bcd6-44b8-4dfe-b3e9-3f5af9bd1436"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onJobPanelRender",
+                "implHandler": [
+                    "this.loadCreds();"
+                ],
+                "name": "render",
+                "scope": "me"
+            },
+            "name": "onJobPanelRender",
+            "designerId": "f54bdc49-b406-43eb-8523-084a601322c0"
         }
     ]
 }

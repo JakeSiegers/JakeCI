@@ -37,6 +37,19 @@ Ext.define('JakeCI.view.JobFormViewModel', {
                     name: 'repoType'
                 }
             ]
+        },
+        CredStore: {
+            fields: [
+                {
+                    name: 'cred'
+                },
+                {
+                    name: 'username'
+                },
+                {
+                    name: 'password'
+                }
+            ]
         }
     }
 

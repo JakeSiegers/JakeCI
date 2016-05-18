@@ -119,11 +119,37 @@ Ext.define('JakeCI.view.JobForm', {
                     name: 'repoUrl'
                 },
                 {
-                    xtype: 'combobox',
+                    xtype: 'container',
                     flex: 1,
-                    maxWidth: 400,
-                    fieldLabel: 'Credentials',
-                    labelAlign: 'right'
+                    margin: '0 0 5 0',
+                    layout: {
+                        type: 'hbox',
+                        align: 'stretch'
+                    },
+                    items: [
+                        {
+                            xtype: 'combobox',
+                            flex: 1,
+                            fieldLabel: 'Credentials',
+                            labelAlign: 'right',
+                            editable: false,
+                            displayField: 'cred',
+                            forceSelection: true,
+                            queryMode: 'local',
+                            valueField: 'cred',
+                            bind: {
+                                store: '{CredStore}'
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            margin: '0 0 0 5',
+                            text: 'Edit Creds',
+                            listeners: {
+                                click: 'onButtonClick'
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -204,6 +230,9 @@ Ext.define('JakeCI.view.JobForm', {
             ]
         }
     ],
+    listeners: {
+        render: 'onJobPanelRender'
+    },
 
     onExecuteJobBtnClick: function(button, e, eOpts) {
         this.runLoadedJob();
@@ -215,6 +244,14 @@ Ext.define('JakeCI.view.JobForm', {
 
     onButtonClick41: function(button, e, eOpts) {
         this.addNewJob();
+    },
+
+    onButtonClick: function(button, e, eOpts) {
+        this.fireEvent('showcredwindow');
+    },
+
+    onJobPanelRender: function(component, eOpts) {
+        this.loadCreds();
     },
 
     loadJob: function(jobName) {
@@ -319,6 +356,19 @@ Ext.define('JakeCI.view.JobForm', {
                 saveJobBtn.show();
                 break;
         }
+    },
+
+    loadCreds: function() {
+        AERP.Ajax.request({
+            url:'GetAllCreds',
+            success:function(reply){
+                this.lookupViewModel().getStore('CredStore').setData(reply.data);
+            },
+            failure:function(){
+
+            },
+            scope:this
+        });
     }
 
 });

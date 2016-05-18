@@ -15,6 +15,7 @@ function Jake(){
     this.fs.mkdirAsync = this.Promise.promisify(this.fs.mkdir);
     this.fs.writeFileAsync = this.Promise.promisify(this.fs.writeFile);
     this.fs.readFileAsync = this.Promise.promisify(this.fs.readFile);
+    this.fs.statAsync = this.Promise.promisify(this.fs.stat);
 
     if (!this.fs.existsSync('./src/config.js')) {
         throw "No config file found.";
