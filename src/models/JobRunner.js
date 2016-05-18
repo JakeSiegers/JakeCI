@@ -1,8 +1,6 @@
 var spawn = require('child_process').spawn;
 var SVN = require('svn');
 
-
-
 function JobRunner(JakeCI){
     this.JakeCI = JakeCI;
     this.jobsQueue = [];
