@@ -58,7 +58,7 @@
                     "designerId": "41c26bc4-3bc8-43c4-9f92-20b0048e3c21"
                 },
                 {
-                    "type": "Ext.grid.column.Date",
+                    "type": "Ext.grid.column.Column",
                     "reference": {
                         "name": "columns",
                         "type": "array"
@@ -69,11 +69,11 @@
                         "text": "Last Run",
                         "width": 198
                     },
-                    "name": "MyDateColumn1",
+                    "name": "MyColumn6",
                     "designerId": "1509ab9e-714d-4a56-b7c5-9b3b6124c4e2"
                 },
                 {
-                    "type": "Ext.grid.column.Date",
+                    "type": "Ext.grid.column.Column",
                     "reference": {
                         "name": "columns",
                         "type": "array"
@@ -84,7 +84,7 @@
                         "text": "Last Error",
                         "width": 249
                     },
-                    "name": "MyDateColumn",
+                    "name": "MyColumn2",
                     "designerId": "b5188c34-a0c5-4f34-83a2-f036b39b82e0"
                 },
                 {
@@ -231,10 +231,10 @@
                     "this.mask(\"Loading Jobs...\");",
                     "",
                     "AERP.Ajax.request({",
-                    "    url:'getAllJobs',",
+                    "    url:'/Job/getAllJobs',",
                     "    success:function(result){",
                     "        this.unmask();",
-                    "        this.lookupViewModel().getStore('JobStore').loadData(result.jobs);",
+                    "        this.lookupViewModel().getStore('JobStore').loadData(result.data);",
                     "    },",
                     "    failure:function(){",
                     "        this.unmask();",

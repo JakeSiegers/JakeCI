@@ -10,14 +10,12 @@ function JobRunner(JakeCI){
     this.activeJobLimit = 1;
 }
 
-JobRunner.prototype.addJobToQueue = function(response, data){
-    this.jobsQueue.push(data);
-    console.log('Added "'+data.name+'" to queue');
+JobRunner.prototype.addJobToQueue = function(params){
+    this.jobsQueue.push(params.job);
+    console.log('Added "'+params.job+'" to queue');
     this.checkToStartANewJob();
-
-    this.JakeCI.sendResponse(response,'Job Queued');
+    params.success('Job Queued');
 };
-
 
 JobRunner.prototype.checkToStartANewJob = function(){
     if(Object.keys(this.activeJobs).length>=this.activeJobLimit     //We're at max consecutive jobs

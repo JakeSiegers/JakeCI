@@ -2,6 +2,28 @@ function Job(JakeCI){
     this.JakeCI = JakeCI;
 }
 
+Job.prototype.getAllJobs = function(request, response){
+    this.JakeCI.models['JobEditor'].getAllJobs({
+        success:function(jobs){
+            var formattedJobs = [];
+            for(var i=0;i<jobs.length;i++){
+                formattedJobs.push([
+                    jobs[i].name,
+                    jobs[i].description,
+                    jobs[i].exec,
+                    "lastRun??",
+                    "lastFailure??"
+                ]);
+            }
+            this.JakeCI.sendResponse(response,formattedJobs);
+        },
+        error:function(error){
+            this.JakeCI.sendError(response,error);
+        },
+        scope:this
+    });
+};
+
 Job.prototype.newJob = function(request, response){
 
     var errors = this.JakeCI.functions.verifyRequiredPostFields(request.body,['name']);
@@ -45,10 +67,12 @@ Job.prototype.runJob = function(request, response){
     }
     var job = request.body.job;
 
-    this.JakeCI.jobEditor.getJob(
-        job,
-        this.JakeCI.models['JobRunner'].addJobToQueue.bind(this.JakeCI.models['JobRunner'],response)
-    );
+    this.JakeCI.models['JobRunner'].addJobToQueue({
+        job:job,
+        success:this.JakeCI.sendResponse.bind(this.JakeCI,response),
+        error:this.JakeCI.sendError.bind(this.JakeCI,response)
+    });
+
 };
 
 module.exports = Job;

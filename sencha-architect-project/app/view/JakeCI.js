@@ -20,7 +20,7 @@ Ext.define('JakeCI.view.JakeCI', {
     requires: [
         'JakeCI.view.JakeCIViewModel',
         'Ext.grid.Panel',
-        'Ext.grid.column.Date',
+        'Ext.grid.column.Column',
         'Ext.view.Table',
         'Ext.toolbar.Toolbar',
         'Ext.button.Button',
@@ -58,13 +58,13 @@ Ext.define('JakeCI.view.JakeCI', {
                     text: 'Job Name'
                 },
                 {
-                    xtype: 'datecolumn',
+                    xtype: 'gridcolumn',
                     width: 198,
                     dataIndex: 'lastRun',
                     text: 'Last Run'
                 },
                 {
-                    xtype: 'datecolumn',
+                    xtype: 'gridcolumn',
                     width: 249,
                     dataIndex: 'lastRunError',
                     text: 'Last Error'
@@ -127,10 +127,10 @@ Ext.define('JakeCI.view.JakeCI', {
         this.mask("Loading Jobs...");
 
         AERP.Ajax.request({
-            url:'getAllJobs',
+            url:'/Job/getAllJobs',
             success:function(result){
                 this.unmask();
-                this.lookupViewModel().getStore('JobStore').loadData(result.jobs);
+                this.lookupViewModel().getStore('JobStore').loadData(result.data);
             },
             failure:function(){
                 this.unmask();

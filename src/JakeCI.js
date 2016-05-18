@@ -12,10 +12,12 @@ function Jake(){
     this.path = require('path');
     this.Promise = require("bluebird");
     //this.Promise.promisifyAll(this.fs); //Way too much memory
+    this.fs.readdirAsync = this.Promise.promisify(this.fs.readdir);
     this.fs.mkdirAsync = this.Promise.promisify(this.fs.mkdir);
     this.fs.writeFileAsync = this.Promise.promisify(this.fs.writeFile);
     this.fs.readFileAsync = this.Promise.promisify(this.fs.readFile);
     this.fs.statAsync = this.Promise.promisify(this.fs.stat);
+    this.fs.accessAsync = this.Promise.promisify(this.fs.access);
 
     if (!this.fs.existsSync('./src/config.js')) {
         throw "No config file found.";
@@ -56,7 +58,6 @@ Jake.prototype.initExpress = function () {
     this.app.use('/',Express.static(__dirname + '/../www'));
 
     //Post Endpoints
-    this.app.post('/getAllJobs',this.getAllJobs.bind(this));
     this.app.post('/getJob',this.getJob.bind(this));
     this.app.post('/saveJob',this.saveJob.bind(this));
 
@@ -107,15 +108,6 @@ Jake.prototype.initExpress = function () {
         );
         sThis.error(error);
     });
-};
-
-Jake.prototype.getAllJobs = function(request, response){
-    var jobs = this.jobEditor.getAllJobs();
-    
-    response.send(JSON.stringify({
-        success:true,
-        jobs:this.convertJobObjectArrayIntoRawArray(jobs)
-    }));
 };
 
 Jake.prototype.getJob = function(request, response){
@@ -171,18 +163,6 @@ Jake.prototype.sendResponse = function(response, data){
         success: true,
         data: data
     }));
-};
-
-Jake.prototype.convertJobObjectArrayIntoRawArray = function(jobs){
-    var allJobs = [];
-    for(var i=0;i<jobs.length;i++){
-        var job = [];
-        for(var jobKey in jobs[i]) {
-            job.push(jobs[i][jobKey]);
-        }
-        allJobs.push(job);
-    }
-    return allJobs;
 };
 
 Jake.prototype.error = function(error){
