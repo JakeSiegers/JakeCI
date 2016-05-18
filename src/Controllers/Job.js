@@ -1,8 +1,8 @@
-function NewJob(JakeCI){
+function Job(JakeCI){
     this.JakeCI = JakeCI;
 }
 
-NewJob.prototype.expressRequest = function(request, response){
+Job.prototype.newJob = function(request, response){
 
     var errors = this.JakeCI.functions.verifyRequiredPostFields(request.body,['name']);
     if(errors !== ''){
@@ -36,4 +36,19 @@ NewJob.prototype.expressRequest = function(request, response){
     });
 };
 
-module.exports = NewJob;
+Job.prototype.runJob = function(request, response){
+
+    var errors = this.JakeCI.functions.verifyRequiredPostFields(request.body,['job']);
+    if(errors !== ''){
+        this.JakeCI.sendError(response,errors);
+        return;
+    }
+    var job = request.body.job;
+
+    this.JakeCI.jobEditor.getJob(
+        job,
+        this.JakeCI.models['JobRunner'].addJobToQueue.bind(this.JakeCI.models['JobRunner'],response)
+    );
+};
+
+module.exports = Job;

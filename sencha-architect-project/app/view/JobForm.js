@@ -278,7 +278,7 @@ Ext.define('JakeCI.view.JobForm', {
         this.mask("Adding New Job...");
 
         AERP.Ajax.request({
-            url:'NewJob',
+            url:'/Job/newJob',
             params:this.getValues(false,false,true,true), //[asString], [dirtyOnly], [includeEmptyText], [useDataValues]
             success:function(reply){
                 this.unmask();
@@ -316,7 +316,7 @@ Ext.define('JakeCI.view.JobForm', {
     runLoadedJob: function() {
         this.mask('Starting Job...');
         AERP.Ajax.request({
-            url:'RunJob',
+            url:'/Job/runJob',
             params:{
                 job:this.currentJob,
             },
@@ -360,7 +360,7 @@ Ext.define('JakeCI.view.JobForm', {
 
     loadCreds: function() {
         AERP.Ajax.request({
-            url:'GetAllCreds',
+            url:'/Creds/getAllCreds',
             success:function(reply){
                 this.lookupViewModel().getStore('CredStore').setData(reply.data);
             },

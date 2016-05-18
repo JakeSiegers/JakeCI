@@ -165,7 +165,7 @@ Ext.define('JakeCI.view.CredsEditor', {
     addCred: function(data) {
         this.mask('Adding...');
         AERP.Ajax.request({
-            url:'AddCred',
+            url:'/Creds/addCred',
             params:data,
             success:function(reply){
                 this.unmask();
@@ -186,7 +186,7 @@ Ext.define('JakeCI.view.CredsEditor', {
 
     loadCreds: function() {
         AERP.Ajax.request({
-            url:'GetAllCreds',
+            url:'/Creds/getAllCreds',
             success:function(reply){
                 this.lookupViewModel().getStore('CredStore').setData(reply.data);
             },

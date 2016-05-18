@@ -535,7 +535,7 @@
                     "this.mask(\"Adding New Job...\");",
                     "",
                     "AERP.Ajax.request({",
-                    "    url:'NewJob',",
+                    "    url:'/Job/newJob',",
                     "    params:this.getValues(false,false,true,true), //[asString], [dirtyOnly], [includeEmptyText], [useDataValues]",
                     "    success:function(reply){",
                     "        this.unmask();",
@@ -597,7 +597,7 @@
                 "implHandler": [
                     "this.mask('Starting Job...');",
                     "AERP.Ajax.request({",
-                    "    url:'RunJob',",
+                    "    url:'/Job/runJob',",
                     "    params:{",
                     "        job:this.currentJob,",
                     "    },",
@@ -668,7 +668,7 @@
                 "fn": "loadCreds",
                 "implHandler": [
                     "AERP.Ajax.request({",
-                    "    url:'GetAllCreds',",
+                    "    url:'/Creds/getAllCreds',",
                     "    success:function(reply){",
                     "        this.lookupViewModel().getStore('CredStore').setData(reply.data);",
                     "    },",

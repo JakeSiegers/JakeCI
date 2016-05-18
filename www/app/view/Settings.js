@@ -89,7 +89,7 @@ Ext.define('JakeCI.view.Settings', {
     loadSettings: function() {
         this.mask('Loading Settings...');
         AERP.Ajax.request({
-            url:'GetSettings',
+            url:'/Settings/getAllSettings',
             success:function(reply){
                 this.getForm().setValues(reply.data);
                 this.unmask();
@@ -104,7 +104,7 @@ Ext.define('JakeCI.view.Settings', {
     saveSettings: function() {
         this.mask('Saving...');
         AERP.Ajax.request({
-            url:'SaveSettings',
+            url:'/Settings/saveSettings',
             params:this.getForm().getValues(false,false,true,false),
             success:function(reply){
                 this.getForm().setValues(reply.data);

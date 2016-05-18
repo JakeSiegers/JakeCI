@@ -348,7 +348,7 @@
                 "implHandler": [
                     "this.mask('Adding...');",
                     "AERP.Ajax.request({",
-                    "    url:'AddCred',",
+                    "    url:'/Creds/addCred',",
                     "    params:data,",
                     "    success:function(reply){",
                     "        this.unmask();",
@@ -393,7 +393,7 @@
                 "fn": "loadCreds",
                 "implHandler": [
                     "AERP.Ajax.request({",
-                    "    url:'GetAllCreds',",
+                    "    url:'/Creds/getAllCreds',",
                     "    success:function(reply){",
                     "        this.lookupViewModel().getStore('CredStore').setData(reply.data);",
                     "    },",

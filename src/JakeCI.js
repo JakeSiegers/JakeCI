@@ -68,16 +68,19 @@ Jake.prototype.initExpress = function () {
         var controllerName = fileName.substring(0,fileName.indexOf("."));
         var cls = require('./controllers/'+controllerName);
         this.controllers[controllerName] = new cls(this);
-        this.app.post('/'+controllerName,this.controllers[controllerName].expressRequest.bind(this.controllers[controllerName]));
 
-        /*
-        //Maybe add support for calling methods from the router?
-        this.app.get('/'+controllerName+'/:method',function(request,response){
+        var controllerFunctions = Object.keys(cls.prototype);
+        for(var c=0;c<controllerFunctions.length;c++){
+            var endpoint = '/'+controllerName+'/'+controllerFunctions[c];
+            if(controllerFunctions[c] == 'index'){
+                endpoint = '/'+controllerName;
+            }
+            this.app.post(endpoint,this.controllers[controllerName][controllerFunctions[c]].bind(this.controllers[controllerName]));
+            console.log('Loaded Endpoint: '+endpoint);
+        }
 
-        });
-        */
     }
-
+    console.log('=======================');
     //Loop Over Controller Folder for endpoints ~ ooh magic!
     var modelFiles = this.fs.readdirSync('./src/models');
     this.models = {};
@@ -86,6 +89,7 @@ Jake.prototype.initExpress = function () {
         var modelName = modelFileName.substring(0,modelFileName.indexOf("."));
         var modelCls = require('./models/'+modelName);
         this.models[modelName] = new modelCls(this);
+        console.log('Loaded Model: '+modelName);
     }
 
     var port = 3000;
