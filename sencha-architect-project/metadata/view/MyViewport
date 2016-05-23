@@ -23,9 +23,35 @@
                 "type": "array"
             },
             "codeClass": null,
+            "userConfig": {
+                "itemId": "JakeCI"
+            },
             "name": "jakeci",
             "designerId": "c0bac97e-edfd-4991-9948-ff6763695297",
             "masterInstanceId": "2d62bcac-e0cf-4ff4-be1e-a6cfe9531784"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onViewportRender",
+                "implHandler": [
+                    "var sThis = this;",
+                    "var JakeCI = this.queryById('JakeCI');",
+                    "this.getEl().dom.addEventListener('mousemove',function(){",
+                    "    JakeCI.resetIdleTimer();",
+                    "    //console.log(arguments);",
+                    "},true);"
+                ],
+                "name": "render",
+                "scope": "me"
+            },
+            "name": "onViewportRender",
+            "designerId": "9aee2024-5c59-41b9-8f74-d58aaefb1f31"
         }
     ]
 }

@@ -27,11 +27,25 @@ Ext.define('JakeCI.view.MyViewport', {
         type: 'myviewport'
     },
     layout: 'fit',
+    defaultListenerScope: true,
 
     items: [
         {
-            xtype: 'jakeci'
+            xtype: 'jakeci',
+            itemId: 'JakeCI'
         }
-    ]
+    ],
+    listeners: {
+        render: 'onViewportRender'
+    },
+
+    onViewportRender: function(component, eOpts) {
+        var sThis = this;
+        var JakeCI = this.queryById('JakeCI');
+        this.getEl().dom.addEventListener('mousemove',function(){
+            JakeCI.resetIdleTimer();
+            //console.log(arguments);
+        },true);
+    }
 
 });

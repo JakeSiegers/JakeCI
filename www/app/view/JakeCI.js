@@ -99,6 +99,30 @@ Ext.define('JakeCI.view.JakeCI', {
             listeners: {
                 rowdblclick: 'onJobGridRowDblClick'
             }
+        },
+        {
+            xtype: 'gridpanel',
+            flex: 1,
+            width: 100,
+            collapseDirection: 'right',
+            collapsible: true,
+            title: 'Job Queue',
+            bind: {
+                store: '{QueueStore}'
+            },
+            columns: [
+                {
+                    xtype: 'gridcolumn',
+                    dataIndex: 'active',
+                    text: 'Active'
+                },
+                {
+                    xtype: 'gridcolumn',
+                    dataIndex: 'job',
+                    text: 'Job',
+                    flex: 1
+                }
+            ]
         }
     ],
     listeners: {
@@ -121,6 +145,17 @@ Ext.define('JakeCI.view.JakeCI', {
 
     onViewportRender: function(component, eOpts) {
         this.getAllJobs();
+
+
+
+        var sThis = this;
+        this.resetIdleTimer();
+        this.updateJobQueue();
+        setInterval(function(){
+            if(!sThis.idle){
+                sThis.updateJobQueue();
+            }
+        },5000);
     },
 
     getAllJobs: function() {
@@ -218,6 +253,25 @@ Ext.define('JakeCI.view.JakeCI', {
             this.settingsWindow.settingsPanel = panel;
         }
         this.settingsWindow.show();
+    },
+
+    resetIdleTimer: function() {
+        var sThis = this;
+        this.idle = false;
+        clearTimeout(this.idleTimeout);
+        this.idleTimeout = setTimeout(function(){
+            sThis.idle = true;
+        },30000); //If you don't do anything for 30 seconds, stop updating the screen.
+    },
+
+    updateJobQueue: function() {
+        AERP.Ajax.request({
+            url:'/Job/getJobQueue',
+            success:function(reply){
+                this.lookupViewModel().getStore('QueueStore').loadData(reply.data);
+            },
+            scope:this
+        })
     }
 
 });

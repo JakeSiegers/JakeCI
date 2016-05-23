@@ -3,45 +3,62 @@ var SVN = require('svn');
 
 function JobRunner(JakeCI){
     this.JakeCI = JakeCI;
-    this.jobsQueue = [];
-    this.activeJobs = {};
+    this.jobsQueue = []; //List of job names
+    this.activeJobs = {}; //Object of job names. Prevents 2 of the same job from running, and can store info about the active job. Like time started, and command info.
     this.activeJobLimit = 1;
 }
 
+JobRunner.prototype.getJobQueue = function(params){
+    params.success.call(params.scope,{active:this.activeJobs,queued:this.jobsQueue});
+};
+
 JobRunner.prototype.addJobToQueue = function(params){
-    this.jobsQueue.push(params.job);
-    console.log('Added "'+params.job+'" to queue');
+    var errors = this.JakeCI.functions.verifyRequiredPostFields(params.data,['jobName']);
+    if(errors !== ''){
+        params.error.call(params.scope,errors);
+        return;
+    }
+    var jobName = params.data.jobName;
+
+    this.jobsQueue.push(jobName);
+    console.log('Added "'+jobName+'" to queue');
     this.checkToStartANewJob();
-    params.success('Job Queued');
+    params.success.call(params.scope,'Job Queued');
 };
 
 JobRunner.prototype.checkToStartANewJob = function(){
     if(Object.keys(this.activeJobs).length>=this.activeJobLimit     //We're at max consecutive jobs
         || this.jobsQueue.length == 0                               //Nothing in the job queue
-        || this.activeJobs.hasOwnProperty(this.jobsQueue[0].name)){ //There's already a job with the same name running
+        || this.activeJobs.hasOwnProperty(this.jobsQueue[0])){      //There's already a job with the same name running
         return false;
     }
 
     //Let's start a job!
     var nextJob = this.jobsQueue.pop();
-    console.log('Removed "'+nextJob.name+'" from queue');
+    console.log('Removed "'+nextJob+'" from queue');
     this.startJob(nextJob);
 };
 
-JobRunner.prototype.startJob = function(data){
-    console.log('Adding "'+data.name+'" to active jobs');
-    this.activeJobs[data.name] = data;
+JobRunner.prototype.startJob = function(jobName){
+    console.log('Adding "'+jobName+'" to active jobs');
+    this.activeJobs[jobName] = {started:'time, etc'};
 
 
     var buildNumber = '1';
 
-    var buildNumberFile = this.JakeCI.path.join(this.JakeCI.config.jobPath,data.name,'buildNumber.txt');
-
-    this.JakeCI.fs.statAsync(buildNumberFile)
+    /*this.JakeCI.fs.statAsync(buildNumberFile)
         .then(function(one,two){
             console.log(one,two);
         });
-
+        */
+/*
+    this.JakeCI.fs.readFileAsync(this.JakeCI.path.join(this.JakeCI.config.jobPath,data.name,'buildNumber.txt'),'utf8')
+        .then(function(jobConfig){
+            console.log(JSON.parse(jobConfig));
+        }).catch(function(e){
+            console.error(e);
+        });
+*/
 /*
     fs.stat(buildNumberFile, function(err, stats) {
         if (err && err.code === 'ENOENT') {
@@ -65,6 +82,7 @@ JobRunner.prototype.startJob = function(data){
     }
     */
 
+    /*
     var cmdArray = this.JakeCI.functions.commandParser(data.exec);
     var program = cmdArray[0];
     var programArgs = [];
@@ -91,6 +109,7 @@ JobRunner.prototype.startJob = function(data){
         delete sThis.activeJobs[data.name];
         sThis.checkToStartANewJob();
     });
+    */
 };
 
 module.exports = JobRunner;

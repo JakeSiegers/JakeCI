@@ -90,6 +90,47 @@
                     "designerId": "de932ac8-fdee-4fd0-bd9b-d23bd7705593"
                 }
             ]
+        },
+        {
+            "type": "Ext.data.Store",
+            "reference": {
+                "name": "stores",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "QueueStore"
+            },
+            "name": "MyStore4",
+            "designerId": "a8201a3a-3a70-4e32-8d06-bc73ba5b1b3f",
+            "cn": [
+                {
+                    "type": "Ext.data.field.Field",
+                    "reference": {
+                        "name": "fields",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "job"
+                    },
+                    "name": "MyField6",
+                    "designerId": "da141a21-a528-445e-8be4-d05396c8404b"
+                },
+                {
+                    "type": "Ext.data.field.Field",
+                    "reference": {
+                        "name": "fields",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "active"
+                    },
+                    "name": "MyField10",
+                    "designerId": "34dcd1f7-fdf6-4374-bff3-6a4e6a84e2ab"
+                }
+            ]
         }
     ]
 }

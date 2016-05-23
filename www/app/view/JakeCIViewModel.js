@@ -41,6 +41,16 @@ Ext.define('JakeCI.view.JakeCIViewModel', {
                     name: 'lastRunError'
                 }
             ]
+        },
+        QueueStore: {
+            fields: [
+                {
+                    name: 'job'
+                },
+                {
+                    name: 'active'
+                }
+            ]
         }
     }
 

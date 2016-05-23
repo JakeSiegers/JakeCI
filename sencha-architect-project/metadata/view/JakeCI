@@ -219,6 +219,71 @@
             ]
         },
         {
+            "type": "Ext.grid.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "collapseDirection": "right",
+                "collapsible": true,
+                "dock": null,
+                "layout|flex": 1,
+                "store": [
+                    "{QueueStore}"
+                ],
+                "title": "Job Queue",
+                "width": 100
+            },
+            "name": "MyGridPanel2",
+            "configAlternates": {
+                "store": "binding"
+            },
+            "designerId": "dcda73ac-798a-4532-ab5b-e92a55ee0868",
+            "cn": [
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "active",
+                        "text": "Active"
+                    },
+                    "name": "MyColumn7",
+                    "designerId": "7d197c3f-d5b7-41e3-b287-d5da469c2302"
+                },
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "job",
+                        "flex": 1,
+                        "text": "Job"
+                    },
+                    "name": "MyColumn8",
+                    "designerId": "52d01241-cc56-41e0-a4a9-e85745c2b73b"
+                },
+                {
+                    "type": "Ext.view.Table",
+                    "reference": {
+                        "name": "viewConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "name": "MyTable3",
+                    "designerId": "1fda51c8-6e13-4174-bfb4-b1c9af6f78a3"
+                }
+            ]
+        },
+        {
             "type": "basicfunction",
             "reference": {
                 "name": "items",
@@ -256,7 +321,18 @@
             "userConfig": {
                 "fn": "onViewportRender",
                 "implHandler": [
-                    "this.getAllJobs();"
+                    "this.getAllJobs();",
+                    "",
+                    "",
+                    "",
+                    "var sThis = this;",
+                    "this.resetIdleTimer();",
+                    "this.updateJobQueue();",
+                    "setInterval(function(){",
+                    "    if(!sThis.idle){",
+                    "        sThis.updateJobQueue();",
+                    "    }",
+                    "},5000);"
                 ],
                 "name": "render",
                 "scope": "me"
@@ -380,6 +456,49 @@
             },
             "name": "showSettingsWindow",
             "designerId": "9dfac99d-af4f-4d21-af0e-8ed0584d73a3"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "resetIdleTimer",
+                "implHandler": [
+                    "var sThis = this;",
+                    "this.idle = false;",
+                    "clearTimeout(this.idleTimeout);",
+                    "this.idleTimeout = setTimeout(function(){",
+                    "    sThis.idle = true;",
+                    "},30000); //If you don't do anything for 30 seconds, stop updating the screen."
+                ]
+            },
+            "name": "resetIdleTimer",
+            "designerId": "c43e2257-8aff-4555-96fd-c8e3fe6536fa"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "updateJobQueue",
+                "implHandler": [
+                    "AERP.Ajax.request({",
+                    "    url:'/Job/getJobQueue',",
+                    "    success:function(reply){",
+                    "        this.lookupViewModel().getStore('QueueStore').loadData(reply.data);",
+                    "    },",
+                    "    scope:this",
+                    "})"
+                ]
+            },
+            "name": "updateJobQueue",
+            "designerId": "e37831ef-8482-477a-a674-a03535367123"
         }
     ]
 }

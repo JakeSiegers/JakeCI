@@ -2,6 +2,36 @@ function Job(JakeCI){
     this.JakeCI = JakeCI;
 }
 
+Job.prototype.getJobQueue = function(request,response){
+    this.JakeCI.models['JobRunner'].getJobQueue({
+        success:function(reply){
+
+            console.log(reply);
+
+            var queue = []
+            //Is an object
+            for(var jobName in reply.active){
+                queue.push([
+                    jobName, //job name
+                    true //is active
+                ]);
+            }
+            //Is an array
+            for(var i=0;i<reply.queued.length;i++){
+                queue.push([
+                    reply.queued[i], //job name
+                    false //is active
+                ]);
+            }
+            this.JakeCI.sendResponse(response,queue);
+        },
+        error:function(error){
+            this.JakeCI.sendError(response,error);
+        },
+        scope:this
+    });
+};
+
 Job.prototype.getAllJobs = function(request, response){
     this.JakeCI.models['JobEditor'].getAllJobs({
         success:function(jobs){
@@ -87,17 +117,15 @@ Job.prototype.newJob = function(request, response){
 
 Job.prototype.runJob = function(request, response){
 
-    var errors = this.JakeCI.functions.verifyRequiredPostFields(request.body,['job']);
-    if(errors !== ''){
-        this.JakeCI.sendError(response,errors);
-        return;
-    }
-    var job = request.body.job;
-
     this.JakeCI.models['JobRunner'].addJobToQueue({
-        job:job,
-        success:this.JakeCI.sendResponse.bind(this.JakeCI,response),
-        error:this.JakeCI.sendError.bind(this.JakeCI,response)
+        data:request.body,
+        success:function(reply){
+            this.JakeCI.sendResponse(response,reply);
+        },
+        error:function(error){
+            this.JakeCI.sendError(response,error);
+        },
+        scope:this
     });
 
 };
