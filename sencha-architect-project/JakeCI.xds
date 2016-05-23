@@ -27,8 +27,8 @@
         "displayfield-ExtBox1-1174-inputEl": "a new version of the framework is available",
         "displayfield-ExtBox1-1306-inputEl": "a new version of the framework is available"
     },
-    "xdsVersion": "3.5.0",
-    "xdsBuild": 268,
+    "xdsVersion": "3.5.1",
+    "xdsBuild": 348,
     "schemaVersion": 1,
     "upgradeVersion": 310000000001,
     "framework": "ext51",

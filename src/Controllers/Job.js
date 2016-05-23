@@ -24,6 +24,33 @@ Job.prototype.getAllJobs = function(request, response){
     });
 };
 
+Job.prototype.getJob = function(request, response){
+    this.JakeCI.models['JobEditor'].getJob({
+        data:request.body,
+        success:function(reply){
+            this.JakeCI.sendResponse(response,reply);
+        },
+        error:function(error){
+            this.JakeCI.sendError(response,error);
+        },
+        scope:this
+    });
+};
+
+Job.prototype.saveJob = function(request, response){
+    this.JakeCI.models['JobEditor'].saveJob({
+        data:request.body,
+        success:function(reply){
+            this.JakeCI.sendResponse(response,reply);
+        },
+        error:function(error){
+            this.JakeCI.sendError(response,error);
+        },
+        scope:this
+    });
+};
+
+//TODO: this needs to be moved to a model....
 Job.prototype.newJob = function(request, response){
 
     var errors = this.JakeCI.functions.verifyRequiredPostFields(request.body,['name']);

@@ -18,11 +18,9 @@ function Jake(){
     this.fs.readFileAsync = this.Promise.promisify(this.fs.readFile);
     this.fs.statAsync = this.Promise.promisify(this.fs.stat);
     this.fs.accessAsync = this.Promise.promisify(this.fs.access);
+    this.fs.renameAsync = this.Promise.promisify(this.fs.rename);
 
-    if (!this.fs.existsSync('./src/config.js')) {
-        throw "No config file found.";
-    }
-    this.config = require('./config');
+    this.config = JSON.parse(this.fs.readFileSync('./config.json','utf8'));
 
     //Create Settings File
     if (!this.fs.existsSync(this.config.settingsFile)){
@@ -59,7 +57,6 @@ Jake.prototype.initExpress = function () {
 
     //Post Endpoints
     this.app.post('/getJob',this.getJob.bind(this));
-    this.app.post('/saveJob',this.saveJob.bind(this));
 
     //Loop Over Controller Folder for endpoints ~ ooh magic!
     var controllerFiles = this.fs.readdirSync('./src/controllers');
@@ -123,31 +120,6 @@ Jake.prototype.getJob = function(request, response){
     var job = request.body.job;
 
     this.jobEditor.getJob(job,this.sendResponse.bind(this,response));
-};
-
-Jake.prototype.saveJob = function(request, response){
-
-    var errors = this.functions.verifyRequiredPostFields(request.body,['job','data']);
-    if(errors !== ''){
-        this.sendError(response,errors);
-        return;
-    }
-
-    var job = request.body.job;
-    var data = "";
-    try {
-        data = JSON.parse(request.body.data);
-    }catch(e){
-        this.sendError(response,"Bad Form Data");
-        return;
-    }
-
-    if(/[^a-zA-Z0-9 ]/.test(data.name) || data.name.length > 20){
-        this.sendError(response,"Job Name Must Be less than <= 20 characters and only contain alpha-numeric characters, plus spaces and dashes.");
-        return;
-    }
-
-    this.jobEditor.saveJob(job,data,this.sendResponse.bind(this,response));
 };
 
 

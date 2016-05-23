@@ -132,6 +132,7 @@ Ext.define('JakeCI.view.JobForm', {
                             flex: 1,
                             fieldLabel: 'Credentials',
                             labelAlign: 'right',
+                            name: 'repoCredentials',
                             editable: false,
                             displayField: 'cred',
                             forceSelection: true,
@@ -295,10 +296,10 @@ Ext.define('JakeCI.view.JobForm', {
     saveJob: function() {
         this.mask('Saving...');
         AERP.Ajax.request({
-            url:'saveJob',
+            url:'/Job/saveJob',
             params:{
-                job:this.currentJob,
-                data:Ext.encode(this.getValues(false,false,true,true)) //[asString], [dirtyOnly], [includeEmptyText], [useDataValues
+                jobName:this.currentJob,
+                jobData:Ext.encode(this.getValues(false,false,true,true)) //[asString], [dirtyOnly], [includeEmptyText], [useDataValues
             },
             success:function(reply){
                 this.unmask();

@@ -338,6 +338,7 @@
                                 "labelAlign": "right",
                                 "layout|flex": 1,
                                 "maxWidth": null,
+                                "name": "repoCredentials",
                                 "queryMode": "local",
                                 "store": [
                                     "{CredStore}"
@@ -564,10 +565,10 @@
                 "implHandler": [
                     "this.mask('Saving...');",
                     "AERP.Ajax.request({",
-                    "    url:'saveJob',",
+                    "    url:'/Job/saveJob',",
                     "    params:{",
-                    "        job:this.currentJob,",
-                    "        data:Ext.encode(this.getValues(false,false,true,true)) //[asString], [dirtyOnly], [includeEmptyText], [useDataValues",
+                    "        jobName:this.currentJob,",
+                    "        jobData:Ext.encode(this.getValues(false,false,true,true)) //[asString], [dirtyOnly], [includeEmptyText], [useDataValues",
                     "    },",
                     "    success:function(reply){",
                     "        this.unmask();",
