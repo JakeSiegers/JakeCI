@@ -260,8 +260,8 @@ Ext.define('JakeCI.view.JobForm', {
         this.mask('Loading Job...');
 
         AERP.Ajax.request({
-            url:'getJob',
-            params:{job:jobName},
+            url:'/Job/getJob',
+            params:{jobName:jobName},
             success:function(reply){
                 this.unmask();
                 this.setState('edit');

@@ -1,10 +1,7 @@
 function Jake(){
 
-    //These will go away soon. And become controllers.
-    var JobEditor = require('./JobEditor.js');
+    //Load Helper functions. These are all synchronous. But shouldn't take very long :)
     var Functions = require('./Functions');
-
-    this.jobEditor = new JobEditor(this);
     this.functions = new Functions(this);
 
     //Standard Libraries are now baked into the core.
@@ -55,9 +52,6 @@ Jake.prototype.initExpress = function () {
     //Web Accessible Directory
     this.app.use('/',Express.static(__dirname + '/../www'));
 
-    //Post Endpoints
-    this.app.post('/getJob',this.getJob.bind(this));
-
     //Loop Over Controller Folder for endpoints ~ ooh magic!
     var controllerFiles = this.fs.readdirSync('./src/controllers');
     this.controllers = {};
@@ -106,22 +100,6 @@ Jake.prototype.initExpress = function () {
         sThis.error(error);
     });
 };
-
-Jake.prototype.getJob = function(request, response){
-    var errors = this.functions.verifyRequiredPostFields(request.body,['job']);
-    if(errors !== ''){
-        response.send(JSON.stringify({
-            success: false,
-            error: errors
-        }));
-        return;
-    }
-
-    var job = request.body.job;
-
-    this.jobEditor.getJob(job,this.sendResponse.bind(this,response));
-};
-
 
 Jake.prototype.sendError = function(response, error){
     response.send(JSON.stringify({

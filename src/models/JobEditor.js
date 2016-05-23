@@ -41,7 +41,20 @@ JobEditor.prototype.getAllJobs = function(params){
 };
 
 JobEditor.prototype.getJob = function(params) {
-
+    var errors = this.JakeCI.functions.verifyRequiredPostFields(params.data,['jobName']);
+    if(errors !== ''){
+        params.error.call(params.scope,errors);
+        return;
+    }
+    var jobName = params.data.jobName;
+    var sThis = this;
+    this.JakeCI.fs.readFileAsync(sThis.JakeCI.path.join(sThis.JakeCI.config.jobPath, jobName,'config.json'),'utf8')
+        .then(function(jobConfig){
+            params.success.call(params.scope,JSON.parse(jobConfig));
+        }).catch(function(e){
+            console.error(e);
+            params.error.call(params.scope,'Failed to load Job <hr />'+e);
+        });
 };
 
 JobEditor.prototype.saveJob = function(params){
@@ -67,6 +80,7 @@ JobEditor.prototype.saveJob = function(params){
     }
 
     var sThis = this;
+    //TODO: change this from a loop over valid jobs to just grabbing the job we want with some error checking (Check for config file)
     this.JakeCI.fs.readdirAsync(this.JakeCI.config.jobPath)
         .map(function(fileName){
             //Get A list of all the valid jobs
