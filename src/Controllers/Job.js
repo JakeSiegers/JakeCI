@@ -100,8 +100,9 @@ Job.prototype.newJob = function(request, response){
         //Check if error defined and the error code is "not exists"
         if (err && err.code === 'ENOENT') {
             sThis.JakeCI.fs.mkdirAsync(newJobFolder)
-                .then(sThis.JakeCI.fs.mkdirAsync(buildsFolder))
+
                 .then(sThis.JakeCI.fs.mkdirAsync(workspaceFolder))
+                .then(sThis.JakeCI.fs.mkdirAsync(buildsFolder))
                 .then(sThis.JakeCI.fs.writeFileAsync(sThis.JakeCI.path.join(sThis.JakeCI.config.jobPath,data.name,'config.json'), JSON.stringify(data)))
                 .then(function(){
                     sThis.JakeCI.sendResponse(response,{jobName:data.name});

@@ -41,7 +41,7 @@ JobRunner.prototype.checkToStartANewJob = function(){
 
 JobRunner.prototype.startJob = function(jobName){
     console.log('Adding "'+jobName+'" to active jobs');
-    this.activeJobs[jobName] = {started:'time, etc'};
+    this.activeJobs[jobName] = {started:this.JakeCI.functions.getDateTime()};
 
 
     var buildNumber = '1';
@@ -51,14 +51,39 @@ JobRunner.prototype.startJob = function(jobName){
             console.log(one,two);
         });
         */
-/*
-    this.JakeCI.fs.readFileAsync(this.JakeCI.path.join(this.JakeCI.config.jobPath,data.name,'buildNumber.txt'),'utf8')
+
+    var sThis = this;
+
+    var buildNumberFile = this.JakeCI.path.join(this.JakeCI.config.jobPath,jobName,'buildNumber.txt');
+    var configFile = this.JakeCI.path.join(this.JakeCI.config.jobPath,jobName,'config.json');
+
+
+    this.JakeCI.fs.readFileAsync(buildNumberFile,'utf8').bind({})
+        .then(function(buildNumber){
+            return buildNumber;
+        })
+        .catch(function(e){
+            //create the file if it doesn't exist, then return 0.
+            return sThis.JakeCI.fs.writeFileAsync(buildNumberFile,0,'utf8').then(function(){return 0});
+        })
+        .then(function(buildNumber){
+            this.buildNumber = parseInt(buildNumber);
+            return sThis.JakeCI.fs.writeFileAsync(sThis.JakeCI.path.join(sThis.JakeCI.config.jobPath,jobName,'builds',this.buildNumber+'.log'),'','utf8');
+        })
+        .then(function(){
+            console.log(this.buildNumber);
+            return sThis.JakeCI.fs.writeFileAsync(buildNumberFile,this.buildNumber+1,'utf8');
+        })
+        .then(function(){
+            return sThis.JakeCI.fs.readFileAsync(configFile,'utf8');
+        })
         .then(function(jobConfig){
-            console.log(JSON.parse(jobConfig));
+            this.jobConfig = JSON.parse(jobConfig);
+
         }).catch(function(e){
             console.error(e);
         });
-*/
+
 /*
     fs.stat(buildNumberFile, function(err, stats) {
         if (err && err.code === 'ENOENT') {
