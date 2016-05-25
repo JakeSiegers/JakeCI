@@ -8,6 +8,7 @@
     "url": "git://github.com/JakeSiegers/JakeCI.git"
   },
   "license":"MIT",
+  "main":"app.js",
   "dependencies": {
     "bluebird": "^3.3.5",
     "body-parser": "^1.15.0",
