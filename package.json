@@ -1,9 +1,11 @@
 {
-  "name": "jake_ci",
+  "name": "jakeci",
+  "author": "Jake Siegers <jake@jakesiegers.com> (http://jakesiegers.com/)",
+  "description": "Continous Integration, Jake's way",
   "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JakeSiegers/JakeCI"
+    "url": "git://github.com/JakeSiegers/JakeCI.git"
   },
   "license":"MIT",
   "dependencies": {
