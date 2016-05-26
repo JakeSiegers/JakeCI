@@ -1,5 +1,7 @@
 var spawn = require('child_process').spawn;
 var SVN = require('svn');
+var Git = require("nodegit");
+
 
 function JobRunner(JakeCI){
     this.JakeCI = JakeCI;
@@ -21,7 +23,7 @@ JobRunner.prototype.addJobToQueue = function(params){
     var jobName = params.data.jobName;
 
     this.jobsQueue.push(jobName);
-    console.log('Added "'+jobName+'" to queue');
+    this.JakeCI.debug('Added "'+jobName+'" to queue');
     this.checkToStartANewJob();
     params.success.call(params.scope,'Job Queued');
 };
@@ -34,13 +36,13 @@ JobRunner.prototype.checkToStartANewJob = function(){
     }
 
     //Let's start a job!
-    var nextJob = this.jobsQueue.pop();
-    console.log('Removed "'+nextJob+'" from queue');
+    var nextJob = this.jobsQueue.shift(); // grab the next item
+    this.JakeCI.debug('Removed "'+nextJob+'" from queue');
     this.startJob(nextJob);
 };
 
 JobRunner.prototype.startJob = function(jobName){
-    console.log('Adding "'+jobName+'" to active jobs');
+    this.JakeCI.debug('Adding "'+jobName+'" to active jobs');
     this.activeJobs[jobName] = {started:this.JakeCI.functions.getDateTime()};
 
 
@@ -54,9 +56,10 @@ JobRunner.prototype.startJob = function(jobName){
 
     var sThis = this;
 
-    var buildNumberFile = this.JakeCI.path.join(this.JakeCI.config.jobPath,jobName,'buildNumber.txt');
-    var configFile = this.JakeCI.path.join(this.JakeCI.config.jobPath,jobName,'config.json');
-
+    var jobFolder = this.JakeCI.path.join(this.JakeCI.config.jobPath,jobName);
+    var buildNumberFile = this.JakeCI.path.join(jobFolder,'buildNumber.txt');
+    var configFile = this.JakeCI.path.join(jobFolder,'config.json');
+    var workspaceFolder = this.JakeCI.path.join(jobFolder,'workspace');
 
     this.JakeCI.fs.readFileAsync(buildNumberFile,'utf8').bind({})
         .then(function(buildNumber){
@@ -68,19 +71,73 @@ JobRunner.prototype.startJob = function(jobName){
         })
         .then(function(buildNumber){
             this.buildNumber = parseInt(buildNumber);
-            return sThis.JakeCI.fs.writeFileAsync(sThis.JakeCI.path.join(sThis.JakeCI.config.jobPath,jobName,'builds',this.buildNumber+'.log'),'','utf8');
+            this.logFile = sThis.JakeCI.path.join(sThis.JakeCI.config.jobPath,jobName,'builds',this.buildNumber+'.log');
+            this.addToLog = function(entry){
+                sThis.JakeCI.debug(entry);
+                return sThis.JakeCI.fs.writeFileAsync(this.logFile,entry+"\n",{encoding: 'utf8', flag: 'a'})
+                    .catch(function(e){
+                        console.error(e);
+                    });
+            };
+            return this.addToLog("Starting Build: "+this.buildNumber);
         })
         .then(function(){
-            console.log(this.buildNumber);
             return sThis.JakeCI.fs.writeFileAsync(buildNumberFile,this.buildNumber+1,'utf8');
+        })
+        .then(function(){
+            return this.addToLog("Reading '"+configFile+"'");
         })
         .then(function(){
             return sThis.JakeCI.fs.readFileAsync(configFile,'utf8');
         })
         .then(function(jobConfig){
             this.jobConfig = JSON.parse(jobConfig);
+            return this.addToLog("Deleting '"+workspaceFolder+"'");
+        })
+        .then(function(){
+            return sThis.JakeCI.rmdirAsync(workspaceFolder);
+        })
+        .then(function(){
+            return this.addToLog("Cloning '"+this.jobConfig.repoUrl+"' to '"+workspaceFolder+"'");
+        })
+        .then(function(){
+            return Git.Clone(this.jobConfig.repoUrl,workspaceFolder);
+        })
+        .then(function(){
+            return this.addToLog("Executing '"+this.jobConfig.exec+"'");
+        })
+        .then(function(){
+            var cmdArray = sThis.JakeCI.functions.commandParser(this.jobConfig.exec);
+            var program = cmdArray[0];
+            var programArgs = [];
+            for(var i=1;i<cmdArray.length;i++){
+                programArgs.push(cmdArray[i]);
+            }
 
-        }).catch(function(e){
+            var cmd = spawn(program,programArgs,{cwd:workspaceFolder});
+
+            var wstream = sThis.JakeCI.fs.createWriteStream(this.logFile,{flags:'a'});
+
+            cmd.stdout.on('data', function (data) {
+                sThis.JakeCI.debug('stdout: ' + data);
+                wstream.write(data);
+            });
+
+            cmd.stderr.on('data', function (data) {
+                sThis.JakeCI.debug('stderr: ' + data);
+                wstream.write(data);
+            });
+
+            cmd.on('exit', function (code) {
+                wstream.write('process exited with code ' + code);
+                console.log('child process exited with code ' + code);
+                console.log('Removing "'+jobName+'" from active jobs');
+                delete sThis.activeJobs[jobName];
+                sThis.checkToStartANewJob();
+                wstream.end();
+            });
+        })
+        .catch(function(e){
             console.error(e);
         });
 
@@ -107,34 +164,15 @@ JobRunner.prototype.startJob = function(jobName){
     }
     */
 
-    /*
-    var cmdArray = this.JakeCI.functions.commandParser(data.exec);
-    var program = cmdArray[0];
-    var programArgs = [];
-    for(var i=1;i<cmdArray.length;i++){
-        programArgs.push(cmdArray[i]);
-    }
-
-    var cmd = spawn(program,programArgs);
-    var sThis = this;
-
-
-
-    cmd.stdout.on('data', function (data) {
-        console.log('stdout: ' + data);
-    });
-
-    cmd.stderr.on('data', function (data) {
-        console.log('stderr: ' + data);
-    });
-
-    cmd.on('exit', function (code) {
-        console.log('child process exited with code ' + code);
-        console.log('Removing "'+data.name+'" from active jobs');
-        delete sThis.activeJobs[data.name];
-        sThis.checkToStartANewJob();
-    });
-    */
 };
+/*
+JobRunner.prototype.addToJobLog = function(job,file,entry){
+    this.JakeCI.debug(entry);
+    this.JakeCI.fs.writeFileAsync(file,entry,'utf8')
+        .catch(function(e){
+            console.error(e);
+        });
+};
+*/
 
 module.exports = JobRunner;

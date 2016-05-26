@@ -291,28 +291,6 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "fn": "onRowEditingBeforeEdit",
-                        "implHandler": [
-                            "//Don't try and edit anything else if we're already editing something!",
-                            "if(this.getPlugin('credRowEditing').editing){",
-                            "    return false;",
-                            "}",
-                            "this.currentState = 'edit';"
-                        ],
-                        "name": "beforeedit",
-                        "scope": "me"
-                    },
-                    "name": "onRowEditingBeforeEdit",
-                    "designerId": "fb36868c-88e5-4e7b-9527-af06576b67b8"
-                },
-                {
-                    "type": "basiceventbinding",
-                    "reference": {
-                        "name": "listeners",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
                         "fn": "onRowEditingEdit",
                         "implHandler": [
                             "if(this.currentState == 'new'){",
@@ -330,6 +308,29 @@
                     },
                     "name": "onRowEditingEdit",
                     "designerId": "7eaaf400-f614-4561-b960-8e9f63c7d7e5"
+                },
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "element": null,
+                        "fn": "onRowEditingBeforeEdit",
+                        "implHandler": [
+                            "//Don't try and edit anything else if we're already editing something!",
+                            "if(this.getPlugin('credRowEditing').editing){",
+                            "    return false;",
+                            "}",
+                            "this.currentState = 'edit';"
+                        ],
+                        "name": "beforeedit",
+                        "scope": "me"
+                    },
+                    "name": "onRowEditingBeforeEdit",
+                    "designerId": "e85d8bf7-78f5-407d-8ec7-f40223e2184d"
                 }
             ]
         },

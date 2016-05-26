@@ -107,8 +107,8 @@ Ext.define('JakeCI.view.CredsEditor', {
             autoCancel: false,
             listeners: {
                 canceledit: 'onRowEditingCanceledit',
-                beforeedit: 'onRowEditingBeforeEdit',
-                edit: 'onRowEditingEdit'
+                edit: 'onRowEditingEdit',
+                beforeedit: 'onRowEditingBeforeEdit'
             }
         }
     ],
@@ -138,14 +138,6 @@ Ext.define('JakeCI.view.CredsEditor', {
         }
     },
 
-    onRowEditingBeforeEdit: function(editor, context, eOpts) {
-        //Don't try and edit anything else if we're already editing something!
-        if(this.getPlugin('credRowEditing').editing){
-            return false;
-        }
-        this.currentState = 'edit';
-    },
-
     onRowEditingEdit: function(editor, context, eOpts) {
         if(this.currentState == 'new'){
             console.log(context);
@@ -156,6 +148,14 @@ Ext.define('JakeCI.view.CredsEditor', {
         }else{
             this.editCred();
         }
+    },
+
+    onRowEditingBeforeEdit: function(editor, context, eOpts) {
+        //Don't try and edit anything else if we're already editing something!
+        if(this.getPlugin('credRowEditing').editing){
+            return false;
+        }
+        this.currentState = 'edit';
     },
 
     onGridpanelRender: function(component, eOpts) {

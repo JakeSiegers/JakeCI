@@ -1,4 +1,6 @@
 function Jake(){
+    //Debug messages, ahoy!
+    this.debugMode = true;
 
     //Load Helper functions. These are all synchronous. But shouldn't take very long :)
     var Functions = require('./Functions');
@@ -8,6 +10,7 @@ function Jake(){
     this.fs = require("fs");
     this.path = require('path');
     this.Promise = require("bluebird");
+    this.rmdir = require('rimraf');
     //this.Promise.promisifyAll(this.fs); //Way too much memory
     this.fs.readdirAsync = this.Promise.promisify(this.fs.readdir);
     this.fs.mkdirAsync = this.Promise.promisify(this.fs.mkdir);
@@ -16,6 +19,7 @@ function Jake(){
     this.fs.statAsync = this.Promise.promisify(this.fs.stat);
     this.fs.accessAsync = this.Promise.promisify(this.fs.access);
     this.fs.renameAsync = this.Promise.promisify(this.fs.rename);
+    this.rmdirAsync = this.Promise.promisify(this.rmdir);
 
     this.config = JSON.parse(this.fs.readFileSync('./config.json','utf8'));
 
@@ -68,11 +72,11 @@ Jake.prototype.initExpress = function () {
                 endpoint = '/'+controllerName;
             }
             this.app.post(endpoint,this.controllers[controllerName][controllerFunctions[c]].bind(this.controllers[controllerName]));
-            console.log('Loaded Endpoint: '+endpoint);
+            this.debug('Loaded Endpoint: '+endpoint);
         }
 
     }
-    console.log('=======================');
+    this.debug('=======================');
     //Loop Over Controller Folder for endpoints ~ ooh magic!
     var modelFiles = this.fs.readdirSync('./src/models');
     this.models = {};
@@ -81,7 +85,7 @@ Jake.prototype.initExpress = function () {
         var modelName = modelFileName.substring(0,modelFileName.indexOf("."));
         var modelCls = require('./models/'+modelName);
         this.models[modelName] = new modelCls(this);
-        console.log('Loaded Model: '+modelName);
+        this.debug('Loaded Model: '+modelName);
     }
 
     var port = 3000;
@@ -122,6 +126,12 @@ Jake.prototype.error = function(error){
         this.log('error', error);
     }
     process.exit(1);
+};
+
+Jake.prototype.debug = function(msg){
+    if(this.debugMode){
+        console.log(msg);
+    }
 };
 
 Jake.prototype.log = function(type, msg){

@@ -4,6 +4,7 @@ function Creds(JakeCI){
 
 Creds.prototype.getAllCreds = function(request,response){
     this.JakeCI.models['CredEditor'].getAllCreds({
+        data:request.body,
         success:this.JakeCI.sendResponse.bind(this.JakeCI,response),
         error:this.JakeCI.sendError.bind(this.JakeCI,response)
     });
