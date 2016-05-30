@@ -26,7 +26,9 @@ SettingsEditor.prototype.saveSettings = function(params){
             return sThis.JakeCI.fs.readFileAsync(sThis.JakeCI.config.settingsFile,'utf8');
         })
         .then(function(newSettings){
-            params.success(JSON.parse(newSettings));
+            //update appSettings array;
+            sThis.JakeCI.appSettings = JSON.parse(newSettings);
+            params.success(sThis.JakeCI.appSettings);
         })
         .catch(function(e){
             console.error(e);

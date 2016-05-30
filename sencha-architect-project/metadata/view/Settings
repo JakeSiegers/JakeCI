@@ -125,12 +125,27 @@
             "codeClass": null,
             "userConfig": {
                 "designer|displayName": null,
-                "fieldLabel": "Default Email",
+                "fieldLabel": "Alert Email",
                 "layout|anchor": "100%",
-                "name": "defaultEmail"
+                "name": "alertEmail"
             },
             "name": "MyTextField",
             "designerId": "9dba7393-236f-4dee-8ffb-42c2b772cbec"
+        },
+        {
+            "type": "Ext.form.field.Text",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fieldLabel": "From Address",
+                "layout|anchor": "100%",
+                "name": "fromAddress"
+            },
+            "name": "MyTextField10",
+            "designerId": "118837a2-2255-47b4-81cf-74e02855060a"
         },
         {
             "type": "basiceventbinding",
@@ -204,6 +219,52 @@
             },
             "name": "saveSettings",
             "designerId": "8540df55-b723-4960-bab6-a1b2fa36bb5b"
+        },
+        {
+            "type": "Ext.form.FieldSet",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "title": "SendGrid Settings"
+            },
+            "name": "MyFieldSet5",
+            "designerId": "41c0bc1a-64b3-46bb-8756-5cd07e839224",
+            "cn": [
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Username",
+                        "layout|anchor": "100%",
+                        "name": "sendgridUsername"
+                    },
+                    "name": "MyTextField8",
+                    "designerId": "6b66da40-21ba-4d1c-a8be-710960305a7c"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Password",
+                        "inputType": "password",
+                        "layout|anchor": "100%",
+                        "name": "sendgridPassword"
+                    },
+                    "name": "MyTextField9",
+                    "designerId": "654be2bc-3485-406d-aa77-e67d84f46ec3"
+                }
+            ]
         }
     ]
 }

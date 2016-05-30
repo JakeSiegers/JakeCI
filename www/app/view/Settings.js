@@ -22,7 +22,8 @@ Ext.define('JakeCI.view.Settings', {
         'Ext.toolbar.Toolbar',
         'Ext.button.Button',
         'Ext.toolbar.Spacer',
-        'Ext.form.field.Text'
+        'Ext.form.field.Text',
+        'Ext.form.FieldSet'
     ],
 
     viewModel: {
@@ -66,8 +67,33 @@ Ext.define('JakeCI.view.Settings', {
         {
             xtype: 'textfield',
             anchor: '100%',
-            fieldLabel: 'Default Email',
-            name: 'defaultEmail'
+            fieldLabel: 'Alert Email',
+            name: 'alertEmail'
+        },
+        {
+            xtype: 'textfield',
+            anchor: '100%',
+            fieldLabel: 'From Address',
+            name: 'fromAddress'
+        },
+        {
+            xtype: 'fieldset',
+            title: 'SendGrid Settings',
+            items: [
+                {
+                    xtype: 'textfield',
+                    anchor: '100%',
+                    fieldLabel: 'Username',
+                    name: 'sendgridUsername'
+                },
+                {
+                    xtype: 'textfield',
+                    anchor: '100%',
+                    fieldLabel: 'Password',
+                    name: 'sendgridPassword',
+                    inputType: 'password'
+                }
+            ]
         }
     ],
     listeners: {

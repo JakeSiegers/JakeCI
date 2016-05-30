@@ -15,7 +15,8 @@
     "express": "^4.13.4",
     "mkdirp": "latest",
     "nodegit": "^0.13.0",
-    "svn": "^0.2.0",
-    "rimraf": "latest"
+    "nodemailer": "^2.4.2",
+    "rimraf": "latest",
+    "svn": "^0.2.0"
   }
 }

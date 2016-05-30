@@ -11,6 +11,8 @@ function Jake(){
     this.path = require('path');
     this.Promise = require("bluebird");
     this.rmdir = require('rimraf');
+    this.nodemailer = require("nodemailer");
+
     //this.Promise.promisifyAll(this.fs); //Way too much memory
     this.fs.readdirAsync = this.Promise.promisify(this.fs.readdir);
     this.fs.mkdirAsync = this.Promise.promisify(this.fs.mkdir);
@@ -25,8 +27,11 @@ function Jake(){
 
     //Create Settings File
     if (!this.fs.existsSync(this.config.settingsFile)){
-        this.fs.writeFileSync(this.config.settingsFile,'{}');
+        this.fs.writeFileSync(this.config.settingsFile,JSON.stringify({
+            fromAddress:'JakeCI <JakeCI@jakesiegers.com>'
+        }));
     }
+    this.appSettings = JSON.parse(this.fs.readFileSync(this.config.settingsFile,'utf8'));
 
     //Create Cred File
     if (!this.fs.existsSync(this.config.credFile)){
@@ -117,6 +122,35 @@ Jake.prototype.sendResponse = function(response, data){
         success: true,
         data: data
     }));
+};
+
+Jake.prototype.sendEmail = function(mailOptions){
+    var sThis = this;
+    return new Promise(function (resolve, reject) {
+        var transport = sThis.nodemailer.createTransport({
+            service: 'SendGrid',
+            auth: {
+                user: sThis.appSettings.sendgridUsername,
+                pass: sThis.appSettings.sendgridPassword
+            }
+        });
+        /*
+         var mailOptions = {
+         from: 'Jake CI<JakeCI@jakesiegers.com>', // sender address
+         to: 'sirtopeia@yahoo.com', // list of receivers
+         subject: 'Hello ✔', // Subject line
+         text: 'Hello world 🐴', // plaintext body
+         html: '<b>Hello world 🐴</b>' // html body
+         };
+         */
+        sThis.debug('Sending Email');
+        transport.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                return reject(error);
+            }
+            resolve('Email sent: ' + info.response);
+        });
+    });
 };
 
 Jake.prototype.error = function(error){
