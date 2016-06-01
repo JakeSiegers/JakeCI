@@ -7,7 +7,6 @@ function JobRunner(JakeCI){
     this.JakeCI = JakeCI;
     this.jobsQueue = []; //List of job names
     this.activeJobs = {}; //Object of job names. Prevents 2 of the same job from running, and can store info about the active job. Like time started, and command info.
-    this.activeJobLimit = 1;
 }
 
 JobRunner.prototype.getJobQueue = function(params){
@@ -29,22 +28,29 @@ JobRunner.prototype.addJobToQueue = function(params){
 };
 
 JobRunner.prototype.checkToStartANewJob = function(){
-    if(Object.keys(this.activeJobs).length>=this.activeJobLimit     //We're at max consecutive jobs
-        || this.jobsQueue.length == 0                               //Nothing in the job queue
-        || this.activeJobs.hasOwnProperty(this.jobsQueue[0])){      //There's already a job with the same name running
+    //We're at max consecutive jobs or, Nothing in the job queue
+    if(Object.keys(this.activeJobs).length>=this.JakeCI.appSettings.activeJobLimit || this.jobsQueue.length == 0){
         return false;
     }
 
-    //Let's start a job!
-    var nextJob = this.jobsQueue.shift(); // grab the next item
-    this.JakeCI.debug('Removed "'+nextJob+'" from queue');
-    this.startJob(nextJob);
+    //Loop over all jobs in queue to find a good job to start
+    for(var i in this.jobsQueue){
+        //There's NOT already a job with the same name running
+        if(!this.activeJobs.hasOwnProperty(this.jobsQueue[i])){
+            //Let's start a job!
+            var nextJobIndex = this.jobsQueue.indexOf(this.jobsQueue[i]);
+            var nextJob = this.jobsQueue.splice(nextJobIndex, 1)[0]; // grab the next item
+            this.JakeCI.debug('Removed "'+nextJob+'" from queue');
+            this.startJob(nextJob);
+            break;
+        }
+    }
 };
 
 JobRunner.prototype.startJob = function(jobName){
     this.JakeCI.debug('Adding "'+jobName+'" to active jobs');
     var startTime = this.JakeCI.functions.getDateTime();
-    this.activeJobs[jobName] = {started:startTime,passed:null,buildNumber:null,log:''};
+    this.activeJobs[jobName] = {started:startTime,lastFinishTime:null,passed:null,buildNumber:null,log:''};
 
     var jr = this; //Job Runner Scope
     var ps = {}; //Promise Scope
@@ -61,6 +67,7 @@ JobRunner.prototype.startJob = function(jobName){
                 var jobFile = JSON.parse(jobFileContents);
                 jobFile.passed = jobPassed;
                 jobFile.finished = jr.JakeCI.functions.getDateTime();
+                ps.lastFinishTime = new Date(jobFile.finished) - new Date(jobFile.started);
                 return jr.JakeCI.fs.writeFileAsync(ps.jobFile,JSON.stringify(jobFile),'utf8');
             })
             //Read and update build stats
@@ -71,6 +78,7 @@ JobRunner.prototype.startJob = function(jobName){
                 var buildStats = JSON.parse(jsonBuildStats);
                 ps.buildPassing = buildStats.buildPassing;
                 buildStats.buildPassing = jobPassed;
+                buildStats.lastFinishTime = ps.lastFinishTime;
                 return jr.JakeCI.fs.writeFileAsync(buildStatsFile,JSON.stringify(buildStats),'utf8');
             })
             .then(function(){
@@ -120,15 +128,16 @@ JobRunner.prototype.startJob = function(jobName){
 
     this.JakeCI.fs.readFileAsync(buildStatsFile,'utf8').bind(ps)
         .then(function(buildStats){
-            return JSON.parse(buildStats).buildNumber;
+            return JSON.parse(buildStats);
         })
         .catch(function(e){
             //create the file if it doesn't exist, then return 1.
-            return jr.JakeCI.fs.writeFileAsync(buildStatsFile,JSON.stringify({buildNumber:1,buildPassing:null}),'utf8').then(function(){return 1});
+            return jr.JakeCI.fs.writeFileAsync(buildStatsFile,JSON.stringify({buildNumber:1,buildPassing:null,lastFinishTime:null}),'utf8').then(function(){return 1});
         })
-        .then(function(buildNumber){
-            ps.buildNumber = parseInt(buildNumber);
+        .then(function(buildStats){
+            ps.buildNumber = parseInt(buildStats.buildNumber);
             jr.activeJobs[jobName].buildNumber = ps.buildNumber;
+            jr.activeJobs[jobName].lastFinishTime = buildStats.lastFinishTime;
             ps.logFile = jr.JakeCI.path.join(jr.JakeCI.config.jobPath,jobName,'builds',ps.buildNumber+'.log');
             ps.jobFile = jr.JakeCI.path.join(jr.JakeCI.config.jobPath,jobName,'builds',ps.buildNumber+'.json');
             ps.addToLog = function(entry){

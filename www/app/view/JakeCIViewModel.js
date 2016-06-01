@@ -49,6 +49,9 @@ Ext.define('JakeCI.view.JakeCIViewModel', {
                 },
                 {
                     name: 'active'
+                },
+                {
+                    name: 'percentDone'
                 }
             ]
         }

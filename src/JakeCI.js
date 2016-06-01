@@ -28,7 +28,8 @@ function Jake(){
     //Create Settings File
     if (!this.fs.existsSync(this.config.settingsFile)){
         this.fs.writeFileSync(this.config.settingsFile,JSON.stringify({
-            fromAddress:'JakeCI <JakeCI@jakesiegers.com>'
+            fromAddress:'JakeCI <JakeCI@jakesiegers.com>',
+            activeJobLimit:2
         }));
     }
     this.appSettings = JSON.parse(this.fs.readFileSync(this.config.settingsFile,'utf8'));
@@ -128,27 +129,22 @@ Jake.prototype.sendEmail = function(mailOptions){
     var sThis = this;
     return new Promise(function (resolve, reject) {
         var transport = sThis.nodemailer.createTransport({
-            service: 'SendGrid',
+            host: sThis.appSettings.smtpHost,
+            port: sThis.appSettings.smtpPort,
+            secure: (sThis.appSettings.smtpUseSSL == 1), // use SSL
             auth: {
-                user: sThis.appSettings.sendgridUsername,
-                pass: sThis.appSettings.sendgridPassword
+                user: sThis.appSettings.smtpUsername,
+                pass: sThis.appSettings.smtpPassword
             }
         });
-        /*
-         var mailOptions = {
-         from: 'Jake CI<JakeCI@jakesiegers.com>', // sender address
-         to: 'sirtopeia@yahoo.com', // list of receivers
-         subject: 'Hello ✔', // Subject line
-         text: 'Hello world 🐴', // plaintext body
-         html: '<b>Hello world 🐴</b>' // html body
-         };
-         */
         sThis.debug('Sending Email');
         transport.sendMail(mailOptions, function (error, info) {
             if (error) {
                 return reject(error);
             }
-            resolve('Email sent: ' + info.response);
+            var emailOutput = 'Email sent: ' + info.response;
+            sThis.debug(emailOutput);
+            resolve(emailOutput);
         });
     });
 };

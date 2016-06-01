@@ -22,21 +22,25 @@ Ext.define('JakeCI.view.Settings', {
         'Ext.toolbar.Toolbar',
         'Ext.button.Button',
         'Ext.toolbar.Spacer',
-        'Ext.form.field.Text',
-        'Ext.form.FieldSet'
+        'Ext.form.FieldSet',
+        'Ext.form.field.Checkbox',
+        'Ext.form.field.Number'
     ],
 
     viewModel: {
         type: 'settings'
     },
-    height: 369,
+    height: 323,
     itemId: 'settingsPanel',
-    width: 626,
+    width: 677,
     bodyPadding: 10,
     title: '',
-    trackResetOnLoad: true,
     defaultListenerScope: true,
 
+    layout: {
+        type: 'hbox',
+        align: 'stretch'
+    },
     dockedItems: [
         {
             xtype: 'toolbar',
@@ -63,42 +67,77 @@ Ext.define('JakeCI.view.Settings', {
             ]
         }
     ],
+    listeners: {
+        render: 'onSettingsPanelRender'
+    },
     items: [
         {
-            xtype: 'textfield',
-            anchor: '100%',
-            fieldLabel: 'Alert Email',
-            name: 'alertEmail'
-        },
-        {
-            xtype: 'textfield',
-            anchor: '100%',
-            fieldLabel: 'From Address',
-            name: 'fromAddress'
-        },
-        {
             xtype: 'fieldset',
-            title: 'SendGrid Settings',
+            flex: 1,
+            title: 'Email / SMTP',
             items: [
                 {
                     xtype: 'textfield',
                     anchor: '100%',
-                    fieldLabel: 'Username',
-                    name: 'sendgridUsername'
+                    fieldLabel: 'Alert Email',
+                    name: 'alertEmail'
                 },
                 {
                     xtype: 'textfield',
                     anchor: '100%',
-                    fieldLabel: 'Password',
-                    name: 'sendgridPassword',
+                    fieldLabel: 'Email From',
+                    name: 'fromAddress'
+                },
+                {
+                    xtype: 'textfield',
+                    anchor: '100%',
+                    fieldLabel: 'SMTP Host',
+                    name: 'smtpHost'
+                },
+                {
+                    xtype: 'textfield',
+                    anchor: '100%',
+                    fieldLabel: 'SMTP Port',
+                    name: 'smtpPort'
+                },
+                {
+                    xtype: 'textfield',
+                    anchor: '100%',
+                    fieldLabel: 'SMTP User',
+                    name: 'smtpUsername'
+                },
+                {
+                    xtype: 'textfield',
+                    anchor: '100%',
+                    fieldLabel: 'SMTP Pass',
+                    name: 'smtpPassword',
                     inputType: 'password'
+                },
+                {
+                    xtype: 'checkboxfield',
+                    anchor: '100%',
+                    fieldLabel: 'SMTP Use SSL',
+                    name: 'smtpUseSSL',
+                    boxLabel: '',
+                    inputValue: '1',
+                    uncheckedValue: '0'
+                }
+            ]
+        },
+        {
+            xtype: 'fieldset',
+            flex: 1,
+            title: 'Job Building',
+            items: [
+                {
+                    xtype: 'numberfield',
+                    anchor: '100%',
+                    fieldLabel: 'Active Job Limit',
+                    name: 'activeJobLimit'
                 }
             ]
         }
     ],
-    listeners: {
-        render: 'onSettingsPanelRender'
-    },
 
     onButtonClick1: function(button, e, eOpts) {
         this.saveSettings();

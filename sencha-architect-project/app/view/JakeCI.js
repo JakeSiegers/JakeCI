@@ -42,6 +42,32 @@ Ext.define('JakeCI.view.JakeCI', {
     items: [
         {
             xtype: 'gridpanel',
+            cls: 'jobQueue',
+            resizable: true,
+            resizeHandles: 'e',
+            width: 246,
+            collapseDirection: 'right',
+            collapsible: true,
+            headerPosition: 'right',
+            title: 'Job Queue',
+            hideHeaders: true,
+            bind: {
+                store: '{QueueStore}'
+            },
+            columns: [
+                {
+                    xtype: 'gridcolumn',
+                    dataIndex: 'job',
+                    text: 'Job',
+                    flex: 1
+                }
+            ],
+            viewConfig: {
+                width: 346
+            }
+        },
+        {
+            xtype: 'gridpanel',
             flex: 1,
             height: 214,
             itemId: 'jobGrid',
@@ -70,6 +96,9 @@ Ext.define('JakeCI.view.JakeCI', {
                     text: 'Last Error'
                 }
             ],
+            listeners: {
+                rowdblclick: 'onJobGridRowDblClick'
+            },
             dockedItems: [
                 {
                     xtype: 'toolbar',
@@ -95,38 +124,16 @@ Ext.define('JakeCI.view.JakeCI', {
                         }
                     ]
                 }
-            ],
-            listeners: {
-                rowdblclick: 'onJobGridRowDblClick'
-            }
-        },
-        {
-            xtype: 'gridpanel',
-            flex: 1,
-            width: 100,
-            collapseDirection: 'right',
-            collapsible: true,
-            title: 'Job Queue',
-            bind: {
-                store: '{QueueStore}'
-            },
-            columns: [
-                {
-                    xtype: 'gridcolumn',
-                    dataIndex: 'active',
-                    text: 'Active'
-                },
-                {
-                    xtype: 'gridcolumn',
-                    dataIndex: 'job',
-                    text: 'Job',
-                    flex: 1
-                }
             ]
         }
     ],
     listeners: {
         render: 'onViewportRender'
+    },
+
+    onJobGridRowDblClick: function(tableview, record, tr, rowIndex, e, eOpts) {
+        this.showJobWindow();
+        this.jobWindow.jobForm.loadJob(record.get('name'));
     },
 
     onButtonClick1: function(button, e, eOpts) {
@@ -136,11 +143,6 @@ Ext.define('JakeCI.view.JakeCI', {
 
     onButtonClick3: function(button, e, eOpts) {
         this.showSettingsWindow();
-    },
-
-    onJobGridRowDblClick: function(tableview, record, tr, rowIndex, e, eOpts) {
-        this.showJobWindow();
-        this.jobWindow.jobForm.loadJob(record.get('name'));
     },
 
     onViewportRender: function(component, eOpts) {

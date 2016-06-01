@@ -27,6 +27,68 @@
             },
             "codeClass": null,
             "userConfig": {
+                "cls": [
+                    "jobQueue"
+                ],
+                "collapseDirection": "right",
+                "collapsible": true,
+                "dock": null,
+                "headerPosition": "right",
+                "hideHeaders": true,
+                "layout|flex": null,
+                "resizable": true,
+                "resizeHandles": "e",
+                "store": [
+                    "{QueueStore}"
+                ],
+                "title": "Job Queue",
+                "width": 246
+            },
+            "name": "MyGridPanel2",
+            "configAlternates": {
+                "store": "binding",
+                "resizable": "boolean"
+            },
+            "designerId": "dcda73ac-798a-4532-ab5b-e92a55ee0868",
+            "cn": [
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "job",
+                        "flex": 1,
+                        "text": "Job"
+                    },
+                    "name": "MyColumn8",
+                    "designerId": "52d01241-cc56-41e0-a4a9-e85745c2b73b"
+                },
+                {
+                    "type": "Ext.view.Table",
+                    "reference": {
+                        "name": "viewConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "width": 346
+                    },
+                    "name": "MyTable3",
+                    "designerId": "1fda51c8-6e13-4174-bfb4-b1c9af6f78a3"
+                }
+            ]
+        },
+        {
+            "type": "Ext.grid.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
                 "height": 214,
                 "itemId": "jobGrid",
                 "layout|flex": 1,
@@ -96,6 +158,25 @@
                     "codeClass": null,
                     "name": "MyTable",
                     "designerId": "28348b03-39d6-4448-8361-f9f8e4a3ccb5"
+                },
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onJobGridRowDblClick",
+                        "implHandler": [
+                            "this.showJobWindow();",
+                            "this.jobWindow.jobForm.loadJob(record.get('name'));"
+                        ],
+                        "name": "rowdblclick",
+                        "scope": "me"
+                    },
+                    "name": "onJobGridRowDblClick",
+                    "designerId": "faa1254a-444d-439d-878b-b6052b58eef0"
                 },
                 {
                     "type": "Ext.toolbar.Toolbar",
@@ -196,90 +277,6 @@
                             ]
                         }
                     ]
-                },
-                {
-                    "type": "basiceventbinding",
-                    "reference": {
-                        "name": "listeners",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "fn": "onJobGridRowDblClick",
-                        "implHandler": [
-                            "this.showJobWindow();",
-                            "this.jobWindow.jobForm.loadJob(record.get('name'));"
-                        ],
-                        "name": "rowdblclick",
-                        "scope": "me"
-                    },
-                    "name": "onJobGridRowDblClick",
-                    "designerId": "faa1254a-444d-439d-878b-b6052b58eef0"
-                }
-            ]
-        },
-        {
-            "type": "Ext.grid.Panel",
-            "reference": {
-                "name": "items",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "collapseDirection": "right",
-                "collapsible": true,
-                "dock": null,
-                "layout|flex": 1,
-                "store": [
-                    "{QueueStore}"
-                ],
-                "title": "Job Queue",
-                "width": 100
-            },
-            "name": "MyGridPanel2",
-            "configAlternates": {
-                "store": "binding"
-            },
-            "designerId": "dcda73ac-798a-4532-ab5b-e92a55ee0868",
-            "cn": [
-                {
-                    "type": "Ext.grid.column.Column",
-                    "reference": {
-                        "name": "columns",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "dataIndex": "active",
-                        "text": "Active"
-                    },
-                    "name": "MyColumn7",
-                    "designerId": "7d197c3f-d5b7-41e3-b287-d5da469c2302"
-                },
-                {
-                    "type": "Ext.grid.column.Column",
-                    "reference": {
-                        "name": "columns",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "dataIndex": "job",
-                        "flex": 1,
-                        "text": "Job"
-                    },
-                    "name": "MyColumn8",
-                    "designerId": "52d01241-cc56-41e0-a4a9-e85745c2b73b"
-                },
-                {
-                    "type": "Ext.view.Table",
-                    "reference": {
-                        "name": "viewConfig",
-                        "type": "object"
-                    },
-                    "codeClass": null,
-                    "name": "MyTable3",
-                    "designerId": "1fda51c8-6e13-4174-bfb4-b1c9af6f78a3"
                 }
             ]
         },

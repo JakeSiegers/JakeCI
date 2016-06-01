@@ -11,16 +11,24 @@ Job.prototype.getJobQueue = function(request,response){
             var queue = []
             //Is an object
             for(var jobName in reply.active){
+                var progress = 100;
+                
+                if(reply.active[jobName].lastFinishTime !== null){
+                    progress = ((Date.now() - new Date(reply.active[jobName].started)) / reply.active[jobName].lastFinishTime) * 100;
+                }
+
                 queue.push([
-                    jobName, //job name
-                    true //is active
+                    jobName+'<div class="progress" style="left:'+(progress - 100)+'%;"></div>', //job name
+                    true, //is active
+                    progress+"%"
                 ]);
             }
             //Is an array
             for(var i=0;i<reply.queued.length;i++){
                 queue.push([
                     reply.queued[i], //job name
-                    false //is active
+                    false, //is active
+                    0+"%"
                 ]);
             }
             this.JakeCI.sendResponse(response,queue);
