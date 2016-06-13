@@ -22,10 +22,16 @@
                 "data": [
                     "[",
                     "    {",
-                    "        \"repoType\": \"SVN\"",
+                    "        \"repoType\": \"[ None ]\",",
+                    "        \"repoValue\": \"\"",
                     "    },",
                     "    {",
-                    "        \"repoType\": \"GIT\"",
+                    "        \"repoType\": \"Subversion\",",
+                    "        \"repoValue\": \"svn\"",
+                    "    },",
+                    "    {",
+                    "        \"repoType\": \"Git\",",
+                    "        \"repoValue\": \"git\"",
                     "    }",
                     "]"
                 ],
@@ -46,6 +52,19 @@
                     },
                     "name": "MyField5",
                     "designerId": "cfb45970-ffd6-47a1-8b5b-4b1232a89e9c"
+                },
+                {
+                    "type": "Ext.data.field.Field",
+                    "reference": {
+                        "name": "fields",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "repoValue"
+                    },
+                    "name": "MyField12",
+                    "designerId": "aaa19316-c275-4f93-92c1-1d165365b124"
                 }
             ]
         },

@@ -281,7 +281,7 @@
                         "store": [
                             "{RepoTypeStore}"
                         ],
-                        "valueField": "repoType",
+                        "valueField": "repoValue",
                         "width": null
                     },
                     "name": "MyComboBox",

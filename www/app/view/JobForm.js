@@ -106,7 +106,7 @@ Ext.define('JakeCI.view.JobForm', {
                     displayField: 'repoType',
                     forceSelection: true,
                     queryMode: 'local',
-                    valueField: 'repoType',
+                    valueField: 'repoValue',
                     bind: {
                         store: '{RepoTypeStore}'
                     }

@@ -122,8 +122,13 @@ JobEditor.prototype.saveJob = function(params){
             });
         }).then(function(foundJob){
             //Save Config file
+            //console.log(jobData);
             for(var key in jobData){
                 foundJob[key] = jobData[key];
+                //Delete The Key if it exists, and it's being saved as a blank value.
+                if(foundJob.hasOwnProperty(key) && jobData[key] !== null && jobData[key].trim() == ""){
+                    delete foundJob[key];
+                }
             }
             return sThis.JakeCI.fs.writeFileAsync(sThis.JakeCI.path.join(sThis.JakeCI.config.jobPath, foundJob.name,'config.json'),JSON.stringify(foundJob));
         }).then(function(){

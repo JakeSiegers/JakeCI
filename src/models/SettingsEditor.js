@@ -14,11 +14,15 @@ SettingsEditor.prototype.getAllSettings = function(params){
 
 SettingsEditor.prototype.saveSettings = function(params){
     sThis = this;
+    var newSettings = params.data;
     this.JakeCI.fs.readFileAsync(this.JakeCI.config.settingsFile,'utf8')
         .then(function(currentSettings) {
             currentSettings = JSON.parse(currentSettings);
-            for(var key in params.data){
-                currentSettings[key] = params.data[key];
+            for(var key in newSettings){
+                currentSettings[key] = newSettings[key];
+                if(currentSettings.hasOwnProperty(key) && newSettings[key] !== null && newSettings[key].trim() == ""){
+                    delete currentSettings[key];
+                }
             }
             return sThis.JakeCI.fs.writeFileAsync(sThis.JakeCI.config.settingsFile,JSON.stringify(currentSettings));
         })

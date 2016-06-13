@@ -26,15 +26,24 @@ Ext.define('JakeCI.view.JobFormViewModel', {
         RepoTypeStore: {
             data: [
                 {
-                    repoType: 'SVN'
+                    repoType: '[ None ]',
+                    repoValue: ''
                 },
                 {
-                    repoType: 'GIT'
+                    repoType: 'Subversion',
+                    repoValue: 'svn'
+                },
+                {
+                    repoType: 'Git',
+                    repoValue: 'git'
                 }
             ],
             fields: [
                 {
                     name: 'repoType'
+                },
+                {
+                    name: 'repoValue'
                 }
             ]
         },

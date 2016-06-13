@@ -56,6 +56,69 @@ JobRunner.prototype.startJob = function(jobName){
     var buildStatsFile = this.JakeCI.path.join(jobFolder,'buildStats.json');
     var configFile = this.JakeCI.path.join(jobFolder,'config.json');
     var workspaceFolder = this.JakeCI.path.join(jobFolder,'workspace');
+    var logFile = null;
+
+    var addToLog = function(entry){
+        jr.JakeCI.debug(entry);
+        jr.activeJobs[jobName].log += entry+"\n";
+        return jr.JakeCI.fs.writeFileAsync(logFile,entry+"\n",{encoding: 'utf8', flag: 'a'})
+            .catch(function(e){
+                console.error(e);
+            });
+    };
+
+    var executeCmd = function(command){
+        return new Promise(function (resolve, reject) {
+            try {
+                var cmdArray = jr.JakeCI.functions.commandParser(command);
+                var program = cmdArray[0];
+                var programArgs = [];
+                for (var i = 1; i < cmdArray.length; i++) {
+                    programArgs.push(cmdArray[i]);
+                }
+
+                var wstream = jr.JakeCI.fs.createWriteStream(logFile, {flags: 'a'});
+                console.log(program);
+                console.log(programArgs);
+                wstream.write("Executing '" + command + "'");
+
+                var cmd = spawn(program, programArgs, {cwd: workspaceFolder});
+
+                cmd.stdout.on('data', function (data) {
+                    var msg = 'stdout: ' + data;
+                    wstream.write(msg);
+                    addToLog(msg);
+                    jr.activeJobs[jobName].log += data;
+                });
+
+                cmd.stderr.on('data', function (data) {
+                    var msg = 'stderr: ' + data;
+                    wstream.write(msg);
+                    addToLog(msg);
+                    jr.activeJobs[jobName].log += data;
+                });
+
+                cmd.on('error', function(error) {
+                    var msg = "process crashed with error: "+error;
+                    wstream.write(msg);
+                    addToLog(msg);
+                    wstream.end();
+                    resolve({exitCode: -1});
+                });
+
+                cmd.on('exit', function (code) {
+                    var msg = 'process exited with code ' + code;
+                    wstream.write(msg);
+                    addToLog(msg);
+                    wstream.end();
+                    resolve({exitCode: code});
+                });
+            }catch(e){
+                console.log("CAUGHT?");
+                reject(e);
+            }
+        })
+    };
 
     var endBuild = function(jobPassed){
         jr.JakeCI.fs.readFileAsync(ps.jobFile,'utf8').bind(ps)
@@ -123,7 +186,7 @@ JobRunner.prototype.startJob = function(jobName){
             });
     };
 
-    this.JakeCI.fs.readFileAsync(buildStatsFile,'utf8').bind(ps)
+    this.JakeCI.fs.readFileAsync(buildStatsFile,'utf8')
         .then(function(buildStats){
             return JSON.parse(buildStats);
         })
@@ -135,17 +198,9 @@ JobRunner.prototype.startJob = function(jobName){
             ps.buildNumber = parseInt(buildStats.buildNumber);
             jr.activeJobs[jobName].buildNumber = ps.buildNumber;
             jr.activeJobs[jobName].lastFinishTime = buildStats.lastFinishTime;
-            ps.logFile = jr.JakeCI.path.join(jr.JakeCI.config.jobPath,jobName,'builds',ps.buildNumber+'.log');
             ps.jobFile = jr.JakeCI.path.join(jr.JakeCI.config.jobPath,jobName,'builds',ps.buildNumber+'.json');
-            ps.addToLog = function(entry){
-                jr.JakeCI.debug(entry);
-                jr.activeJobs[jobName].log += entry+"\n";
-                return jr.JakeCI.fs.writeFileAsync(ps.logFile,entry+"\n",{encoding: 'utf8', flag: 'a'})
-                    .catch(function(e){
-                        console.error(e);
-                    });
-            };
-            return ps.addToLog("Starting Build: "+ps.buildNumber+" at "+startTime);
+            logFile = jr.JakeCI.path.join(jr.JakeCI.config.jobPath,jobName,'builds',ps.buildNumber+'.log');
+            return addToLog("Starting Build: "+ps.buildNumber+" at "+startTime);
         })
         .then(function(){
             return jr.JakeCI.fs.writeFileAsync(ps.jobFile,JSON.stringify({
@@ -163,58 +218,48 @@ JobRunner.prototype.startJob = function(jobName){
             return jr.JakeCI.fs.writeFileAsync(buildStatsFile,JSON.stringify(buildStats),'utf8');
         })
         .then(function(){
-            return ps.addToLog("Reading '"+configFile+"'");
+            return addToLog("Reading '"+configFile+"'");
         })
         .then(function(){
             return jr.JakeCI.fs.readFileAsync(configFile,'utf8');
         })
         .then(function(jobConfig){
             ps.jobConfig = JSON.parse(jobConfig);
-            return ps.addToLog("Deleting '"+workspaceFolder+"'");
         })
         .then(function(){
-            return jr.JakeCI.rmdirAsync(workspaceFolder);
-        })
-        .then(function(){
-            return ps.addToLog("Cloning '"+ps.jobConfig.repoUrl+"' to '"+workspaceFolder+"'");
-        })
-        .then(function(){
-            return Git.Clone(ps.jobConfig.repoUrl,workspaceFolder);
-        })
-        .then(function(){
-            return this.addToLog("Executing '"+ps.jobConfig.exec+"'");
-        })
-        .then(function(){
-            return new Promise(function (resolve, reject) {
-                var cmdArray = jr.JakeCI.functions.commandParser(ps.jobConfig.exec);
-                var program = cmdArray[0];
-                var programArgs = [];
-                for(var i=1;i<cmdArray.length;i++){
-                    programArgs.push(cmdArray[i]);
+            //If job doesn't have a repo type set, or a repo url set, skip this step!
+            if(!ps.jobConfig.hasOwnProperty('repoType') || !ps.jobConfig.hasOwnProperty('repoUrl')){
+                return;
+            }
+            if(ps.jobConfig.hasOwnProperty('repoType') && ps.jobConfig['repoType'] == 'git'){
+                if(!jr.JakeCI.appSettings.hasOwnProperty('gitBinary')){
+                    throw("Missing Git binary path - Set in JakeCI settings");
                 }
+                return addToLog("Deleting '"+workspaceFolder+"'")
+                    .then(function(){
+                        return jr.JakeCI.rmdirAsync(workspaceFolder);
+                    })
+                    .then(function(){
+                        return addToLog("Git Clone '"+ps.jobConfig.repoUrl+"' to '"+workspaceFolder+"'");
+                    })
+                    .then(function(){
+                        return executeCmd(jr.JakeCI.appSettings.gitBinary+" clone "+ps.jobConfig.repoUrl+" "+workspaceFolder);
+                    })
+            }
+            else if(ps.jobConfig.hasOwnProperty('repoType') && ps.jobConfig['repoType'] == 'svn'){
 
-                var cmd = spawn(program,programArgs,{cwd:workspaceFolder});
-                var wstream = jr.JakeCI.fs.createWriteStream(ps.logFile,{flags:'a'});
+            }
+            else {
+                throw("Job Has Invalid Repo Type");
+            }
 
-                cmd.stdout.on('data', function (data) {
-                    jr.JakeCI.debug('stdout: ' + data);
-                    wstream.write(data);
-                    jr.activeJobs[jobName].log += data;
-                });
-
-                cmd.stderr.on('data', function (data) {
-                    jr.JakeCI.debug('stderr: ' + data);
-                    wstream.write(data);
-                    jr.activeJobs[jobName].log += data;
-                });
-
-                cmd.on('exit', function (code) {
-                    wstream.write('process exited with code ' + code);
-                    console.log('child process exited with code ' + code);
-                    wstream.end();
-                    resolve({exitCode:code});
-                });
-            });
+        })
+        .then(function(){
+            if(ps.jobConfig.hasOwnProperty('exec')){
+                return executeCmd(ps.jobConfig.exec);
+            }
+            //Skipping if no exec command
+            return {exitCode:0};
         })
         .then(function(runResults){
             jr.JakeCI.debug(runResults);
@@ -223,7 +268,7 @@ JobRunner.prototype.startJob = function(jobName){
         //if something crashed, stop and fail the build.
         .catch(function(e){
             console.error(e);
-            return ps.addToLog(e).then(function(){endBuild(false);});
+            return addToLog(e).then(function(){endBuild(false);});
         })
 };
 
