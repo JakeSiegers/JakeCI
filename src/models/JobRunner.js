@@ -1,7 +1,4 @@
 var spawn = require('child_process').spawn;
-var SVN = require('svn');
-var Git = require('nodegit');
-
 
 function JobRunner(JakeCI){
     this.JakeCI = JakeCI;

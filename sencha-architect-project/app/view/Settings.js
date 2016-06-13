@@ -125,15 +125,44 @@ Ext.define('JakeCI.view.Settings', {
             ]
         },
         {
-            xtype: 'fieldset',
+            xtype: 'container',
             flex: 1,
-            title: 'Job Building',
             items: [
                 {
-                    xtype: 'numberfield',
-                    anchor: '100%',
-                    fieldLabel: 'Active Job Limit',
-                    name: 'activeJobLimit'
+                    xtype: 'fieldset',
+                    title: 'Job Building',
+                    items: [
+                        {
+                            xtype: 'numberfield',
+                            anchor: '100%',
+                            fieldLabel: 'Active Job Limit',
+                            name: 'activeJobLimit'
+                        }
+                    ]
+                },
+                {
+                    xtype: 'fieldset',
+                    title: 'Git',
+                    items: [
+                        {
+                            xtype: 'textfield',
+                            anchor: '100%',
+                            fieldLabel: 'Git Binary',
+                            name: 'gitBinary'
+                        }
+                    ]
+                },
+                {
+                    xtype: 'fieldset',
+                    title: 'Subversion',
+                    items: [
+                        {
+                            xtype: 'textfield',
+                            anchor: '100%',
+                            fieldLabel: 'Svn Binary',
+                            name: 'svnBinary'
+                        }
+                    ]
                 }
             ]
         }
