@@ -83,6 +83,20 @@ Ext.define('JakeCI.view.JobHistory', {
                 }
             ]
         }
-    ]
+    ],
+
+    getAllHistory: function(job) {
+        AERP.Ajax.request({
+            url:'/History/getAllHistoryForJob',
+            params:{job:job},
+            success:function(reply){
+                console.log(reply);
+            },
+            failure:function(){
+
+            },
+            scope:this
+        });
+    }
 
 });

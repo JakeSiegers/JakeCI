@@ -134,6 +134,35 @@
                     "designerId": "3c938a06-0422-40a5-8ed8-c20969a45504"
                 }
             ]
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "job"
+                ],
+                "fn": "getAllHistory",
+                "implHandler": [
+                    "AERP.Ajax.request({",
+                    "    url:'/History/getAllHistoryForJob',",
+                    "    params:{job:job},",
+                    "    success:function(reply){",
+                    "        console.log(reply);",
+                    "    },",
+                    "    failure:function(){",
+                    "        ",
+                    "    },",
+                    "    scope:this",
+                    "});"
+                ]
+            },
+            "name": "getAllHistory",
+            "designerId": "f31385c7-abd9-46cb-8749-50e51b0db3b2"
         }
     ]
 }

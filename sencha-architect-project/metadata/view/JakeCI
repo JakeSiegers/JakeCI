@@ -170,7 +170,8 @@
                         "fn": "onJobGridRowDblClick",
                         "implHandler": [
                             "this.showJobWindow();",
-                            "this.jobWindow.jobForm.loadJob(record.get('name'));"
+                            "this.jobWindow.jobForm.loadJob(record.get('name'));",
+                            "this.jobWindow.jobHistory.getAllHistory(record.get('name'))"
                         ],
                         "name": "rowdblclick",
                         "scope": "me"
