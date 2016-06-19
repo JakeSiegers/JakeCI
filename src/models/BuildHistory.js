@@ -10,7 +10,14 @@ BuildHistory.prototype.getBuildHistory = function(params){
     }
     var job = params.data.job;
 
-    console.log(job);
+    var jobDirectory = this.JakeCI.path.join(this.JakeCI.config.jobPath,job,"builds")
+        .then(function(historyFiles){
+            console.log(historyFiles);
+        }).catch(function(e){
+            console.log(e);
+        });
+
+    this.JakeCI.fs.readdirAsync()
 
     params.success();
 };
