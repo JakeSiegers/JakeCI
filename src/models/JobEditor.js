@@ -15,11 +15,13 @@ JobEditor.prototype.getAllJobs = function(params){
         .map(function(fileName){
             var stats = sThis.JakeCI.fs.statAsync(sThis.JakeCI.config.jobPath+'/'+fileName);
             var configContents = sThis.JakeCI.fs.readFileAsync(sThis.JakeCI.config.jobPath+'/'+fileName+'/config.json','utf8').catch(function(){return null;});
-            return sThis.JakeCI.Promise.join(stats,configContents,function(statsResponse,configContentsResponse){
+            var buildStats = sThis.JakeCI.fs.readFileAsync(sThis.JakeCI.config.jobPath+'/'+fileName+'/buildStats.json','utf8').catch(function(){return null;});
+            return sThis.JakeCI.Promise.join(stats,configContents,buildStats,function(statsResponse,configContentsResponse,buildStatsResponse){
                 return {
                     jobName: fileName,
                     stats: statsResponse, //Do we even need stats? you will for isDirectory() to check for sub job folders recursively. Version 2!
-                    config: configContentsResponse
+                    config: JSON.parse(configContentsResponse),
+                    buildStats: JSON.parse(buildStatsResponse)
                 }
             });
         })
@@ -31,7 +33,7 @@ JobEditor.prototype.getAllJobs = function(params){
                 if(rawJobs[i].config == null){
                     continue;
                 }
-                allJobs.push(JSON.parse(rawJobs[i].config));
+                allJobs.push(rawJobs[i]);
             }
             params.success.call(params.scope,allJobs);
         }).catch(function(e){

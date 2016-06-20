@@ -46,11 +46,10 @@ Job.prototype.getAllJobs = function(request, response){
             var formattedJobs = [];
             for(var i=0;i<jobs.length;i++){
                 formattedJobs.push([
-                    jobs[i].name,
-                    jobs[i].description,
-                    jobs[i].exec,
-                    "lastRun??",
-                    "lastFailure??"
+                    jobs[i].config.name,
+                    jobs[i].config.description,
+                    jobs[i].buildStats.buildPassing,
+                    jobs[i].buildStats.lastFinishTime,
                 ]);
             }
             this.JakeCI.sendResponse(response,formattedJobs);

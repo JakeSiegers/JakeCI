@@ -32,13 +32,10 @@ Ext.define('JakeCI.view.JakeCIViewModel', {
                     name: 'description'
                 },
                 {
-                    name: 'exec'
+                    name: 'buildPassing'
                 },
                 {
-                    name: 'lastRun'
-                },
-                {
-                    name: 'lastRunError'
+                    name: 'lastBuildLength'
                 }
             ]
         },

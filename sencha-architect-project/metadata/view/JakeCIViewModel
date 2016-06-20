@@ -58,20 +58,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "name": "exec"
-                    },
-                    "name": "MyField3",
-                    "designerId": "a8072f1b-eef9-4579-a122-ca25c03933bb"
-                },
-                {
-                    "type": "Ext.data.field.Field",
-                    "reference": {
-                        "name": "fields",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "name": "lastRun"
+                        "name": "buildPassing"
                     },
                     "name": "MyField",
                     "designerId": "17075fe1-c5c4-42b6-af21-cc06a24d5cff"
@@ -84,7 +71,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "name": "lastRunError"
+                        "name": "lastBuildLength"
                     },
                     "name": "MyField4",
                     "designerId": "de932ac8-fdee-4fd0-bd9b-d23bd7705593"

@@ -30,8 +30,6 @@ Ext.define('JakeCI.view.JakeCI', {
     viewModel: {
         type: 'jakeci'
     },
-    height: 407,
-    width: 692,
     title: 'JakeCI',
     defaultListenerScope: true,
 
@@ -79,21 +77,32 @@ Ext.define('JakeCI.view.JakeCI', {
             columns: [
                 {
                     xtype: 'gridcolumn',
+                    renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                        if(value == true){
+                            return '<i class="fa fa-thumbs-up" aria-hidden="true" style="color:green;"></i>';
+                        }
+                        return '<i class="fa fa-thumbs-down" aria-hidden="true" style="color:red;"></i>';
+                    },
+                    width: 40,
+                    sortable: false,
+                    dataIndex: 'buildPassing',
+                    menuDisabled: true,
+                    text: ''
+                },
+                {
+                    xtype: 'gridcolumn',
                     width: 193,
                     dataIndex: 'name',
                     text: 'Job Name'
                 },
                 {
                     xtype: 'gridcolumn',
-                    width: 198,
-                    dataIndex: 'lastRun',
-                    text: 'Last Run'
-                },
-                {
-                    xtype: 'gridcolumn',
+                    renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                        return Ext.util.Format.number(value/1000.0,'0.###')+" sec";
+                    },
                     width: 249,
-                    dataIndex: 'lastRunError',
-                    text: 'Last Error'
+                    dataIndex: 'lastBuildLength',
+                    text: 'Last Build Time'
                 }
             ],
             listeners: {

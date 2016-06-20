@@ -9,10 +9,10 @@
         "container|align": "stretch",
         "designer|userAlias": "jakeci",
         "designer|userClassName": "JakeCI",
-        "height": 407,
+        "height": null,
         "layout": "hbox",
         "title": "JakeCI",
-        "width": 692
+        "width": null
     },
     "name": "MyPanel",
     "designerId": "2d62bcac-e0cf-4ff4-be1e-a6cfe9531784",
@@ -112,6 +112,53 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "dataIndex": "buildPassing",
+                        "menuDisabled": true,
+                        "sortable": false,
+                        "text": "",
+                        "width": 40
+                    },
+                    "name": "MyColumn6",
+                    "designerId": "1509ab9e-714d-4a56-b7c5-9b3b6124c4e2",
+                    "cn": [
+                        {
+                            "type": "fixedfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "value",
+                                    "metaData",
+                                    "record",
+                                    "rowIndex",
+                                    "colIndex",
+                                    "store",
+                                    "view"
+                                ],
+                                "fn": "renderer",
+                                "implHandler": [
+                                    "if(value == true){",
+                                    "    return '<i class=\"fa fa-thumbs-up\" aria-hidden=\"true\" style=\"color:green;\"></i>';",
+                                    "}",
+                                    "return '<i class=\"fa fa-thumbs-down\" aria-hidden=\"true\" style=\"color:red;\"></i>';"
+                                ]
+                            },
+                            "name": "renderer",
+                            "designerId": "7f947545-e25d-412b-b1ad-93bd7d375f01"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
                         "dataIndex": "name",
                         "text": "Job Name",
                         "width": 193
@@ -127,27 +174,39 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "dataIndex": "lastRun",
-                        "text": "Last Run",
-                        "width": 198
-                    },
-                    "name": "MyColumn6",
-                    "designerId": "1509ab9e-714d-4a56-b7c5-9b3b6124c4e2"
-                },
-                {
-                    "type": "Ext.grid.column.Column",
-                    "reference": {
-                        "name": "columns",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "dataIndex": "lastRunError",
-                        "text": "Last Error",
+                        "dataIndex": "lastBuildLength",
+                        "text": "Last Build Time",
                         "width": 249
                     },
                     "name": "MyColumn2",
-                    "designerId": "b5188c34-a0c5-4f34-83a2-f036b39b82e0"
+                    "designerId": "b5188c34-a0c5-4f34-83a2-f036b39b82e0",
+                    "cn": [
+                        {
+                            "type": "fixedfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "value",
+                                    "metaData",
+                                    "record",
+                                    "rowIndex",
+                                    "colIndex",
+                                    "store",
+                                    "view"
+                                ],
+                                "fn": "renderer",
+                                "implHandler": [
+                                    "return Ext.util.Format.number(value/1000.0,'0.###')+\" sec\";"
+                                ]
+                            },
+                            "name": "renderer",
+                            "designerId": "e5122ba7-57c9-48c5-a026-7a29111aca37"
+                        }
+                    ]
                 },
                 {
                     "type": "Ext.view.Table",

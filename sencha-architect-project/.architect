@@ -299,13 +299,23 @@
                     "id": "0d164643-0f1a-4f51-bfcb-3150d6dd520a",
                     "cn": [
                         {
+                            "id": "1509ab9e-714d-4a56-b7c5-9b3b6124c4e2",
+                            "cn": [
+                                {
+                                    "id": "7f947545-e25d-412b-b1ad-93bd7d375f01"
+                                }
+                            ]
+                        },
+                        {
                             "id": "41c26bc4-3bc8-43c4-9f92-20b0048e3c21"
                         },
                         {
-                            "id": "1509ab9e-714d-4a56-b7c5-9b3b6124c4e2"
-                        },
-                        {
-                            "id": "b5188c34-a0c5-4f34-83a2-f036b39b82e0"
+                            "id": "b5188c34-a0c5-4f34-83a2-f036b39b82e0",
+                            "cn": [
+                                {
+                                    "id": "e5122ba7-57c9-48c5-a026-7a29111aca37"
+                                }
+                            ]
                         },
                         {
                             "id": "28348b03-39d6-4448-8361-f9f8e4a3ccb5"
@@ -373,9 +383,6 @@
                         },
                         {
                             "id": "e4cf772c-632c-4b59-b0c6-3aec33c27a36"
-                        },
-                        {
-                            "id": "a8072f1b-eef9-4579-a122-ca25c03933bb"
                         },
                         {
                             "id": "17075fe1-c5c4-42b6-af21-cc06a24d5cff"
@@ -592,8 +599,8 @@
         "topInstance": null
     },
     "inspectorState": {
-        "topInstance": "c8bc6396-61e5-41c4-90eb-afea42c4fcfb",
-        "selectedInstance": "f31385c7-abd9-46cb-8749-50e51b0db3b2"
+        "topInstance": "2d62bcac-e0cf-4ff4-be1e-a6cfe9531784",
+        "selectedInstance": "1509ab9e-714d-4a56-b7c5-9b3b6124c4e2"
     },
     "editMode": "code",
     "userSettings": {
