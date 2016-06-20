@@ -8,7 +8,7 @@ Job.prototype.getJobQueue = function(request,response){
 
             console.log(reply);
 
-            var queue = []
+            var queue = [];
             //Is an object
             for(var jobName in reply.active){
                 var progress = 100;
@@ -31,7 +31,7 @@ Job.prototype.getJobQueue = function(request,response){
                     0+"%"
                 ]);
             }
-            this.JakeCI.sendResponse(response,queue);
+            this.JakeCI.sendResponse(response,{data:queue});
         },
         error:function(error){
             this.JakeCI.sendError(response,error);
@@ -52,7 +52,7 @@ Job.prototype.getAllJobs = function(request, response){
                     jobs[i].buildStats.lastFinishTime,
                 ]);
             }
-            this.JakeCI.sendResponse(response,formattedJobs);
+            this.JakeCI.sendResponse(response,{data:formattedJobs});
         },
         error:function(error){
             this.JakeCI.sendError(response,error);
@@ -65,7 +65,7 @@ Job.prototype.getJob = function(request, response){
     this.JakeCI.models['JobEditor'].getJob({
         data:request.body,
         success:function(reply){
-            this.JakeCI.sendResponse(response,reply);
+            this.JakeCI.sendResponse(response,{data:reply});
         },
         error:function(error){
             this.JakeCI.sendError(response,error);
@@ -78,7 +78,7 @@ Job.prototype.saveJob = function(request, response){
     this.JakeCI.models['JobEditor'].saveJob({
         data:request.body,
         success:function(reply){
-            this.JakeCI.sendResponse(response,reply);
+            this.JakeCI.sendResponse(response,{data:reply});
         },
         error:function(error){
             this.JakeCI.sendError(response,error);
@@ -112,7 +112,7 @@ Job.prototype.newJob = function(request, response){
                 .then(sThis.JakeCI.fs.mkdirAsync(buildsFolder))
                 .then(sThis.JakeCI.fs.writeFileAsync(sThis.JakeCI.path.join(sThis.JakeCI.config.jobPath,data.name,'config.json'), JSON.stringify(data)))
                 .then(function(){
-                    sThis.JakeCI.sendResponse(response,{jobName:data.name});
+                    sThis.JakeCI.sendResponse(response,{data:{jobName:data.name}});
                 }).catch(function(e){
                     console.log(e);
                     sThis.JakeCI.sendError(response,"Failed to create Job (does it already exist?)");
@@ -128,7 +128,7 @@ Job.prototype.runJob = function(request, response){
     this.JakeCI.models['JobRunner'].addJobToQueue({
         data:request.body,
         success:function(reply){
-            this.JakeCI.sendResponse(response,reply);
+            this.JakeCI.sendResponse(response,{data:reply});
         },
         error:function(error){
             this.JakeCI.sendError(response,error);

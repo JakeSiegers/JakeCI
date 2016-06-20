@@ -28,11 +28,38 @@
             "codeClass": null,
             "userConfig": {
                 "layout|flex": 1,
+                "store": [
+                    "{HistoryStore}"
+                ],
                 "title": ""
             },
             "name": "MyGridPanel1",
+            "configAlternates": {
+                "store": "binding"
+            },
             "designerId": "8c123cfd-6a80-4c23-af75-32e7b7299404",
             "cn": [
+                {
+                    "type": "Ext.toolbar.Paging",
+                    "reference": {
+                        "name": "dockedItems",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "displayInfo": true,
+                        "dock": "top",
+                        "store": [
+                            "{HistoryStore}"
+                        ],
+                        "width": 360
+                    },
+                    "name": "MyPagingToolbar",
+                    "configAlternates": {
+                        "store": "binding"
+                    },
+                    "designerId": "87c6eb38-b72b-470f-8f67-b9d8f1b139fc"
+                },
                 {
                     "type": "Ext.grid.column.Column",
                     "reference": {
@@ -41,53 +68,12 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "dataIndex": "string",
-                        "text": "String"
+                        "dataIndex": "buildNumber",
+                        "text": "Build #",
+                        "width": 67
                     },
                     "name": "MyColumn1",
                     "designerId": "98dc49fe-b23c-4651-a779-280e13dd2e31"
-                },
-                {
-                    "type": "Ext.grid.column.Number",
-                    "reference": {
-                        "name": "columns",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "dataIndex": "number",
-                        "text": "Number"
-                    },
-                    "name": "MyNumberColumn",
-                    "designerId": "48832b37-9a9f-402a-ae85-0fcdfe6f7529"
-                },
-                {
-                    "type": "Ext.grid.column.Date",
-                    "reference": {
-                        "name": "columns",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "dataIndex": "date",
-                        "text": "Date"
-                    },
-                    "name": "MyDateColumn2",
-                    "designerId": "9482cb2f-aa71-4e8a-9033-ad9a9b8b1e11"
-                },
-                {
-                    "type": "Ext.grid.column.Boolean",
-                    "reference": {
-                        "name": "columns",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "dataIndex": "bool",
-                        "text": "Boolean"
-                    },
-                    "name": "MyBooleanColumn",
-                    "designerId": "07491008-813f-4109-872c-9f27e514ce84"
                 },
                 {
                     "type": "Ext.view.Table",
@@ -148,17 +134,13 @@
                 ],
                 "fn": "getAllHistory",
                 "implHandler": [
-                    "AERP.Ajax.request({",
-                    "    url:'/History/getAllHistoryForJob',",
-                    "    params:{job:job},",
-                    "    success:function(reply){",
-                    "        console.log(reply);",
-                    "    },",
-                    "    failure:function(){",
-                    "        ",
-                    "    },",
-                    "    scope:this",
-                    "});"
+                    "var historyStore = this.lookupViewModel().getStore('HistoryStore');",
+                    "historyStore.getProxy().setExtraParams({",
+                    "    job:job",
+                    "});",
+                    "historyStore.load({callback:function(records,operation,success){",
+                    "",
+                    "}});"
                 ]
             },
             "name": "getAllHistory",

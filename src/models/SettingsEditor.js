@@ -6,7 +6,7 @@ SettingsEditor.prototype.getAllSettings = function(params){
     this.JakeCI.fs.readFileAsync(this.JakeCI.config.settingsFile,'utf8')
         .then(function(currentSettings) {
             currentSettings = JSON.parse(currentSettings);
-            params.success(currentSettings);
+            params.success({data:currentSettings});
         }).catch(function(e){
         params.error(e);
     });
@@ -32,7 +32,7 @@ SettingsEditor.prototype.saveSettings = function(params){
         .then(function(newSettings){
             //update appSettings array;
             sThis.JakeCI.appSettings = JSON.parse(newSettings);
-            params.success(sThis.JakeCI.appSettings);
+            params.success({data:sThis.JakeCI.appSettings});
         })
         .catch(function(e){
             console.error(e);

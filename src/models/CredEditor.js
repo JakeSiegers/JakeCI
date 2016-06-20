@@ -19,7 +19,7 @@ CredEditor.prototype.addCred = function(params){
             currentCreds[params.data.cred] = params.data;
             return sThis.JakeCI.fs.writeFileAsync(sThis.JakeCI.config.credFile,JSON.stringify(currentCreds),'utf8');
         }).then(function(){
-            params.success('Added Cred');
+            params.success({data:'Added Cred'});
         }).catch(function(e){
             params.error(e);
         });
@@ -35,7 +35,7 @@ CredEditor.prototype.getAllCreds = function(params){
             for(var i=0;i<credKeys.length;i++){
                 creds.push(currentCreds[credKeys[i]]);
             }
-            params.success(creds);
+            params.success({data:creds});
         }).catch(function(e){
             params.error(e);
         });

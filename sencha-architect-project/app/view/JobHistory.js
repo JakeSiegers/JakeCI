@@ -20,9 +20,8 @@ Ext.define('JakeCI.view.JobHistory', {
     requires: [
         'JakeCI.view.JobHistoryViewModel',
         'Ext.grid.Panel',
-        'Ext.grid.column.Number',
-        'Ext.grid.column.Date',
-        'Ext.grid.column.Boolean',
+        'Ext.toolbar.Paging',
+        'Ext.grid.column.Column',
         'Ext.view.Table',
         'Ext.form.Panel',
         'Ext.form.field.TextArea'
@@ -44,26 +43,26 @@ Ext.define('JakeCI.view.JobHistory', {
             xtype: 'gridpanel',
             flex: 1,
             title: '',
+            bind: {
+                store: '{HistoryStore}'
+            },
+            dockedItems: [
+                {
+                    xtype: 'pagingtoolbar',
+                    dock: 'top',
+                    width: 360,
+                    displayInfo: true,
+                    bind: {
+                        store: '{HistoryStore}'
+                    }
+                }
+            ],
             columns: [
                 {
                     xtype: 'gridcolumn',
-                    dataIndex: 'string',
-                    text: 'String'
-                },
-                {
-                    xtype: 'numbercolumn',
-                    dataIndex: 'number',
-                    text: 'Number'
-                },
-                {
-                    xtype: 'datecolumn',
-                    dataIndex: 'date',
-                    text: 'Date'
-                },
-                {
-                    xtype: 'booleancolumn',
-                    dataIndex: 'bool',
-                    text: 'Boolean'
+                    width: 67,
+                    dataIndex: 'buildNumber',
+                    text: 'Build #'
                 }
             ]
         },
@@ -86,17 +85,13 @@ Ext.define('JakeCI.view.JobHistory', {
     ],
 
     getAllHistory: function(job) {
-        AERP.Ajax.request({
-            url:'/History/getAllHistoryForJob',
-            params:{job:job},
-            success:function(reply){
-                console.log(reply);
-            },
-            failure:function(){
-
-            },
-            scope:this
+        var historyStore = this.lookupViewModel().getStore('HistoryStore');
+        historyStore.getProxy().setExtraParams({
+            job:job
         });
+        historyStore.load({callback:function(records,operation,success){
+
+        }});
     }
 
 });

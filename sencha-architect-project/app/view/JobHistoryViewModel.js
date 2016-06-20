@@ -15,6 +15,41 @@
 
 Ext.define('JakeCI.view.JobHistoryViewModel', {
     extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.jobhistory'
+    alias: 'viewmodel.jobhistory',
+
+    requires: [
+        'Ext.data.Store',
+        'Ext.data.field.Field',
+        'Ext.data.proxy.Ajax',
+        'Ext.data.reader.Array'
+    ],
+
+    stores: {
+        HistoryStore: {
+            pageSize: 10,
+            fields: [
+                {
+                    name: 'buildNumber'
+                }
+            ],
+            proxy: {
+                type: 'ajax',
+                noCache: false,
+                simpleSortMode: true,
+                url: 'History/getAllHistoryForJob',
+                actionMethods: {
+                    create: 'POST',
+                    read: 'POST',
+                    update: 'POST',
+                    destroy: 'POST'
+                },
+                reader: {
+                    type: 'array',
+                    rootProperty: 'data',
+                    totalProperty: 'total'
+                }
+            }
+        }
+    }
 
 });

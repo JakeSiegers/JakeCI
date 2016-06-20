@@ -119,10 +119,9 @@ Jake.prototype.sendError = function(response, error){
 };
 
 Jake.prototype.sendResponse = function(response, data){
-    response.send(JSON.stringify({
-        success: true,
-        data: data
-    }));
+    console.log(data);
+    data.success = true;
+    response.send(JSON.stringify(data));
 };
 
 Jake.prototype.sendEmail = function(mailOptions){
