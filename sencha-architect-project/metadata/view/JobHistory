@@ -68,12 +68,90 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "dataIndex": "passed",
+                        "menuDisabled": true,
+                        "text": "",
+                        "width": 30
+                    },
+                    "name": "MyColumn7",
+                    "designerId": "b4ceba63-cc97-4d3e-89d7-f9612523043b",
+                    "cn": [
+                        {
+                            "type": "fixedfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "value",
+                                    "metaData",
+                                    "record",
+                                    "rowIndex",
+                                    "colIndex",
+                                    "store",
+                                    "view"
+                                ],
+                                "fn": "renderer",
+                                "implHandler": [
+                                    "if(value === true){",
+                                    "    return '<i class=\"fa fa-thumbs-up\" aria-hidden=\"true\" style=\"color:green;\"></i>';",
+                                    "}",
+                                    "return '<i class=\"fa fa-thumbs-down\" aria-hidden=\"true\" style=\"color:red;\"></i>';"
+                                ]
+                            },
+                            "name": "renderer",
+                            "designerId": "8ea329e3-5791-47de-b2e7-0d58a9cf4542"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
                         "dataIndex": "buildNumber",
                         "text": "Build #",
                         "width": 67
                     },
                     "name": "MyColumn1",
                     "designerId": "98dc49fe-b23c-4651-a779-280e13dd2e31"
+                },
+                {
+                    "type": "Ext.grid.column.Date",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "started",
+                        "format": "M j, Y, g:i a",
+                        "text": "Started",
+                        "width": 170
+                    },
+                    "name": "MyDateColumn",
+                    "designerId": "ac853cb7-1e87-4017-bfe4-f56cc9c70a81"
+                },
+                {
+                    "type": "Ext.grid.column.Date",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "finished",
+                        "format": "M j, Y, g:i a",
+                        "text": "Finished",
+                        "width": 170
+                    },
+                    "name": "MyDateColumn1",
+                    "designerId": "db5ca510-c7c6-4f1b-a479-54290c54177d"
                 },
                 {
                     "type": "Ext.view.Table",
@@ -84,6 +162,37 @@
                     "codeClass": null,
                     "name": "MyTable1",
                     "designerId": "96de060d-d500-47e5-8226-0b6435537694"
+                },
+                {
+                    "type": "Ext.selection.RowModel",
+                    "reference": {
+                        "name": "selModel",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "name": "MyRowSelectionModel",
+                    "designerId": "721d6e9b-9b97-43e6-9c03-f8c2265fa6a8",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onRowModelSelect",
+                                "implHandler": [
+                                    "",
+                                    "this.queryById('logTextArea').setValue(record.get('log'));"
+                                ],
+                                "name": "select",
+                                "scope": "me"
+                            },
+                            "name": "onRowModelSelect",
+                            "designerId": "a4cc342c-1285-48fa-84f4-a8dfc28be718"
+                        }
+                    ]
                 }
             ]
         },
@@ -114,6 +223,7 @@
                     "codeClass": null,
                     "userConfig": {
                         "fieldLabel": "",
+                        "itemId": "logTextArea",
                         "readOnly": true
                     },
                     "name": "MyTextArea1",

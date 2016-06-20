@@ -18,7 +18,10 @@ BuildHistory.prototype.getBuildHistory = function(params){
 
     var jobDirectory = this.JakeCI.path.join(this.JakeCI.config.jobPath,job,"builds");
 
-    this.JakeCI.fs.readdirAsync(jobDirectory)
+    var bs = this; //Build History Scope
+    var ps = {}; //Promise Scope
+
+    this.JakeCI.fs.readdirAsync(jobDirectory).bind(ps)
         .then(function(historyFiles){
             var builds = [];
             for(var i in historyFiles){
@@ -46,10 +49,26 @@ BuildHistory.prototype.getBuildHistory = function(params){
                 }
             }
             return buildsToShow;
+        }).mapSeries(function(buildToShow){
+            var buildConfig = bs.JakeCI.fs.readFileAsync(jobDirectory+'/'+buildToShow+'.json','utf-8').catch(function(e){return "{}"});
+            var buildLog = bs.JakeCI.fs.readFileAsync(jobDirectory+'/'+buildToShow+'.log','utf-8').catch(function(e){return "Failed to read log! ("+e+")"});
+            return bs.JakeCI.Promise.join(buildConfig,buildLog,function(buildConfigResponse,buildLogResponse){
+               return {
+                   buildNumber:buildToShow,
+                   config:JSON.parse(buildConfigResponse),
+                   log:buildLogResponse
+               };
+            });
         }).then(function(buildsToShow){
             var buildsOut = [];
             for(var i in buildsToShow){
-                buildsOut.push([buildsToShow[i]]);
+                buildsOut.push([
+                    buildsToShow[i].buildNumber,
+                    buildsToShow[i].config.passed,
+                    buildsToShow[i].config.started,
+                    buildsToShow[i].config.finished,
+                    buildsToShow[i].log,
+                ]);
             }
             params.success({data:buildsOut,total:totalHistory});
         }).catch(function(e){

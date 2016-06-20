@@ -78,7 +78,7 @@ Ext.define('JakeCI.view.JakeCI', {
                 {
                     xtype: 'gridcolumn',
                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                        if(value == true){
+                        if(value === true){
                             return '<i class="fa fa-thumbs-up" aria-hidden="true" style="color:green;"></i>';
                         }
                         return '<i class="fa fa-thumbs-down" aria-hidden="true" style="color:red;"></i>';

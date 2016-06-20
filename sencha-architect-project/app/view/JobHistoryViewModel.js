@@ -19,7 +19,7 @@ Ext.define('JakeCI.view.JobHistoryViewModel', {
 
     requires: [
         'Ext.data.Store',
-        'Ext.data.field.Field',
+        'Ext.data.field.Date',
         'Ext.data.proxy.Ajax',
         'Ext.data.reader.Array'
     ],
@@ -30,6 +30,22 @@ Ext.define('JakeCI.view.JobHistoryViewModel', {
             fields: [
                 {
                     name: 'buildNumber'
+                },
+                {
+                    name: 'passed'
+                },
+                {
+                    type: 'date',
+                    name: 'started',
+                    dateReadFormat: 'Y-m-d H:i:s'
+                },
+                {
+                    type: 'date',
+                    name: 'finished',
+                    dateReadFormat: 'Y-m-d H:i:s'
+                },
+                {
+                    name: 'log'
                 }
             ],
             proxy: {

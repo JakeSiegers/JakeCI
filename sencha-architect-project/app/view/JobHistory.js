@@ -21,8 +21,9 @@ Ext.define('JakeCI.view.JobHistory', {
         'JakeCI.view.JobHistoryViewModel',
         'Ext.grid.Panel',
         'Ext.toolbar.Paging',
-        'Ext.grid.column.Column',
+        'Ext.grid.column.Date',
         'Ext.view.Table',
+        'Ext.selection.RowModel',
         'Ext.form.Panel',
         'Ext.form.field.TextArea'
     ],
@@ -33,6 +34,7 @@ Ext.define('JakeCI.view.JobHistory', {
     height: 614,
     width: 953,
     title: 'Build History',
+    defaultListenerScope: true,
 
     layout: {
         type: 'hbox',
@@ -60,11 +62,44 @@ Ext.define('JakeCI.view.JobHistory', {
             columns: [
                 {
                     xtype: 'gridcolumn',
+                    renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                        if(value === true){
+                            return '<i class="fa fa-thumbs-up" aria-hidden="true" style="color:green;"></i>';
+                        }
+                        return '<i class="fa fa-thumbs-down" aria-hidden="true" style="color:red;"></i>';
+                    },
+                    width: 30,
+                    dataIndex: 'passed',
+                    menuDisabled: true,
+                    text: ''
+                },
+                {
+                    xtype: 'gridcolumn',
                     width: 67,
                     dataIndex: 'buildNumber',
                     text: 'Build #'
+                },
+                {
+                    xtype: 'datecolumn',
+                    width: 170,
+                    dataIndex: 'started',
+                    text: 'Started',
+                    format: 'M j, Y, g:i a'
+                },
+                {
+                    xtype: 'datecolumn',
+                    width: 170,
+                    dataIndex: 'finished',
+                    text: 'Finished',
+                    format: 'M j, Y, g:i a'
                 }
-            ]
+            ],
+            selModel: {
+                selType: 'rowmodel',
+                listeners: {
+                    select: 'onRowModelSelect'
+                }
+            }
         },
         {
             xtype: 'form',
@@ -77,12 +112,18 @@ Ext.define('JakeCI.view.JobHistory', {
             items: [
                 {
                     xtype: 'textareafield',
+                    itemId: 'logTextArea',
                     fieldLabel: '',
                     readOnly: true
                 }
             ]
         }
     ],
+
+    onRowModelSelect: function(rowmodel, record, index, eOpts) {
+
+        this.queryById('logTextArea').setValue(record.get('log'));
+    },
 
     getAllHistory: function(job) {
         var historyStore = this.lookupViewModel().getStore('HistoryStore');
