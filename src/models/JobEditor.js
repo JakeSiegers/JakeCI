@@ -17,11 +17,15 @@ JobEditor.prototype.getAllJobs = function(params){
             var configContents = sThis.JakeCI.fs.readFileAsync(sThis.JakeCI.config.jobPath+'/'+fileName+'/config.json','utf8').catch(function(){return null;});
             var buildStats = sThis.JakeCI.fs.readFileAsync(sThis.JakeCI.config.jobPath+'/'+fileName+'/buildStats.json','utf8').catch(function(){return null;});
             return sThis.JakeCI.Promise.join(stats,configContents,buildStats,function(statsResponse,configContentsResponse,buildStatsResponse){
+                var buildStats = JSON.parse(buildStatsResponse);
+                if(buildStats === null){
+                    buildStats = {};
+                }
                 return {
                     jobName: fileName,
                     stats: statsResponse, //Do we even need stats? you will for isDirectory() to check for sub job folders recursively. Version 2!
                     config: JSON.parse(configContentsResponse),
-                    buildStats: JSON.parse(buildStatsResponse)
+                    buildStats: buildStats
                 }
             });
         })
@@ -37,7 +41,7 @@ JobEditor.prototype.getAllJobs = function(params){
             }
             params.success.call(params.scope,allJobs);
         }).catch(function(e){
-            console.error(e);
+            console.error(e.stack);
             params.error.call(params.scope,'Failed to load Jobs');
         });
 };

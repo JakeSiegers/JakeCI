@@ -57,14 +57,23 @@ JobRunner.prototype.startJob = function(jobName){
     var configFile = this.JakeCI.path.join(jobFolder,'config.json');
     var workspaceFolder = this.JakeCI.path.join(jobFolder,'workspace');
     var logFile = null;
+    var logFileStream = null
 
     var addToLog = function(entry){
+        //Cannot write to log without a stream!
+        if(logFileStream == null){
+            return;
+        }
+        entry = jr.JakeCI.functions.getDateTime()+": "+entry;
         jr.JakeCI.debug(entry);
         jr.activeJobs[jobName].log += entry+"\n";
-        return jr.JakeCI.fs.writeFileAsync(logFile,entry+"\n",{encoding: 'utf8', flag: 'a'})
+        logFileStream.write(entry+"\n");
+        /*
+        return jr.JakeCI.fs.writeFileAsync(logFile,entry,{encoding: 'utf8', flag: 'a'})
             .catch(function(e){
                 console.error(e);
             });
+         */
     };
 
     var executeCmd = function(command){
@@ -77,40 +86,37 @@ JobRunner.prototype.startJob = function(jobName){
                     programArgs.push(cmdArray[i]);
                 }
 
-                var wstream = jr.JakeCI.fs.createWriteStream(logFile, {flags: 'a'});
-                console.log(program);
-                console.log(programArgs);
-                wstream.write("Executing '" + command + "'");
+                addToLog("Executing '" + command + "'");
 
                 var cmd = spawn(program, programArgs, {cwd: workspaceFolder});
 
                 cmd.stdout.on('data', function (data) {
                     var msg = 'stdout: ' + data;
-                    wstream.write(msg);
+                    //wstream.write(msg);
                     addToLog(msg);
                     jr.activeJobs[jobName].log += data;
                 });
 
                 cmd.stderr.on('data', function (data) {
                     var msg = 'stderr: ' + data;
-                    wstream.write(msg);
+                    //wstream.write(msg);
                     addToLog(msg);
                     jr.activeJobs[jobName].log += data;
                 });
 
                 cmd.on('error', function(error) {
                     var msg = "process crashed with error: "+error;
-                    wstream.write(msg);
+                    //wstream.write(msg);
                     addToLog(msg);
-                    wstream.end();
+                    //wstream.end();
                     resolve({exitCode: -1});
                 });
 
                 cmd.on('exit', function (code) {
                     var msg = 'process exited with code ' + code;
-                    wstream.write(msg);
+                    //wstream.write(msg);
                     addToLog(msg);
-                    wstream.end();
+                    //wstream.end();
                     resolve({exitCode: code});
                 });
             }catch(e){
@@ -143,34 +149,40 @@ JobRunner.prototype.startJob = function(jobName){
             })
             .then(function(){
                 if(!jobPassed){
-                    jr.JakeCI.debug('Sending Failure Email');
+                    addToLog('==== BUILD FAILED ====');
+                    addToLog('Sending Failure Email');
                     return jr.JakeCI.sendEmail({
                         from: jr.JakeCI.appSettings.fromAddress,
                         to: jr.JakeCI.appSettings.alertEmail,
-                        subject: '❌Build FAILURE: '+jobName,
+                        subject: String.fromCodePoint(10060)+' Build FAILURE: '+jobName,
                         html: '<h1>"'+jobName+'" FAILED:</h1><pre>'+jr.activeJobs[jobName].log+'</pre>'
                     });
                 }else{
-                    if(ps.buildPassing == null) {
-                        jr.JakeCI.debug('Sending First Pass Email');
+                    addToLog('==== BUILD PASSED ====');
+                    if(ps.buildPassing === null) {
+                        addToLog('Sending First Pass Email');
                         return jr.JakeCI.sendEmail({
                             from: jr.JakeCI.appSettings.fromAddress,
                             to: jr.JakeCI.appSettings.alertEmail,
-                            subject: '🎉 Build Passed: ' + jobName,
+                            subject: ' Build Passed: ' + jobName,
                             html: '<h1>"'+jobName+'" Passed First Build:</h1>' +
                             '<p>This is the first time you\'ve built this job, and it passed the first time! Good Job!</p>' +
                             '<p>I\'ll only send you emails on build failures from now on.</p>'
                         });
-                    }else if(ps.buildPassing == false){
-                        jr.JakeCI.debug('Sending Back to Normal Email');
+                    }else if(ps.buildPassing === false){
+                        addToLog('Sending Back to Normal Email');
                         return jr.JakeCI.sendEmail({
                             from: jr.JakeCI.appSettings.fromAddress,
                             to: jr.JakeCI.appSettings.alertEmail,
-                            subject: '👍 Build Back to Normal: '+jobName,
+                            subject: ' Build Back to Normal: '+jobName,
                             html: '<h1>"'+jobName+'" Is Back To Normal</h1>'
                         });
                     }
                 }
+            })
+            .catch(function(e){
+                addToLog('Failed to Properly End Build');
+                addToLog(e);
             })
             .then(function(){
                 jr.JakeCI.debug('Removing "'+jobName+'" from active jobs');
@@ -179,10 +191,6 @@ JobRunner.prototype.startJob = function(jobName){
             .then(function(){
                 jr.JakeCI.debug('Starting next job in queue (if any)');
                 jr.checkToStartANewJob();
-            })
-            .catch(function(e){
-                jr.JakeCI.debug('Failed to end a build, Crashing!');
-                jr.JakeCI.error(e);
             });
     };
 
@@ -192,7 +200,8 @@ JobRunner.prototype.startJob = function(jobName){
         })
         .catch(function(e){
             //create the file if it doesn't exist, then return 1.
-            return jr.JakeCI.fs.writeFileAsync(buildStatsFile,JSON.stringify({buildNumber:1,buildPassing:null,lastFinishTime:null}),'utf8').then(function(){return 1});
+            var defaultBuildStats = {buildNumber:1,buildPassing:null,lastFinishTime:null};
+            return jr.JakeCI.fs.writeFileAsync(buildStatsFile,JSON.stringify(defaultBuildStats),'utf8').then(function(){return defaultBuildStats});
         })
         .then(function(buildStats){
             ps.buildNumber = parseInt(buildStats.buildNumber);
@@ -200,9 +209,8 @@ JobRunner.prototype.startJob = function(jobName){
             jr.activeJobs[jobName].lastFinishTime = buildStats.lastFinishTime;
             ps.jobFile = jr.JakeCI.path.join(jr.JakeCI.config.jobPath,jobName,'builds',ps.buildNumber+'.json');
             logFile = jr.JakeCI.path.join(jr.JakeCI.config.jobPath,jobName,'builds',ps.buildNumber+'.log');
-            return addToLog("Starting Build: "+ps.buildNumber+" at "+startTime);
-        })
-        .then(function(){
+            logFileStream = jr.JakeCI.fs.createWriteStream(logFile, {flags: 'a'});
+            addToLog("Starting Build: "+ps.buildNumber+" at "+startTime);
             return jr.JakeCI.fs.writeFileAsync(ps.jobFile,JSON.stringify({
                 started:startTime,
                 finished:null,
@@ -218,9 +226,7 @@ JobRunner.prototype.startJob = function(jobName){
             return jr.JakeCI.fs.writeFileAsync(buildStatsFile,JSON.stringify(buildStats),'utf8');
         })
         .then(function(){
-            return addToLog("Reading '"+configFile+"'");
-        })
-        .then(function(){
+            addToLog("Reading '"+configFile+"'");
             return jr.JakeCI.fs.readFileAsync(configFile,'utf8');
         })
         .then(function(jobConfig){
@@ -235,14 +241,10 @@ JobRunner.prototype.startJob = function(jobName){
                 if(!jr.JakeCI.appSettings.hasOwnProperty('gitBinary')){
                     throw("Missing Git binary path - Set in JakeCI settings");
                 }
-                return addToLog("Deleting '"+workspaceFolder+"'")
+                addToLog("Deleting '"+workspaceFolder+"'");
+                return jr.JakeCI.rmdirAsync(workspaceFolder)
                     .then(function(){
-                        return jr.JakeCI.rmdirAsync(workspaceFolder);
-                    })
-                    .then(function(){
-                        return addToLog("Git Clone '"+ps.jobConfig.repoUrl+"' to '"+workspaceFolder+"'");
-                    })
-                    .then(function(){
+                        addToLog("Git Clone '"+ps.jobConfig.repoUrl+"' to '"+workspaceFolder+"'");
                         return executeCmd(jr.JakeCI.appSettings.gitBinary+" clone "+ps.jobConfig.repoUrl+" "+workspaceFolder);
                     })
             }
@@ -267,8 +269,9 @@ JobRunner.prototype.startJob = function(jobName){
         })
         //if something crashed, stop and fail the build.
         .catch(function(e){
-            console.error(e);
-            return addToLog(e).then(function(){endBuild(false);});
+            console.error(e.stack);
+            addToLog(e);
+            return endBuild(false);
         })
 };
 

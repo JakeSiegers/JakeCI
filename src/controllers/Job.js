@@ -6,7 +6,7 @@ Job.prototype.getJobQueue = function(request,response){
     this.JakeCI.models['JobRunner'].getJobQueue({
         success:function(reply){
 
-            console.log(reply);
+            //console.log(reply);
 
             var queue = [];
             //Is an object
