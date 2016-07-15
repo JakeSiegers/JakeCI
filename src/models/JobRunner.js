@@ -189,6 +189,8 @@ JobRunner.prototype.startJob = function(jobName){
                 delete jr.activeJobs[jobName];
             })
             .then(function(){
+                jr.JakeCI.debug('Closing Log File');
+                logFileStream.close();
                 jr.JakeCI.debug('Starting next job in queue (if any)');
                 jr.checkToStartANewJob();
             });
@@ -231,6 +233,14 @@ JobRunner.prototype.startJob = function(jobName){
         })
         .then(function(jobConfig){
             ps.jobConfig = JSON.parse(jobConfig);
+        })
+        .then(function(){
+            addToLog("Creating '"+workspaceFolder+"' if it doesn't exist");
+            return jr.JakeCI.fs.statAsync(workspaceFolder).catch(function(){
+                //Folder doesn't exist, so lets try and create it.
+                return jr.JakeCI.fs.mkdirAsync(workspaceFolder);
+            });
+
         })
         .then(function(){
             //If job doesn't have a repo type set, or a repo url set, skip this step!
