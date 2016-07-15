@@ -171,22 +171,26 @@ JobRunner.prototype.startJob = function(jobName){
                             html: '<h1>"'+jobName+'" Is Back To Normal</h1>'
                         });
                     }
+                    return ""; //to check in next step, no emails were sent.
                 }
             })
             .then(function(emailResponse){
-                addToLog(emailResponse);
+                if(emailResponse.length > 0){
+                    addToLog(emailResponse);
+                }
             })
             .catch(function(e){
                 addToLog('Failed to Properly End Build');
                 addToLog(e);
             })
             .then(function(){
+                addToLog("--- END OF LOG ---");
                 jr.JakeCI.debug('Removing "'+jobName+'" from active jobs');
                 delete jr.activeJobs[jobName];
             })
             .then(function(){
-                jr.JakeCI.debug('Closing Log File');
-                logFileStream.close();
+                //jr.JakeCI.debug('Closing Log File');
+                //logFileStream.close();
                 jr.JakeCI.debug('Starting next job in queue (if any)');
                 jr.checkToStartANewJob();
             });
