@@ -76,17 +76,11 @@ JobRunner.prototype.startJob = function(jobName){
          */
     };
 
-    var executeCmd = function(command){
+    var executeCmd = function(program,programArgs){
         return new Promise(function (resolve, reject) {
             try {
-                var cmdArray = jr.JakeCI.functions.commandParser(command);
-                var program = cmdArray[0];
-                var programArgs = [];
-                for (var i = 1; i < cmdArray.length; i++) {
-                    programArgs.push(cmdArray[i]);
-                }
 
-                addToLog("Executing '" + command + "'");
+                addToLog("Executing '"+program+" "+programArgs.join(" ")+"'");
 
                 var cmd = spawn(program, programArgs, {cwd: workspaceFolder});
 
@@ -120,7 +114,6 @@ JobRunner.prototype.startJob = function(jobName){
                     resolve({exitCode: code});
                 });
             }catch(e){
-                console.log("CAUGHT?");
                 reject(e);
             }
         })
@@ -180,6 +173,9 @@ JobRunner.prototype.startJob = function(jobName){
                     }
                 }
             })
+            .then(function(emailResponse){
+                addToLog(emailResponse);
+            })
             .catch(function(e){
                 addToLog('Failed to Properly End Build');
                 addToLog(e);
@@ -235,12 +231,12 @@ JobRunner.prototype.startJob = function(jobName){
             ps.jobConfig = JSON.parse(jobConfig);
         })
         .then(function(){
-            addToLog("Creating '"+workspaceFolder+"' if it doesn't exist");
-            return jr.JakeCI.fs.statAsync(workspaceFolder).catch(function(){
-                //Folder doesn't exist, so lets try and create it.
-                return jr.JakeCI.fs.mkdirAsync(workspaceFolder);
-            });
-
+            addToLog("Deleting '"+workspaceFolder+"'");
+            return jr.JakeCI.rmdirAsync(workspaceFolder)
+        })
+        .then(function(){
+            addToLog("Creating '"+workspaceFolder+"'");
+            return jr.JakeCI.fs.mkdirAsync(workspaceFolder)
         })
         .then(function(){
             //If job doesn't have a repo type set, or a repo url set, skip this step!
@@ -251,12 +247,10 @@ JobRunner.prototype.startJob = function(jobName){
                 if(!jr.JakeCI.appSettings.hasOwnProperty('gitBinary')){
                     throw("Missing Git binary path - Set in JakeCI settings");
                 }
-                addToLog("Deleting '"+workspaceFolder+"'");
-                return jr.JakeCI.rmdirAsync(workspaceFolder)
-                    .then(function(){
-                        addToLog("Git Clone '"+ps.jobConfig.repoUrl+"' to '"+workspaceFolder+"'");
-                        return executeCmd(jr.JakeCI.appSettings.gitBinary+" clone "+ps.jobConfig.repoUrl+" "+workspaceFolder);
-                    })
+
+                addToLog("Git Clone '"+ps.jobConfig.repoUrl+"'");
+                return executeCmd(jr.JakeCI.appSettings.gitBinary,["clone",ps.jobConfig.repoUrl,workspaceFolder]);
+
             }
             else if(ps.jobConfig.hasOwnProperty('repoType') && ps.jobConfig['repoType'] == 'svn'){
 
@@ -268,7 +262,14 @@ JobRunner.prototype.startJob = function(jobName){
         })
         .then(function(){
             if(ps.jobConfig.hasOwnProperty('exec')){
-                return executeCmd(ps.jobConfig.exec);
+                //Parse exec, into program and commands
+                var cmdArray = jr.JakeCI.functions.commandParser(ps.jobConfig.exec);
+                var program = cmdArray[0];
+                var programArgs = [];
+                for (var i = 1; i < cmdArray.length; i++) {
+                    programArgs.push(cmdArray[i]);
+                }
+                return executeCmd(program,programArgs);
             }
             //Skipping if no exec command
             return {exitCode:0};

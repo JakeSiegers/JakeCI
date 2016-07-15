@@ -19,7 +19,7 @@ SettingsEditor.prototype.saveSettings = function(params){
         .then(function(currentSettings) {
             currentSettings = JSON.parse(currentSettings);
             for(var key in newSettings){
-                currentSettings[key] = newSettings[key];
+                currentSettings[key] = newSettings[key].trim();
                 if(currentSettings.hasOwnProperty(key) && newSettings[key] !== null && newSettings[key].trim() == ""){
                     delete currentSettings[key];
                 }

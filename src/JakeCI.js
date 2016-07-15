@@ -126,6 +126,10 @@ Jake.prototype.sendResponse = function(response, data){
 Jake.prototype.sendEmail = function(mailOptions){
     var sThis = this;
     return new Promise(function (resolve, reject) {
+        if(!sThis.appSettings.hasOwnProperty('sendEmail')){
+            return resolve("[Email Is Disabled]");
+        }
+
         var transport = sThis.nodemailer.createTransport({
             host: sThis.appSettings.smtpHost,
             port: sThis.appSettings.smtpPort,
@@ -142,7 +146,7 @@ Jake.prototype.sendEmail = function(mailOptions){
             }
             var emailOutput = 'Email sent: ' + info.response;
             sThis.debug(emailOutput);
-            resolve(emailOutput);
+            return resolve(emailOutput);
         });
     });
 };

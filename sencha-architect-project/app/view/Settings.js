@@ -77,6 +77,15 @@ Ext.define('JakeCI.view.Settings', {
             title: 'Email / SMTP',
             items: [
                 {
+                    xtype: 'checkboxfield',
+                    anchor: '100%',
+                    fieldLabel: 'Send Emails',
+                    name: 'sendEmails',
+                    boxLabel: '',
+                    inputValue: '1',
+                    uncheckedValue: '0'
+                },
+                {
                     xtype: 'textfield',
                     anchor: '100%',
                     fieldLabel: 'Alert Email',

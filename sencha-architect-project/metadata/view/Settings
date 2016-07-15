@@ -204,6 +204,25 @@
             "designerId": "41c0bc1a-64b3-46bb-8756-5cd07e839224",
             "cn": [
                 {
+                    "type": "Ext.form.field.Checkbox",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "boxLabel": "",
+                        "designer|displayName": "",
+                        "fieldLabel": "Send Emails",
+                        "inputValue": "1",
+                        "layout|anchor": "100%",
+                        "name": "sendEmails",
+                        "uncheckedValue": "0"
+                    },
+                    "name": "MyCheckbox1",
+                    "designerId": "72f08660-ee58-4f32-bd80-5bb7bd1f1663"
+                },
+                {
                     "type": "Ext.form.field.Text",
                     "reference": {
                         "name": "items",
