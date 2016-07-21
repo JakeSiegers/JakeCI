@@ -422,13 +422,6 @@ Ext.define('DocForm',{
 					field.removeCls('docFormSearchable');
 					field.removeCls('docFormChanged');
 					field.setReadOnly(false);
-
-					// If you have a field, but never set data for it, disable it.
-					// This shoudl never happen unless you have an inconsistency between your data and your form
-					if(!this.docFormCurrentDocument.hasOwnProperty(field.itemId)){
-						field.setReadOnly(true);
-						field.addCls('docFormReadOnly');
-					}
 				});
 				break;
 			case 'edit':
@@ -443,10 +436,6 @@ Ext.define('DocForm',{
 					field.removeCls('docFormReadOnly');
 					field.removeCls('docFormSearchable');
 					field.setReadOnly(false);
-					if(!this.docFormCurrentDocument.hasOwnProperty(field.itemId)){
-						field.setReadOnly(true);
-						field.addCls('docFormReadOnly');
-					}
 				});
 				break;
 			case 'new':
@@ -548,7 +537,7 @@ Ext.define('DocForm',{
 		//this.getForm().trackResetOnLoad = true; //Auto-cleans fields when loaded with setValues()
 		this.docFormFields = {};
 		var doubleFields = [];
-		this.docFormSupportedXTypes = ["textfield","textarea","combobox","checkbox","displayfield","numberfield","datefield"];
+		this.docFormSupportedXTypes = ["textfield","textarea","combobox","combo","checkbox","displayfield","numberfield","datefield"];
 
 		this.docFormSubsChangesConfirmed = false;
 		this.docFormSubs = [];
@@ -609,6 +598,7 @@ Ext.define('DocForm',{
 		parent.items.each(function(child){
 			var xType = child.getXType();
 			var itemId = child.getItemId();
+			console.log(itemId+" - "+xType);
 			if(this.docFormSupportedXTypes.indexOf(xType) != -1){
 				results.push(child);
 			}

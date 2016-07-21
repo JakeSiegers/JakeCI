@@ -228,9 +228,10 @@
                     "userConfig": {
                         "fn": "onJobGridRowDblClick",
                         "implHandler": [
-                            "this.showJobWindow();",
-                            "this.jobWindow.jobForm.loadJob(record.get('name'));",
-                            "this.jobWindow.jobHistory.getAllHistory(record.get('name'))"
+                            "this.showJobWindow(function(form){",
+                            "    form.loadJob(record.get('name'));",
+                            "    //form.getAllHistory(record.get('name'))",
+                            "});"
                         ],
                         "name": "rowdblclick",
                         "scope": "me"

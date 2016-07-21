@@ -248,16 +248,13 @@ Ext.define('JakeCI.view.JobForm', {
     },
 
     loadJob: function(jobName) {
-
         this.mask('Loading Job...');
-
         AERP.Ajax.request({
             url:'/Job/getJob',
             params:{jobName:jobName},
             success:function(reply){
                 this.unmask();
-                this.setState('edit');
-                this.getForm().setValues(reply.data);
+                this.docFormLoadFormData(reply);
                 this.currentJob = reply.data.name;
             },
             failure:function(){
@@ -295,7 +292,7 @@ Ext.define('JakeCI.view.JobForm', {
             },
             success:function(reply){
                 this.unmask();
-                this.getForm().setValues(reply.data);
+                this.docFormLoadFormData(reply);
                 this.currentJob = reply.data.name;
                 this.fireEvent('savejob');
             },

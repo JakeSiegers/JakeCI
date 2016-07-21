@@ -141,9 +141,10 @@ Ext.define('JakeCI.view.JakeCI', {
     },
 
     onJobGridRowDblClick: function(tableview, record, tr, rowIndex, e, eOpts) {
-        this.showJobWindow();
-        this.jobWindow.jobForm.loadJob(record.get('name'));
-        this.jobWindow.jobHistory.getAllHistory(record.get('name'))
+        this.showJobWindow(function(form){
+            form.loadJob(record.get('name'));
+            //form.getAllHistory(record.get('name'))
+        });
     },
 
     onButtonClick1: function(button, e, eOpts) {

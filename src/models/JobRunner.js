@@ -64,6 +64,7 @@ JobRunner.prototype.startJob = function(jobName){
         if(logFileStream == null){
             return;
         }
+
         entry = jr.JakeCI.functions.getDateTime()+": "+entry;
         jr.JakeCI.debug(entry);
         jr.activeJobs[jobName].log += entry+"\n";
@@ -185,12 +186,11 @@ JobRunner.prototype.startJob = function(jobName){
             })
             .then(function(){
                 addToLog("--- END OF LOG ---");
+                logFileStream.end();
                 jr.JakeCI.debug('Removing "'+jobName+'" from active jobs');
                 delete jr.activeJobs[jobName];
             })
             .then(function(){
-                //jr.JakeCI.debug('Closing Log File');
-                //logFileStream.close();
                 jr.JakeCI.debug('Starting next job in queue (if any)');
                 jr.checkToStartANewJob();
             });
