@@ -17,11 +17,13 @@ Ext.define('JakeCI.view.JobForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.jobform',
 
+    mixins: [
+        'DocForm'
+    ],
     requires: [
         'JakeCI.view.JobFormViewModel',
         'Ext.button.Button',
         'Ext.toolbar.Toolbar',
-        'Ext.toolbar.Spacer',
         'Ext.form.FieldSet',
         'Ext.form.field.TextArea',
         'Ext.form.field.ComboBox'
@@ -75,15 +77,15 @@ Ext.define('JakeCI.view.JobForm', {
             items: [
                 {
                     xtype: 'textfield',
+                    itemId: 'name',
                     fieldLabel: 'Name',
-                    labelAlign: 'right',
-                    name: 'name'
+                    labelAlign: 'right'
                 },
                 {
                     xtype: 'textareafield',
+                    itemId: 'description',
                     fieldLabel: 'Description',
-                    labelAlign: 'right',
-                    name: 'description'
+                    labelAlign: 'right'
                 }
             ]
         },
@@ -98,10 +100,10 @@ Ext.define('JakeCI.view.JobForm', {
                 {
                     xtype: 'combobox',
                     flex: 1,
+                    itemId: 'repoType',
                     maxWidth: 200,
                     fieldLabel: 'Repo Type',
                     labelAlign: 'right',
-                    name: 'repoType',
                     editable: false,
                     displayField: 'repoType',
                     forceSelection: true,
@@ -114,9 +116,9 @@ Ext.define('JakeCI.view.JobForm', {
                 {
                     xtype: 'textfield',
                     flex: 1,
+                    itemId: 'repoUrl',
                     fieldLabel: 'Repo Url',
-                    labelAlign: 'right',
-                    name: 'repoUrl'
+                    labelAlign: 'right'
                 },
                 {
                     xtype: 'container',
@@ -130,9 +132,9 @@ Ext.define('JakeCI.view.JobForm', {
                         {
                             xtype: 'combobox',
                             flex: 1,
+                            itemId: 'repoCredentials',
                             fieldLabel: 'Credentials',
                             labelAlign: 'right',
-                            name: 'repoCredentials',
                             editable: false,
                             displayField: 'cred',
                             forceSelection: true,
@@ -164,9 +166,9 @@ Ext.define('JakeCI.view.JobForm', {
             items: [
                 {
                     xtype: 'textareafield',
+                    itemId: 'exec',
                     fieldLabel: 'Exec',
-                    labelAlign: 'right',
-                    name: 'exec'
+                    labelAlign: 'right'
                 }
             ]
         },
@@ -180,9 +182,9 @@ Ext.define('JakeCI.view.JobForm', {
             items: [
                 {
                     xtype: 'textfield',
+                    itemId: 'cron',
                     fieldLabel: 'Cron Schedule',
-                    labelAlign: 'right',
-                    name: 'cron'
+                    labelAlign: 'right'
                 }
             ]
         },
@@ -196,9 +198,9 @@ Ext.define('JakeCI.view.JobForm', {
             items: [
                 {
                     xtype: 'textfield',
+                    itemId: 'email',
                     fieldLabel: 'Email',
-                    labelAlign: 'right',
-                    name: 'email'
+                    labelAlign: 'right'
                 }
             ]
         }
@@ -207,52 +209,42 @@ Ext.define('JakeCI.view.JobForm', {
         {
             xtype: 'toolbar',
             dock: 'top',
-            items: [
-                {
-                    xtype: 'button',
-                    itemId: 'saveJobBtn',
-                    text: '<i class="fa fa-floppy-o"></i> Save Job',
-                    listeners: {
-                        click: 'onButtonClick4'
-                    }
-                },
-                {
-                    xtype: 'button',
-                    itemId: 'newJobBtn',
-                    text: '<i class="fa fa-plus"></i> Add New Job',
-                    listeners: {
-                        click: 'onButtonClick41'
-                    }
-                },
-                {
-                    xtype: 'tbspacer',
-                    flex: 1
-                }
-            ]
+            itemId: 'jobFormToolbar'
         }
     ],
     listeners: {
-        render: 'onJobPanelRender'
+        afterrender: 'onJobPanelAfterRender'
     },
 
     onExecuteJobBtnClick: function(button, e, eOpts) {
         this.runLoadedJob();
     },
 
-    onButtonClick4: function(button, e, eOpts) {
-        this.saveJob();
-    },
-
-    onButtonClick41: function(button, e, eOpts) {
-        this.addNewJob();
-    },
-
     onButtonClick: function(button, e, eOpts) {
         this.fireEvent('showcredwindow');
     },
 
-    onJobPanelRender: function(component, eOpts) {
-        this.loadCreds();
+    onJobPanelAfterRender: function(component, eOpts) {
+        //this.loadCreds();
+
+        this.docFormInit({
+            docFormToolbar:{
+                id:'jobFormToolbar',
+                addFn:'addNewJob',
+                saveFn:'saveJob'
+            }
+        });
+
+        AERP.Ajax.request({
+            url:'/Creds/getAllCreds',
+            success:function(reply){
+                this.lookupViewModel().getStore('CredStore').setData(reply.data);
+
+                this.fireEvent('docforminitcomplete',this);
+            },
+            scope:this
+        });
+
     },
 
     loadJob: function(jobName) {
@@ -326,47 +318,6 @@ Ext.define('JakeCI.view.JobForm', {
             },
             failure:function(){
                 this.unmask();
-            },
-            scope:this
-        });
-    },
-
-    setState: function(newState) {
-        this.currentState = newState;
-
-        this.currentJob = null;
-        this.getForm().getFields().each(function(field){
-            field.setValue('');
-            field.resetOriginalValue();
-        });
-
-        var executeJobBtn = this.queryById('executeJobBtn');
-        var newJobBtn = this.queryById('newJobBtn');
-        var saveJobBtn = this.queryById('saveJobBtn');
-
-        executeJobBtn.disable();
-        newJobBtn.hide();
-        saveJobBtn.hide();
-
-        switch(newState){
-            case 'new':
-                newJobBtn.show();
-                break;
-            case 'edit':
-                executeJobBtn.enable();
-                saveJobBtn.show();
-                break;
-        }
-    },
-
-    loadCreds: function() {
-        AERP.Ajax.request({
-            url:'/Creds/getAllCreds',
-            success:function(reply){
-                this.lookupViewModel().getStore('CredStore').setData(reply.data);
-            },
-            failure:function(){
-
             },
             scope:this
         });

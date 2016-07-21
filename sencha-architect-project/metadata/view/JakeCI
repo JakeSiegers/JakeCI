@@ -278,8 +278,9 @@
                                     "userConfig": {
                                         "fn": "onButtonClick1",
                                         "implHandler": [
-                                            "this.showJobWindow();",
-                                            "this.jobWindow.jobForm.setState('new');"
+                                            "this.showJobWindow(function(form){",
+                                            "    form.docFormNew();",
+                                            "});"
                                         ],
                                         "name": "click",
                                         "scope": "me"
@@ -405,12 +406,22 @@
             },
             "codeClass": null,
             "userConfig": {
+                "designer|params": [
+                    "firstFunction"
+                ],
                 "fn": "showJobWindow",
                 "implHandler": [
+                    "if(!firstFunction){",
+                    "    firstFunction = function(){};",
+                    "}",
+                    "",
                     "if(!this.jobWindow){",
                     "    var form = Ext.create('widget.jobform',{",
                     "        listeners:{",
                     "            scope:this,",
+                    "            docforminitcomplete:function(docForm){",
+                    "                firstFunction(docForm);",
+                    "            },",
                     "            addjob:function(){",
                     "                this.getAllJobs();",
                     "            },",
@@ -423,21 +434,25 @@
                     "        }",
                     "    });",
                     "    var history = Ext.create('widget.jobhistory',{});",
-                    "",
                     "    this.jobWindow = Ext.create('Ext.window.Window', {",
-                    "        resizable: true,",
+                    "        resizable: false,",
                     "        layout: 'fit',",
                     "        closeAction: 'hide',",
                     "        title: 'Job Editor',",
-                    "        liveDrag:true,",
-                    "        items: Ext.create('Ext.tab.Panel',{",
+                    "        items:  Ext.create('Ext.tab.Panel',{",
                     "            items: [form,history]",
-                    "        })",
+                    "        }),",
+                    "        liveDrag:true,",
+                    "        listeners:{",
+                    "            beforeclose: form.docFormWindowBeforeClose",
+                    "        }",
                     "    });",
-                    "    this.jobWindow.jobForm = form;",
-                    "    this.jobWindow.jobHistory = history;",
+                    "    this.jobWindow.docForm = form;",
+                    "}else{",
+                    "    firstFunction(this.jobWindow.docForm);",
                     "}",
-                    "this.jobWindow.show();"
+                    "this.jobWindow.show();",
+                    "this.jobWindow.focus();"
                 ]
             },
             "name": "showJobWindow",

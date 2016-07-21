@@ -13,7 +13,7 @@
             }
         },
         "urlPrefix": "http://localhost:3000",
-        "exportPath": "/Users/Jake/Desktop/JakeCI/www",
+        "exportPath": "C:/Users/jsiegers/Desktop/JakeCI/www",
         "projectHasEnabledWebServer": false,
         "lockUrlPrefix": false,
         "buildShouldOverwriteIndex": true,
@@ -61,7 +61,8 @@
             "1194177d-33c2-484d-a961-279b466656ef",
             "cc769fa0-d1d0-46eb-ba86-661648e5860f",
             "e19ca938-9b9a-4c0e-aca0-16ad129307a8",
-            "38c58fae-5aa4-42c4-a592-0c6f57e40691"
+            "38c58fae-5aa4-42c4-a592-0c6f57e40691",
+            "bba78c44-60af-438f-901e-07224fa314d5"
         ],
         "app": [
             "application"

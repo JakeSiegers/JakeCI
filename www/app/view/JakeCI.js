@@ -147,8 +147,9 @@ Ext.define('JakeCI.view.JakeCI', {
     },
 
     onButtonClick1: function(button, e, eOpts) {
-        this.showJobWindow();
-        this.jobWindow.jobForm.setState('new');
+        this.showJobWindow(function(form){
+            form.docFormNew();
+        });
     },
 
     onButtonClick3: function(button, e, eOpts) {
@@ -186,11 +187,18 @@ Ext.define('JakeCI.view.JakeCI', {
         });
     },
 
-    showJobWindow: function() {
+    showJobWindow: function(firstFunction) {
+        if(!firstFunction){
+            firstFunction = function(){};
+        }
+
         if(!this.jobWindow){
             var form = Ext.create('widget.jobform',{
                 listeners:{
                     scope:this,
+                    docforminitcomplete:function(docForm){
+                        firstFunction(docForm);
+                    },
                     addjob:function(){
                         this.getAllJobs();
                     },
@@ -203,21 +211,25 @@ Ext.define('JakeCI.view.JakeCI', {
                 }
             });
             var history = Ext.create('widget.jobhistory',{});
-
             this.jobWindow = Ext.create('Ext.window.Window', {
-                resizable: true,
+                resizable: false,
                 layout: 'fit',
                 closeAction: 'hide',
                 title: 'Job Editor',
-                liveDrag:true,
-                items: Ext.create('Ext.tab.Panel',{
+                items:  Ext.create('Ext.tab.Panel',{
                     items: [form,history]
-                })
+                }),
+                liveDrag:true,
+                listeners:{
+                    beforeclose: form.docFormWindowBeforeClose
+                }
             });
-            this.jobWindow.jobForm = form;
-            this.jobWindow.jobHistory = history;
+            this.jobWindow.docForm = form;
+        }else{
+            firstFunction(this.jobWindow.docForm);
         }
         this.jobWindow.show();
+        this.jobWindow.focus();
     },
 
     showCredWindow: function() {
