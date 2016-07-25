@@ -5,8 +5,7 @@ function CredEditor(JakeCI){
 CredEditor.prototype.addCred = function(params){
     var errors = this.JakeCI.functions.verifyRequiredPostFields(params.data,['cred','username','password']);
     if(errors !== ''){
-        params.error(errors);
-        return;
+        throw new Error(errors);
     }
 
     var sThis = this;
@@ -19,9 +18,9 @@ CredEditor.prototype.addCred = function(params){
             currentCreds[params.data.cred] = params.data;
             return sThis.JakeCI.fs.writeFileAsync(sThis.JakeCI.config.credFile,JSON.stringify(currentCreds),'utf8');
         }).then(function(){
-            params.success({data:'Added Cred'});
+            params.success.call(params.scope,{data:'Added Cred'});
         }).catch(function(e){
-            params.error(e);
+            throw new Error(e);
         });
 
 };
@@ -35,9 +34,9 @@ CredEditor.prototype.getAllCreds = function(params){
             for(var i=0;i<credKeys.length;i++){
                 creds.push(currentCreds[credKeys[i]]);
             }
-            params.success({data:creds});
+            params.success.call(params.scope,creds);
         }).catch(function(e){
-            params.error(e);
+            throw new Error(e);
         });
 };
 module.exports = CredEditor;

@@ -13,7 +13,7 @@
             }
         },
         "urlPrefix": "http://localhost:3000",
-        "exportPath": "C:/Users/jsiegers/Desktop/JakeCI/www",
+        "exportPath": "/Users/Jake/Desktop/JakeCI/www",
         "projectHasEnabledWebServer": false,
         "lockUrlPrefix": false,
         "buildShouldOverwriteIndex": true,
@@ -25,7 +25,8 @@
         "installStatus": "Not Installed",
         "displayfield-ExtBox1-1119-inputEl": "a new version of the framework is available",
         "displayfield-ExtBox1-1174-inputEl": "a new version of the framework is available",
-        "displayfield-ExtBox1-1306-inputEl": "a new version of the framework is available"
+        "displayfield-ExtBox1-1306-inputEl": "a new version of the framework is available",
+        "displayfield-ExtBox1-1118-inputEl": "a new version of the framework is available"
     },
     "xdsVersion": "3.5.1",
     "xdsBuild": 348,
@@ -51,7 +52,10 @@
             "1b4769d9-4400-42ce-b10e-4078755ad75c",
             "9a1966c2-5868-4fd5-b4be-bb93494271af",
             "20926529-3195-4b6d-9278-e2bf0ad2fbf7",
-            "b98ae64c-4b7e-4106-b41c-9bfabc74414a"
+            "b98ae64c-4b7e-4106-b41c-9bfabc74414a",
+            "49658fc3-d650-4e98-bec6-731a3c2d619f",
+            "23d29013-2edf-4dd9-b6f5-6b233474400a",
+            "c7357199-1457-48a3-ac6c-c19956d62b22"
         ],
         "store": [],
         "controller": [],

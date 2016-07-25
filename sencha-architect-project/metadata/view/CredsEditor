@@ -1,150 +1,29 @@
 {
-    "type": "Ext.grid.Panel",
+    "type": "Ext.form.Panel",
     "reference": {
         "name": "items",
         "type": "array"
     },
     "codeClass": null,
     "userConfig": {
+        "bodyPadding": null,
+        "container|align": "stretch",
         "designer|userAlias": "credseditor",
         "designer|userClassName": "CredsEditor",
-        "height": 329,
-        "store": [
-            "{CredStore}"
+        "frame": true,
+        "height": 384,
+        "layout": "hbox",
+        "mixins": [
+            "[DocForm]"
         ],
         "title": "",
-        "width": 657
+        "width": 551
     },
-    "name": "MyGridPanel2",
-    "configAlternates": {
-        "store": "binding"
-    },
-    "designerId": "9a1966c2-5868-4fd5-b4be-bb93494271af",
-    "viewControllerInstanceId": "b98ae64c-4b7e-4106-b41c-9bfabc74414a",
-    "viewModelInstanceId": "20926529-3195-4b6d-9278-e2bf0ad2fbf7",
+    "name": "MyForm1",
+    "designerId": "49658fc3-d650-4e98-bec6-731a3c2d619f",
+    "viewControllerInstanceId": "c7357199-1457-48a3-ac6c-c19956d62b22",
+    "viewModelInstanceId": "23d29013-2edf-4dd9-b6f5-6b233474400a",
     "cn": [
-        {
-            "type": "Ext.grid.column.Column",
-            "reference": {
-                "name": "columns",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "dataIndex": "cred",
-                "text": "Cred Name",
-                "width": 160
-            },
-            "name": "MyColumn5",
-            "designerId": "a99bd813-7313-4658-ada8-ca9b87dc4d26",
-            "cn": [
-                {
-                    "type": "Ext.form.field.Text",
-                    "reference": {
-                        "name": "editor",
-                        "type": "object"
-                    },
-                    "codeClass": null,
-                    "name": "MyTextField5",
-                    "designerId": "24b9519b-1f0b-49ba-b9b3-e4d5da3445b7"
-                }
-            ]
-        },
-        {
-            "type": "Ext.grid.column.Column",
-            "reference": {
-                "name": "columns",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "dataIndex": "username",
-                "text": "Username",
-                "width": 183
-            },
-            "name": "MyColumn4",
-            "designerId": "fc690fac-6c74-4baf-8dfe-69fbee484f47",
-            "cn": [
-                {
-                    "type": "Ext.form.field.Text",
-                    "reference": {
-                        "name": "editor",
-                        "type": "object"
-                    },
-                    "codeClass": null,
-                    "name": "MyTextField6",
-                    "designerId": "dbe03828-f383-40f5-9ac8-fd2f321da8ca"
-                }
-            ]
-        },
-        {
-            "type": "Ext.grid.column.Column",
-            "reference": {
-                "name": "columns",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "dataIndex": "password",
-                "text": "Password",
-                "width": 212
-            },
-            "name": "MyColumn3",
-            "designerId": "d44821ac-942d-4183-8b24-b336a65797b2",
-            "cn": [
-                {
-                    "type": "Ext.form.field.Text",
-                    "reference": {
-                        "name": "editor",
-                        "type": "object"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "inputType": null
-                    },
-                    "name": "MyTextField7",
-                    "designerId": "be40bebe-f820-427b-acb6-dba67d085cce"
-                },
-                {
-                    "type": "fixedfunction",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "designer|params": [
-                            "value",
-                            "metaData",
-                            "record",
-                            "rowIndex",
-                            "colIndex",
-                            "store",
-                            "view"
-                        ],
-                        "fn": "renderer",
-                        "implHandler": [
-                            "return Array(value.length+1).join(\"*\");"
-                        ]
-                    },
-                    "name": "renderer",
-                    "designerId": "58c27e17-50e6-449c-8d73-39860b8f930a"
-                }
-            ]
-        },
-        {
-            "type": "Ext.view.Table",
-            "reference": {
-                "name": "viewConfig",
-                "type": "object"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "width": 590
-            },
-            "name": "MyTable2",
-            "designerId": "3f54c1cd-e894-4b49-b57f-20780cdfe100"
-        },
         {
             "type": "Ext.toolbar.Toolbar",
             "reference": {
@@ -153,260 +32,144 @@
             },
             "codeClass": null,
             "userConfig": {
-                "dock": "top"
+                "dock": "top",
+                "itemId": "credToolbar",
+                "layout|flex": 1
             },
-            "name": "MyToolbar3",
-            "designerId": "39ddbe5e-5c99-41b1-9e46-5210733149c6",
-            "cn": [
-                {
-                    "type": "Ext.button.Button",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "layout|flex": null,
-                        "text": "Add New"
-                    },
-                    "name": "MyButton2",
-                    "designerId": "3cedf680-7330-434b-afc7-1ee4a2a593bb",
-                    "cn": [
-                        {
-                            "type": "basiceventbinding",
-                            "reference": {
-                                "name": "listeners",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "fn": "onButtonClick",
-                                "implHandler": [
-                                    "if(this.getPlugin('credRowEditing').editing){",
-                                    "    return false;",
-                                    "}",
-                                    "this.lookupViewModel().getStore('CredStore').insert(0,{credName:'',userame:'',password:''});",
-                                    "this.getPlugin('credRowEditing').startEdit(0);",
-                                    "this.currentState = 'new';"
-                                ],
-                                "name": "click",
-                                "scope": "me"
-                            },
-                            "name": "onButtonClick",
-                            "designerId": "b5562238-b255-40c0-9a2e-a85069ca0ec6"
-                        }
-                    ]
-                },
-                {
-                    "type": "Ext.toolbar.Spacer",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "layout|flex": 1
-                    },
-                    "name": "MySpacer",
-                    "designerId": "99a54ce5-b235-4df5-973d-470ecf8fa91e"
-                },
-                {
-                    "type": "Ext.button.Button",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "layout|flex": null,
-                        "text": "Delete Selected"
-                    },
-                    "name": "MyButton",
-                    "designerId": "41092d3f-7201-417f-96ef-90339013f14e",
-                    "cn": [
-                        {
-                            "type": "basiceventbinding",
-                            "reference": {
-                                "name": "listeners",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "fn": "onButtonClick1",
-                                "implHandler": [
-                                    "console.log('Program Delete Cred');"
-                                ],
-                                "name": "click",
-                                "scope": "me"
-                            },
-                            "name": "onButtonClick1",
-                            "designerId": "d34d6e7e-e79a-4b8d-a09b-24a3fa5b54d2"
-                        }
-                    ]
-                }
-            ]
+            "name": "MyToolbar4",
+            "designerId": "033f3a8f-c0d1-4d2a-a416-0b9dd311f317"
         },
         {
-            "type": "Ext.grid.plugin.RowEditing",
-            "reference": {
-                "name": "plugins",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "autoCancel": false,
-                "pluginId": "credRowEditing"
-            },
-            "name": "MyRowEditingPlugin",
-            "designerId": "33ba3c90-320c-4c9d-a37f-c3fe00b2630d",
-            "cn": [
-                {
-                    "type": "basiceventbinding",
-                    "reference": {
-                        "name": "listeners",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "fn": "onRowEditingCanceledit",
-                        "implHandler": [
-                            "var record = context.record;",
-                            "var rowIdx = context.rowIdx;",
-                            "",
-                            "if(this.currentState === \"new\"){",
-                            "    this.lookupViewModel().getStore('CredStore').removeAt(rowIdx);",
-                            "}"
-                        ],
-                        "name": "canceledit",
-                        "scope": "me"
-                    },
-                    "name": "onRowEditingCanceledit",
-                    "designerId": "3e655a59-e946-48cc-8536-39badbdd249b"
-                },
-                {
-                    "type": "basiceventbinding",
-                    "reference": {
-                        "name": "listeners",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "fn": "onRowEditingEdit",
-                        "implHandler": [
-                            "if(this.currentState == 'new'){",
-                            "    console.log(context);",
-                            "    if(context.newValues == context.originalValues){",
-                            "        return;",
-                            "    }",
-                            "    this.addCred(context.newValues);",
-                            "}else{",
-                            "    this.editCred();",
-                            "}"
-                        ],
-                        "name": "edit",
-                        "scope": "me"
-                    },
-                    "name": "onRowEditingEdit",
-                    "designerId": "7eaaf400-f614-4561-b960-8e9f63c7d7e5"
-                },
-                {
-                    "type": "basiceventbinding",
-                    "reference": {
-                        "name": "listeners",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "element": null,
-                        "fn": "onRowEditingBeforeEdit",
-                        "implHandler": [
-                            "//Don't try and edit anything else if we're already editing something!",
-                            "if(this.getPlugin('credRowEditing').editing){",
-                            "    return false;",
-                            "}",
-                            "this.currentState = 'edit';"
-                        ],
-                        "name": "beforeedit",
-                        "scope": "me"
-                    },
-                    "name": "onRowEditingBeforeEdit",
-                    "designerId": "e85d8bf7-78f5-407d-8ec7-f40223e2184d"
-                }
-            ]
-        },
-        {
-            "type": "basicfunction",
+            "type": "Ext.grid.Panel",
             "reference": {
                 "name": "items",
                 "type": "array"
             },
             "codeClass": null,
             "userConfig": {
-                "designer|params": [
-                    "data"
+                "itemId": "credGrid",
+                "layout|flex": 1,
+                "store": [
+                    "{CredStore}"
                 ],
-                "fn": "addCred",
-                "implHandler": [
-                    "this.mask('Adding...');",
-                    "AERP.Ajax.request({",
-                    "    url:'/Creds/addCred',",
-                    "    params:data,",
-                    "    success:function(reply){",
-                    "        this.unmask();",
-                    "        this.getStore().commitChanges();",
-                    "    },",
-                    "    failure:function(){",
-                    "        this.unmask();",
-                    "        this.getPlugin('credRowEditing').startEdit(0);",
-                    "        this.currentState = 'new';",
-                    "    },",
-                    "    scope:this",
-                    "});"
-                ]
+                "title": ""
             },
-            "name": "addCred",
-            "designerId": "8f041fdc-8e1b-41eb-86fa-3565f00b2896"
+            "name": "MyGridPanel3",
+            "configAlternates": {
+                "store": "binding"
+            },
+            "designerId": "97b9e2a4-b9d3-4826-8d75-f92adddaf78e",
+            "cn": [
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "description",
+                        "text": "Description",
+                        "width": 164
+                    },
+                    "name": "MyColumn9",
+                    "designerId": "a5846762-b7a8-4163-8865-cb5009e4ec24"
+                },
+                {
+                    "type": "Ext.view.Table",
+                    "reference": {
+                        "name": "viewConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": null
+                    },
+                    "name": "MyTable4",
+                    "designerId": "9601b6c9-724e-4871-85b2-eeea5d591973"
+                },
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onCredGridRowDblClick",
+                        "implHandler": [
+                            "console.log(record.get('description'));"
+                        ],
+                        "name": "rowdblclick",
+                        "scope": "me"
+                    },
+                    "name": "onCredGridRowDblClick",
+                    "designerId": "694102b8-9b16-437a-be9c-3d98f495f05c"
+                }
+            ]
         },
         {
-            "type": "basicfunction",
+            "type": "Ext.container.Container",
             "reference": {
                 "name": "items",
                 "type": "array"
             },
             "codeClass": null,
             "userConfig": {
-                "fn": "editCred",
-                "implHandler": [
-                    ""
-                ]
+                "container|align": "stretch",
+                "dock": null,
+                "frame": false,
+                "layout": "vbox",
+                "layout|flex": null,
+                "padding": 10,
+                "width": null
             },
-            "name": "editCred",
-            "designerId": "7ccaf76d-ff7a-4428-aa22-4d49ee452742"
-        },
-        {
-            "type": "basicfunction",
-            "reference": {
-                "name": "items",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "fn": "loadCreds",
-                "implHandler": [
-                    "AERP.Ajax.request({",
-                    "    url:'/Creds/getAllCreds',",
-                    "    success:function(reply){",
-                    "        this.lookupViewModel().getStore('CredStore').setData(reply.data);",
-                    "    },",
-                    "    failure:function(){",
-                    "",
-                    "    },",
-                    "    scope:this",
-                    "});"
-                ]
-            },
-            "name": "loadCreds",
-            "designerId": "d0d6a33a-3eff-4a82-8806-e35643a5f846"
+            "name": "MyContainer5",
+            "designerId": "08336790-6f43-4506-b2a2-f18825bf0410",
+            "cn": [
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Description",
+                        "itemId": "description"
+                    },
+                    "name": "MyTextField15",
+                    "designerId": "02e66a70-7ef2-486e-892e-0a076486a513"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Username",
+                        "itemId": "username"
+                    },
+                    "name": "MyTextField17",
+                    "designerId": "1c27eaee-6990-4759-91e3-6ed0fcad3897"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Password",
+                        "itemId": "password"
+                    },
+                    "name": "MyTextField16",
+                    "designerId": "34dae070-e2b8-41d8-b360-b985249aaf19"
+                }
+            ]
         },
         {
             "type": "basiceventbinding",
@@ -416,15 +179,61 @@
             },
             "codeClass": null,
             "userConfig": {
-                "fn": "onGridpanelRender",
+                "fn": "onFormAfterRender",
                 "implHandler": [
-                    "this.loadCreds();"
+                    "this.docFormInit({",
+                    "    docFormToolbar:{",
+                    "        id:'credToolbar',",
+                    "        addFn:'addCred',",
+                    "        saveFn:'saveCred',",
+                    "        deleteFn:'deleteCred'",
+                    "    }",
+                    "});",
+                    "",
+                    "AERP.Ajax.request({",
+                    "    url:'/Creds/getCredEditorInitData',",
+                    "    success:function(reply){",
+                    "        this.lookupViewModel().getStore('CredStore').setData(reply.data);",
+                    "",
+                    "        this.fireEvent('docforminitcomplete',this);",
+                    "    },",
+                    "    scope:this",
+                    "});",
+                    ""
                 ],
-                "name": "render",
+                "name": "afterrender",
                 "scope": "me"
             },
-            "name": "onGridpanelRender",
-            "designerId": "f8fd12ed-dabc-450a-ae51-190cd066787f"
+            "name": "onFormAfterRender",
+            "designerId": "970cbf84-b858-43f2-ae2e-cf1009a39ba0"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "addCred",
+                "implHandler": [
+                    "this.mask('Adding...');",
+                    "AERP.Ajax.request({",
+                    "    url:'/Creds/addCred',",
+                    "    params:this.getValues(),",
+                    "    success:function(reply){",
+                    "        this.unmask();",
+                    "        //this.docFormLoadFormData(reply);",
+                    "    },",
+                    "    failure:function(){",
+                    "        this.unmask();",
+                    "    },",
+                    "    scope:this",
+                    "});"
+                ]
+            },
+            "name": "addCred",
+            "designerId": "6bcba4b6-4673-4c92-a1f6-09cf8a99d5f7"
         }
     ]
 }

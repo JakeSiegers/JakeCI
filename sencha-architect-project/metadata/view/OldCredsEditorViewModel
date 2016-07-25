@@ -6,10 +6,10 @@
     },
     "codeClass": null,
     "userConfig": {
-        "designer|userAlias": "credseditor",
-        "designer|userClassName": "CredsEditorViewModel"
+        "designer|userAlias": "oldcredseditor",
+        "designer|userClassName": "OldCredsEditorViewModel"
     },
-    "designerId": "23d29013-2edf-4dd9-b6f5-6b233474400a",
+    "designerId": "20926529-3195-4b6d-9278-e2bf0ad2fbf7",
     "cn": [
         {
             "type": "Ext.data.Store",
@@ -21,8 +21,8 @@
             "userConfig": {
                 "name": "CredStore"
             },
-            "name": "MyStore6",
-            "designerId": "5f4983cd-4c8c-4c16-ae83-023ce75e463e",
+            "name": "MyStore2",
+            "designerId": "6b000fb8-88df-4552-8856-2c7c69b0a124",
             "cn": [
                 {
                     "type": "Ext.data.field.Field",
@@ -32,10 +32,23 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "name": "description"
+                        "name": "cred"
                     },
-                    "name": "MyField14",
-                    "designerId": "bf45255a-55be-44b4-92d4-c2a75a7aab93"
+                    "name": "MyField9",
+                    "designerId": "9ddca2ca-b71d-4076-8487-2e6f44de6dee"
+                },
+                {
+                    "type": "Ext.data.field.Field",
+                    "reference": {
+                        "name": "fields",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "username"
+                    },
+                    "name": "MyField7",
+                    "designerId": "4643158a-818d-4b74-8de2-0fb2b98006cf"
                 },
                 {
                     "type": "Ext.data.field.Field",
@@ -47,8 +60,8 @@
                     "userConfig": {
                         "name": "password"
                     },
-                    "name": "MyField15",
-                    "designerId": "319e70a9-7df9-4ba1-a472-c95d40899826"
+                    "name": "MyField8",
+                    "designerId": "5c477f86-eede-434d-bdff-524fcea9a09e"
                 }
             ]
         }

@@ -9,7 +9,7 @@
         "bodyPadding": 10,
         "designer|userAlias": "jobform",
         "designer|userClassName": "JobForm",
-        "frame": null,
+        "frame": true,
         "height": null,
         "itemId": "jobPanel",
         "mixins": [

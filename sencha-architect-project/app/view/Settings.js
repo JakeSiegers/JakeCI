@@ -30,6 +30,7 @@ Ext.define('JakeCI.view.Settings', {
     viewModel: {
         type: 'settings'
     },
+    frame: true,
     height: 323,
     itemId: 'settingsPanel',
     width: 677,

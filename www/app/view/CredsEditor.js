@@ -14,184 +14,131 @@
  */
 
 Ext.define('JakeCI.view.CredsEditor', {
-    extend: 'Ext.grid.Panel',
+    extend: 'Ext.form.Panel',
     alias: 'widget.credseditor',
 
+    mixins: [
+        DocForm
+    ],
     requires: [
         'JakeCI.view.CredsEditorViewModel',
-        'Ext.grid.column.Column',
-        'Ext.form.field.Text',
-        'Ext.view.Table',
         'Ext.toolbar.Toolbar',
-        'Ext.button.Button',
-        'Ext.toolbar.Spacer',
-        'Ext.grid.plugin.RowEditing'
+        'Ext.grid.Panel',
+        'Ext.grid.column.Column',
+        'Ext.view.Table',
+        'Ext.form.field.Text'
     ],
 
     viewModel: {
         type: 'credseditor'
     },
-    height: 329,
-    width: 657,
+    frame: true,
+    height: 384,
+    width: 551,
     title: '',
     defaultListenerScope: true,
 
-    bind: {
-        store: '{CredStore}'
-    },
-    columns: [
-        {
-            xtype: 'gridcolumn',
-            width: 160,
-            dataIndex: 'cred',
-            text: 'Cred Name',
-            editor: {
-                xtype: 'textfield'
-            }
-        },
-        {
-            xtype: 'gridcolumn',
-            width: 183,
-            dataIndex: 'username',
-            text: 'Username',
-            editor: {
-                xtype: 'textfield'
-            }
-        },
-        {
-            xtype: 'gridcolumn',
-            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                return Array(value.length+1).join("*");
-            },
-            width: 212,
-            dataIndex: 'password',
-            text: 'Password',
-            editor: {
-                xtype: 'textfield'
-            }
-        }
-    ],
-    viewConfig: {
-        width: 590
+    layout: {
+        type: 'hbox',
+        align: 'stretch'
     },
     dockedItems: [
         {
             xtype: 'toolbar',
+            flex: 1,
             dock: 'top',
+            itemId: 'credToolbar'
+        }
+    ],
+    items: [
+        {
+            xtype: 'gridpanel',
+            flex: 1,
+            itemId: 'credGrid',
+            title: '',
+            bind: {
+                store: '{CredStore}'
+            },
+            columns: [
+                {
+                    xtype: 'gridcolumn',
+                    width: 164,
+                    dataIndex: 'description',
+                    text: 'Description'
+                }
+            ],
+            listeners: {
+                rowdblclick: 'onCredGridRowDblClick'
+            }
+        },
+        {
+            xtype: 'container',
+            frame: false,
+            padding: 10,
+            layout: {
+                type: 'vbox',
+                align: 'stretch'
+            },
             items: [
                 {
-                    xtype: 'button',
-                    text: 'Add New',
-                    listeners: {
-                        click: 'onButtonClick'
-                    }
+                    xtype: 'textfield',
+                    itemId: 'description',
+                    fieldLabel: 'Description'
                 },
                 {
-                    xtype: 'tbspacer',
-                    flex: 1
+                    xtype: 'textfield',
+                    itemId: 'username',
+                    fieldLabel: 'Username'
                 },
                 {
-                    xtype: 'button',
-                    text: 'Delete Selected',
-                    listeners: {
-                        click: 'onButtonClick1'
-                    }
+                    xtype: 'textfield',
+                    itemId: 'password',
+                    fieldLabel: 'Password'
                 }
             ]
         }
     ],
-    plugins: [
-        {
-            ptype: 'rowediting',
-            pluginId: 'credRowEditing',
-            autoCancel: false,
-            listeners: {
-                canceledit: 'onRowEditingCanceledit',
-                edit: 'onRowEditingEdit',
-                beforeedit: 'onRowEditingBeforeEdit'
-            }
-        }
-    ],
     listeners: {
-        render: 'onGridpanelRender'
+        afterrender: 'onFormAfterRender'
     },
 
-    onButtonClick: function(button, e, eOpts) {
-        if(this.getPlugin('credRowEditing').editing){
-            return false;
-        }
-        this.lookupViewModel().getStore('CredStore').insert(0,{credName:'',userame:'',password:''});
-        this.getPlugin('credRowEditing').startEdit(0);
-        this.currentState = 'new';
+    onCredGridRowDblClick: function(tableview, record, tr, rowIndex, e, eOpts) {
+        console.log(record.get('description'));
     },
 
-    onButtonClick1: function(button, e, eOpts) {
-        console.log('Program Delete Cred');
-    },
-
-    onRowEditingCanceledit: function(editor, context, eOpts) {
-        var record = context.record;
-        var rowIdx = context.rowIdx;
-
-        if(this.currentState === "new"){
-            this.lookupViewModel().getStore('CredStore').removeAt(rowIdx);
-        }
-    },
-
-    onRowEditingEdit: function(editor, context, eOpts) {
-        if(this.currentState == 'new'){
-            console.log(context);
-            if(context.newValues == context.originalValues){
-                return;
+    onFormAfterRender: function(component, eOpts) {
+        this.docFormInit({
+            docFormToolbar:{
+                id:'credToolbar',
+                addFn:'addCred',
+                saveFn:'saveCred',
+                deleteFn:'deleteCred'
             }
-            this.addCred(context.newValues);
-        }else{
-            this.editCred();
-        }
-    },
+        });
 
-    onRowEditingBeforeEdit: function(editor, context, eOpts) {
-        //Don't try and edit anything else if we're already editing something!
-        if(this.getPlugin('credRowEditing').editing){
-            return false;
-        }
-        this.currentState = 'edit';
-    },
-
-    onGridpanelRender: function(component, eOpts) {
-        this.loadCreds();
-    },
-
-    addCred: function(data) {
-        this.mask('Adding...');
         AERP.Ajax.request({
-            url:'/Creds/addCred',
-            params:data,
+            url:'/Creds/getCredEditorInitData',
             success:function(reply){
-                this.unmask();
-                this.getStore().commitChanges();
-            },
-            failure:function(){
-                this.unmask();
-                this.getPlugin('credRowEditing').startEdit(0);
-                this.currentState = 'new';
+                this.lookupViewModel().getStore('CredStore').setData(reply.data);
+
+                this.fireEvent('docforminitcomplete',this);
             },
             scope:this
         });
-    },
-
-    editCred: function() {
 
     },
 
-    loadCreds: function() {
+    addCred: function() {
+        this.mask('Adding...');
         AERP.Ajax.request({
-            url:'/Creds/getAllCreds',
+            url:'/Creds/addCred',
+            params:this.getValues(),
             success:function(reply){
-                this.lookupViewModel().getStore('CredStore').setData(reply.data);
+                this.unmask();
+                //this.docFormLoadFormData(reply);
             },
             failure:function(){
-
+                this.unmask();
             },
             scope:this
         });

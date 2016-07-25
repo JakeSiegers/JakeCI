@@ -78,6 +78,9 @@ Jake.prototype.initExpress = function () {
                 endpoint = '/'+controllerName;
             }
             this.app.post(endpoint,this.controllers[controllerName][controllerFunctions[c]].bind(this.controllers[controllerName]));
+            //For debug!
+            //this.app.get(endpoint,this.controllers[controllerName][controllerFunctions[c]].bind(this.controllers[controllerName]));
+
             this.debug('Loaded Endpoint: '+endpoint);
         }
 
@@ -101,20 +104,24 @@ Jake.prototype.initExpress = function () {
     //Error Handling
     var sThis = this;
     this.app.use(function(error, request, response, next) {
+        /*
         response.status(500).send(
             JSON.stringify({
                 success: false,
                 error: 'Server Error!'
             })
         );
-        sThis.error(error);
+        */
+
+        sThis.sendError(response,error);
     });
 };
 
 Jake.prototype.sendError = function(response, error){
+    console.error(error);
     response.send(JSON.stringify({
         success: false,
-        error: error
+        error: error.toString()
     }));
 };
 

@@ -32,6 +32,7 @@ Ext.define('JakeCI.view.JobForm', {
     viewModel: {
         type: 'jobform'
     },
+    frame: true,
     itemId: 'jobPanel',
     width: 629,
     bodyPadding: 10,
