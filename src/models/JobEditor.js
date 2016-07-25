@@ -47,11 +47,8 @@ JobEditor.prototype.getAllJobs = function(params){
 };
 
 JobEditor.prototype.getJob = function(params) {
-    var errors = this.JakeCI.functions.verifyRequiredPostFields(params.data,['jobName']);
-    if(errors !== ''){
-        params.error.call(params.scope,errors);
-        return;
-    }
+    this.JakeCI.functions.verifyRequiredPostFields(params.data,['jobName']);
+
     var jobName = params.data.jobName;
     var sThis = this;
     this.JakeCI.fs.readFileAsync(sThis.JakeCI.path.join(sThis.JakeCI.config.jobPath, jobName,'config.json'),'utf8')
@@ -64,11 +61,7 @@ JobEditor.prototype.getJob = function(params) {
 };
 
 JobEditor.prototype.saveJob = function(params){
-    var errors = this.JakeCI.functions.verifyRequiredPostFields(params.data,['jobName','jobData']);
-    if(errors !== ''){
-        params.error.call(params.scope,errors);
-        return;
-    }
+    this.JakeCI.functions.verifyRequiredPostFields(params.data,['jobName','jobData']);
 
     var jobName = params.data.jobName;
     var jobData = JSON.parse(params.data.jobData);

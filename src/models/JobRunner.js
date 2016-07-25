@@ -11,11 +11,8 @@ JobRunner.prototype.getJobQueue = function(params){
 };
 
 JobRunner.prototype.addJobToQueue = function(params){
-    var errors = this.JakeCI.functions.verifyRequiredPostFields(params.data,['jobName']);
-    if(errors !== ''){
-        params.error.call(params.scope,errors);
-        return;
-    }
+    this.JakeCI.functions.verifyRequiredPostFields(params.data,['jobName']);
+
     var jobName = params.data.jobName;
 
     this.jobsQueue.push(jobName);

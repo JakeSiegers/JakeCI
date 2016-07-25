@@ -11,7 +11,9 @@ Functions.prototype.verifyRequiredPostFields = function(post, expected){
             errors += expected[i]+" is required<br />";
         }
     }
-    return errors;
+    if(errors.length > 0){
+        throw new Error(errors);
+    }
 };
 
 Functions.prototype.commandParser = function(message) {

@@ -68,8 +68,8 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "dataIndex": "description",
-                        "text": "Description",
+                        "dataIndex": "name",
+                        "text": "Name",
                         "width": 164
                     },
                     "name": "MyColumn9",
@@ -98,7 +98,7 @@
                     "userConfig": {
                         "fn": "onCredGridRowDblClick",
                         "implHandler": [
-                            "console.log(record.get('description'));"
+                            "this.loadCred(record.get('name'));"
                         ],
                         "name": "rowdblclick",
                         "scope": "me"
@@ -135,8 +135,8 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "fieldLabel": "Description",
-                        "itemId": "description"
+                        "fieldLabel": "Name",
+                        "itemId": "name"
                     },
                     "name": "MyTextField15",
                     "designerId": "02e66a70-7ef2-486e-892e-0a076486a513"
@@ -185,7 +185,7 @@
                     "    docFormToolbar:{",
                     "        id:'credToolbar',",
                     "        addFn:'addCred',",
-                    "        saveFn:'saveCred',",
+                    "        saveFn:'editCred',",
                     "        deleteFn:'deleteCred'",
                     "    }",
                     "});",
@@ -223,7 +223,8 @@
                     "    params:this.getValues(),",
                     "    success:function(reply){",
                     "        this.unmask();",
-                    "        //this.docFormLoadFormData(reply);",
+                    "        this.loadCred(reply.newCredName);",
+                    "        this.reloadGrid();",
                     "    },",
                     "    failure:function(){",
                     "        this.unmask();",
@@ -234,6 +235,84 @@
             },
             "name": "addCred",
             "designerId": "6bcba4b6-4673-4c92-a1f6-09cf8a99d5f7"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "reloadGrid",
+                "implHandler": [
+                    "AERP.Ajax.request({",
+                    "    url:'/Creds/getCredEditorInitData',",
+                    "    params:this.getValues(),",
+                    "    success:function(reply){",
+                    "        this.lookupViewModel().getStore('CredStore').setData(reply.data);",
+                    "    },",
+                    "    scope:this",
+                    "});"
+                ]
+            },
+            "name": "reloadGrid",
+            "designerId": "7bda84ef-1f43-477a-91bc-2663221c797b"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "name"
+                ],
+                "fn": "loadCred",
+                "implHandler": [
+                    "AERP.Ajax.request({",
+                    "    url:'/Creds/getCred',",
+                    "    params:{name:name},",
+                    "    success:function(reply){",
+                    "        this.docFormLoadFormData(reply);",
+                    "    },",
+                    "    scope:this",
+                    "});"
+                ]
+            },
+            "name": "loadCred",
+            "designerId": "0952f2af-dc19-471a-847d-c4aa02c2f17c"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "editCred",
+                "implHandler": [
+                    "this.mask('Saving...');",
+                    "AERP.Ajax.request({",
+                    "    url:'/Creds/updateCred',",
+                    "    params:this.getValues(),",
+                    "    success:function(reply){",
+                    "        this.unmask();",
+                    "        this.loadCred(reply.updatedCredName);",
+                    "        this.reloadGrid();",
+                    "    },",
+                    "    failure:function(){",
+                    "        this.unmask();",
+                    "    },",
+                    "    scope:this",
+                    "});"
+                ]
+            },
+            "name": "editCred",
+            "designerId": "3045e8a5-eadd-4c27-8264-d806d5710663"
         }
     ]
 }

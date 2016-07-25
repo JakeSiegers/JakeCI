@@ -9,12 +9,11 @@ Creds.prototype.getCredEditorInitData = function(request,response){
             var out = [];
             for(var i in creds){
                 out.push([
-                    creds[i].cred,
+                    creds[i].name,
                     creds[i].username,
                     creds[i].password
                 ]);
             }
-            console.log(out);
             this.JakeCI.sendResponse(response,{data:out});
         },
         scope:this
@@ -34,8 +33,28 @@ Creds.prototype.getAllCreds = function(request,response){
 Creds.prototype.addCred = function(request,response){
     this.JakeCI.models['CredEditor'].addCred({
         data:request.body,
-        success:function(reply) {
-            this.JakeCI.sendResponse(response,reply);
+        success:function(newCredName) {
+            this.JakeCI.sendResponse(response,{newCredName:newCredName});
+        },
+        scope:this
+    });
+};
+
+Creds.prototype.getCred = function(request,response){
+    this.JakeCI.models['CredEditor'].getCred({
+        data:request.body,
+        success:function(cred) {
+            this.JakeCI.sendResponse(response,{data:cred});
+        },
+        scope:this
+    });
+};
+
+Creds.prototype.updateCred = function(request,response){
+    this.JakeCI.models['CredEditor'].updateCred({
+        data:request.body,
+        success:function(updatedCredName){
+            this.JakeCI.sendResponse(response,{updatedCredName:updatedCredName});
         },
         scope:this
     });

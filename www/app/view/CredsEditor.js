@@ -63,8 +63,8 @@ Ext.define('JakeCI.view.CredsEditor', {
                 {
                     xtype: 'gridcolumn',
                     width: 164,
-                    dataIndex: 'description',
-                    text: 'Description'
+                    dataIndex: 'name',
+                    text: 'Name'
                 }
             ],
             listeners: {
@@ -82,8 +82,8 @@ Ext.define('JakeCI.view.CredsEditor', {
             items: [
                 {
                     xtype: 'textfield',
-                    itemId: 'description',
-                    fieldLabel: 'Description'
+                    itemId: 'name',
+                    fieldLabel: 'Name'
                 },
                 {
                     xtype: 'textfield',
@@ -103,7 +103,7 @@ Ext.define('JakeCI.view.CredsEditor', {
     },
 
     onCredGridRowDblClick: function(tableview, record, tr, rowIndex, e, eOpts) {
-        console.log(record.get('description'));
+        this.loadCred(record.get('name'));
     },
 
     onFormAfterRender: function(component, eOpts) {
@@ -111,7 +111,7 @@ Ext.define('JakeCI.view.CredsEditor', {
             docFormToolbar:{
                 id:'credToolbar',
                 addFn:'addCred',
-                saveFn:'saveCred',
+                saveFn:'editCred',
                 deleteFn:'deleteCred'
             }
         });
@@ -135,7 +135,47 @@ Ext.define('JakeCI.view.CredsEditor', {
             params:this.getValues(),
             success:function(reply){
                 this.unmask();
-                //this.docFormLoadFormData(reply);
+                this.loadCred(reply.newCredName);
+                this.reloadGrid();
+            },
+            failure:function(){
+                this.unmask();
+            },
+            scope:this
+        });
+    },
+
+    reloadGrid: function() {
+        AERP.Ajax.request({
+            url:'/Creds/getCredEditorInitData',
+            params:this.getValues(),
+            success:function(reply){
+                this.lookupViewModel().getStore('CredStore').setData(reply.data);
+            },
+            scope:this
+        });
+    },
+
+    loadCred: function(name) {
+        AERP.Ajax.request({
+            url:'/Creds/getCred',
+            params:{name:name},
+            success:function(reply){
+                this.docFormLoadFormData(reply);
+            },
+            scope:this
+        });
+    },
+
+    editCred: function() {
+        this.mask('Saving...');
+        AERP.Ajax.request({
+            url:'/Creds/updateCred',
+            params:this.getValues(),
+            success:function(reply){
+                this.unmask();
+                this.loadCred(reply.updatedCredName);
+                this.reloadGrid();
             },
             failure:function(){
                 this.unmask();

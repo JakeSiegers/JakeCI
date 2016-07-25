@@ -26,7 +26,10 @@ Ext.define('JakeCI.view.CredsEditorViewModel', {
         CredStore: {
             fields: [
                 {
-                    name: 'description'
+                    name: 'name'
+                },
+                {
+                    name: 'username'
                 },
                 {
                     name: 'password'
