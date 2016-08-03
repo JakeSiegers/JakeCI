@@ -130,7 +130,6 @@
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "rootProperty": "data",
                                 "totalProperty": "total"
                             },
                             "name": "MyArrayReader",
