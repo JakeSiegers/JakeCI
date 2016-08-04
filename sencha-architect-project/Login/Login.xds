@@ -1,0 +1,50 @@
+{
+    "name": "Login",
+    "settings": {
+        "cmd": {
+            "license": "commercial"
+        },
+        "urlPrefix": "http://localhost:1841/",
+        "canvasControls": {
+            "viewportSize": {
+                "name": "Auto Expand",
+                "builtIn": true,
+                "height": null,
+                "width": null
+            }
+        },
+        "exportPath": "C:/Users/Jake/Desktop/JakeCI/www/Login",
+        "buildShouldOverwriteIndex": true,
+        "generateArchitectVersion": false,
+        "spacesToIndent": 4,
+        "lineEnding": "CRLF",
+        "genTimestamps": false,
+        "cacheBust": false,
+        "installStatus": "Not Installed"
+    },
+    "xdsVersion": "4.0.0",
+    "xdsBuild": 112,
+    "schemaVersion": 1,
+    "upgradeVersion": 310000000001,
+    "framework": "ext60",
+    "viewOrderMap": {
+        "view": [
+            "108ecfd0-8ab6-4fa6-826b-271a49106fc5",
+            "175d8b7c-6d19-49e8-99fb-90b81fa54a26",
+            "f9d7649c-dc87-47f3-aafc-2e5938e7377f",
+            "07ac6845-df5a-4167-868e-ebd917c5843e",
+            "3e9a34f1-8c28-4b4b-b328-21f8f9ac24b9",
+            "1fd9eecb-bc10-4d6f-95ae-00faa35f87b6"
+        ],
+        "store": [],
+        "controller": [],
+        "model": [],
+        "resource": [
+            "f28aed9e-aba1-492d-af91-b5b66c08c5d6",
+            "c78f5a7c-b0df-4ff6-aab8-a219f7f9ae71"
+        ],
+        "app": [
+            "application"
+        ]
+    }
+}

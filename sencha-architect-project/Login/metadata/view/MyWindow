@@ -1,0 +1,35 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "autoShow": true,
+        "designer|initialView": true,
+        "designer|userAlias": "mywindow",
+        "designer|userClassName": "MyWindow",
+        "height": null,
+        "layout": "fit",
+        "title": "Welcome To Jake CI",
+        "width": 324
+    },
+    "name": "MyWindow",
+    "designerId": "108ecfd0-8ab6-4fa6-826b-271a49106fc5",
+    "viewControllerInstanceId": "f9d7649c-dc87-47f3-aafc-2e5938e7377f",
+    "viewModelInstanceId": "175d8b7c-6d19-49e8-99fb-90b81fa54a26",
+    "cn": [
+        {
+            "type": "linkedinstance",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "name": "loginform",
+            "designerId": "c5199ffe-0971-463b-b28c-9875e51ed6d7",
+            "masterInstanceId": "07ac6845-df5a-4167-868e-ebd917c5843e"
+        }
+    ]
+}

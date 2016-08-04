@@ -1,0 +1,81 @@
+{
+    "name": "JakeCI",
+    "settings": {
+        "cmd": {
+            "license": "commercial"
+        },
+        "canvasControls": {
+            "viewportSize": {
+                "name": "Auto Expand",
+                "builtIn": true,
+                "height": null,
+                "width": null
+            }
+        },
+        "urlPrefix": "http://localhost:3000",
+        "exportPath": "C:/Users/Jake/Desktop/JakeCI/www",
+        "projectHasEnabledWebServer": false,
+        "lockUrlPrefix": false,
+        "buildShouldOverwriteIndex": true,
+        "generateArchitectVersion": false,
+        "spacesToIndent": 4,
+        "lineEnding": "CRLF",
+        "genTimestamps": false,
+        "cacheBust": false,
+        "installStatus": "Not Installed",
+        "displayfield-ExtBox1-1119-inputEl": "a new version of the framework is available",
+        "displayfield-ExtBox1-1174-inputEl": "a new version of the framework is available",
+        "displayfield-ExtBox1-1306-inputEl": "a new version of the framework is available",
+        "displayfield-ExtBox1-1118-inputEl": "a new version of the framework is available",
+        "displayfield-ExtBox1-1204-inputEl": "a new version of the framework is available"
+    },
+    "xdsVersion": "4.0.0",
+    "xdsBuild": 112,
+    "schemaVersion": 1,
+    "upgradeVersion": 310000000001,
+    "framework": "ext60",
+    "viewOrderMap": {
+        "view": [
+            "f0c78d6f-b5da-4b2f-9746-e6c831e349a4",
+            "3e44ecb5-5d81-4a09-a0b5-255fe2e5dc32",
+            "fe7fdc86-35b4-411e-9a5a-bd777740d0fc",
+            "ab404ff4-4acc-4b7d-80b2-0a233db83bde",
+            "6952602a-04e6-4643-b064-270b31dc0ec2",
+            "d0ec1f85-40be-438d-b2ac-3c1c0321156c",
+            "081fcff5-62a2-4369-bd6c-72af652cc70e",
+            "580dc1fc-78ab-468b-810a-af9d4852834a",
+            "e1c016d9-84c5-4f63-b975-4e7c7361e349",
+            "2d62bcac-e0cf-4ff4-be1e-a6cfe9531784",
+            "8a75c16e-5f5b-4134-80aa-088115286083",
+            "1b53b1d7-5913-4ac7-998e-515eadea392d",
+            "c8bc6396-61e5-41c4-90eb-afea42c4fcfb",
+            "67b40d86-e6f3-4d53-bade-179f4a534cc0",
+            "1b4769d9-4400-42ce-b10e-4078755ad75c",
+            "9a1966c2-5868-4fd5-b4be-bb93494271af",
+            "20926529-3195-4b6d-9278-e2bf0ad2fbf7",
+            "b98ae64c-4b7e-4106-b41c-9bfabc74414a",
+            "49658fc3-d650-4e98-bec6-731a3c2d619f",
+            "23d29013-2edf-4dd9-b6f5-6b233474400a",
+            "c7357199-1457-48a3-ac6c-c19956d62b22",
+            "538e278d-3797-4344-89c9-bdd566f35ad0",
+            "b2a0b991-ac31-4d24-ab7c-e8e9cb42bc29",
+            "65169cc3-6993-441c-bc89-25c4ca13fa89"
+        ],
+        "store": [],
+        "controller": [],
+        "model": [],
+        "resource": [
+            "a625c198-7807-49bf-972b-cf4dc224b195",
+            "1194177d-33c2-484d-a961-279b466656ef",
+            "cc769fa0-d1d0-46eb-ba86-661648e5860f",
+            "e19ca938-9b9a-4c0e-aca0-16ad129307a8",
+            "38c58fae-5aa4-42c4-a592-0c6f57e40691",
+            "bba78c44-60af-438f-901e-07224fa314d5",
+            "443a214d-8700-4842-8fa5-214ffda5b498",
+            "fb6919f2-a8a5-4e58-bc64-e17862b5850f"
+        ],
+        "app": [
+            "application"
+        ]
+    }
+}

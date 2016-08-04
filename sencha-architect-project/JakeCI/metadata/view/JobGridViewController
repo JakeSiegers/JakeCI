@@ -1,0 +1,13 @@
+{
+    "type": "Ext.app.ViewController",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "jobgrid",
+        "designer|userClassName": "JobGridViewController"
+    },
+    "designerId": "65169cc3-6993-441c-bc89-25c4ca13fa89"
+}

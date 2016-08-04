@@ -1,0 +1,14 @@
+{
+    "type": "cssresource",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "css_ungzxqnn",
+        "url": "resources\\js\\docForm\\tabs.css"
+    },
+    "name": "css2",
+    "designerId": "fb6919f2-a8a5-4e58-bc64-e17862b5850f"
+}

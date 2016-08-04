@@ -1,0 +1,16 @@
+{
+    "type": "jsresource",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "defer": false,
+        "designer|userClassName": "js_npt7p3dy",
+        "url": "resources\\js\\docForm\\docForm.js",
+        "x-compile": true
+    },
+    "name": "js1",
+    "designerId": "bba78c44-60af-438f-901e-07224fa314d5"
+}

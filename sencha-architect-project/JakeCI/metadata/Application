@@ -1,0 +1,23 @@
+{
+    "type": "Ext.app.Application",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "name": "JakeCI",
+        "views": [
+            "MyViewport",
+            "JobForm",
+            "Settings",
+            "JakeCI",
+            "JobHistory",
+            "OldCredsEditor",
+            "CredsEditor",
+            "JobGrid"
+        ]
+    },
+    "name": "Application",
+    "designerId": "application"
+}

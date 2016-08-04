@@ -1,0 +1,16 @@
+{
+    "type": "jsresource",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "defer": false,
+        "designer|userClassName": "js_0ia5xcs2",
+        "url": "resources/js/Ajax.js",
+        "x-compile": true
+    },
+    "name": "js",
+    "designerId": "c78f5a7c-b0df-4ff6-aab8-a219f7f9ae71"
+}

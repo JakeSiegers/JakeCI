@@ -1,0 +1,143 @@
+{
+    "type": "Ext.app.ViewModel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "jobhistory",
+        "designer|userClassName": "JobHistoryViewModel"
+    },
+    "designerId": "67b40d86-e6f3-4d53-bade-179f4a534cc0",
+    "cn": [
+        {
+            "type": "Ext.data.Store",
+            "reference": {
+                "name": "stores",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "data": [
+                    "[",
+                    "    {",
+                    "        \"buildNumber\": \"dolorem\"",
+                    "    }",
+                    "]"
+                ],
+                "name": "HistoryStore",
+                "pageSize": 10
+            },
+            "name": "MyStore5",
+            "designerId": "b288349b-5aa3-4fe5-9dbd-fc0044b2d7b7",
+            "configMeta": {
+                "data": {
+                    "mock": true
+                }
+            },
+            "cn": [
+                {
+                    "type": "Ext.data.field.Field",
+                    "reference": {
+                        "name": "fields",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "buildNumber"
+                    },
+                    "name": "MyField3",
+                    "designerId": "2423236e-949a-484d-8021-85ed11e4d4a7"
+                },
+                {
+                    "type": "Ext.data.field.Field",
+                    "reference": {
+                        "name": "fields",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "passed"
+                    },
+                    "name": "MyField13",
+                    "designerId": "22a3cf6b-2612-448e-9720-bf896b50d0ff"
+                },
+                {
+                    "type": "Ext.data.field.Date",
+                    "reference": {
+                        "name": "fields",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dateReadFormat": "Y-m-d H:i:s",
+                        "name": "started"
+                    },
+                    "name": "MyDate",
+                    "designerId": "1c034fe7-b645-4839-a2bc-8e8f59089ecf"
+                },
+                {
+                    "type": "Ext.data.field.Date",
+                    "reference": {
+                        "name": "fields",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dateReadFormat": "Y-m-d H:i:s",
+                        "name": "finished"
+                    },
+                    "name": "MyDate1",
+                    "designerId": "2fe87c59-9056-4722-9230-7db6c5766274"
+                },
+                {
+                    "type": "Ext.data.field.Field",
+                    "reference": {
+                        "name": "fields",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "log"
+                    },
+                    "name": "MyField16",
+                    "designerId": "8534c232-5213-4d94-b913-b70911322071"
+                },
+                {
+                    "type": "Ext.data.proxy.Ajax",
+                    "reference": {
+                        "name": "proxy",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "actionMethods": [
+                            "{\"create\":\"POST\",\"read\":\"POST\",\"update\":\"POST\",\"destroy\":\"POST\"}"
+                        ],
+                        "noCache": false,
+                        "simpleSortMode": true,
+                        "url": "History/getAllHistoryForJob"
+                    },
+                    "name": "MyAjaxProxy",
+                    "designerId": "f6bed784-a47b-4056-9534-c9612af53165",
+                    "cn": [
+                        {
+                            "type": "Ext.data.reader.Array",
+                            "reference": {
+                                "name": "reader",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "totalProperty": "total"
+                            },
+                            "name": "MyArrayReader",
+                            "designerId": "ba188170-adff-4269-a3cf-94e8fe210f7b"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

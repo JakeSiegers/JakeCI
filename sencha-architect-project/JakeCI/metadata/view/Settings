@@ -1,0 +1,445 @@
+{
+    "type": "Ext.form.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "bodyPadding": 10,
+        "container|align": "stretch",
+        "designer|userAlias": "settings",
+        "designer|userClassName": "Settings",
+        "frame": true,
+        "height": null,
+        "itemId": "settingsPanel",
+        "layout": "hbox",
+        "title": "",
+        "width": 677
+    },
+    "designerId": "081fcff5-62a2-4369-bd6c-72af652cc70e",
+    "viewControllerInstanceId": "e1c016d9-84c5-4f63-b975-4e7c7361e349",
+    "viewModelInstanceId": "580dc1fc-78ab-468b-810a-af9d4852834a",
+    "cn": [
+        {
+            "type": "Ext.toolbar.Toolbar",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dock": "top"
+            },
+            "name": "MyToolbar2",
+            "designerId": "e42ba19b-280f-4e2a-b07f-dd2a238b31e1",
+            "cn": [
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": null,
+                        "text": "<i class=\"fa fa-floppy-o\"></i> Save"
+                    },
+                    "name": "MyButton7",
+                    "designerId": "73457c23-baab-43b4-8723-700284b9510e",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onButtonClick1",
+                                "implHandler": [
+                                    "this.saveSettings();"
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "name": "onButtonClick1",
+                            "designerId": "0c792bc6-bbf1-4975-9623-d336f4a00f10"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.toolbar.Spacer",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": 1
+                    },
+                    "name": "MySpacer1",
+                    "designerId": "f7efba62-d536-4229-a98b-3494e9b54d19"
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": null,
+                        "text": "Edit Creds"
+                    },
+                    "name": "MyButton3",
+                    "designerId": "a8ebab26-3605-46ca-8bcf-87489fcf9d28",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onButtonClick",
+                                "implHandler": [
+                                    "this.fireEvent('showcredwindow');"
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "name": "onButtonClick",
+                            "designerId": "ca70ff1a-de8c-4ccb-a956-aebc5b606084"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onSettingsPanelRender",
+                "implHandler": [
+                    "this.loadSettings();"
+                ],
+                "name": "render",
+                "scope": "me"
+            },
+            "name": "onSettingsPanelRender",
+            "designerId": "cd430514-0f88-4200-b045-8a31a01c762a"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "loadSettings",
+                "implHandler": [
+                    "this.mask('Loading Settings...');",
+                    "AERP.Ajax.request({",
+                    "    url:'/Settings/getAllSettings',",
+                    "    success:function(reply){",
+                    "        this.getForm().setValues(reply.data);",
+                    "        this.unmask();",
+                    "    },",
+                    "    failure:function(){",
+                    "        this.unmask();",
+                    "    },",
+                    "    scope:this",
+                    "});"
+                ]
+            },
+            "name": "loadSettings",
+            "designerId": "e33a3c5e-a306-4b4a-9f2a-33c029b04894"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "saveSettings",
+                "implHandler": [
+                    "this.mask('Saving...');",
+                    "AERP.Ajax.request({",
+                    "    url:'/Settings/saveSettings',",
+                    "    params:this.getForm().getValues(false,false,true,false),",
+                    "    success:function(reply){",
+                    "        this.getForm().setValues(reply.data);",
+                    "        this.unmask();",
+                    "    },",
+                    "    failure:function(){",
+                    "        this.unmask();",
+                    "    },",
+                    "    scope:this",
+                    "});"
+                ]
+            },
+            "name": "saveSettings",
+            "designerId": "8540df55-b723-4960-bab6-a1b2fa36bb5b"
+        },
+        {
+            "type": "Ext.form.FieldSet",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|flex": 1,
+                "title": "Email / SMTP"
+            },
+            "name": "MyFieldSet5",
+            "designerId": "41c0bc1a-64b3-46bb-8756-5cd07e839224",
+            "cn": [
+                {
+                    "type": "Ext.form.field.Checkbox",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "boxLabel": "",
+                        "designer|displayName": "",
+                        "fieldLabel": "Send Emails",
+                        "inputValue": "1",
+                        "layout|anchor": "100%",
+                        "name": "sendEmails",
+                        "uncheckedValue": "0"
+                    },
+                    "name": "MyCheckbox1",
+                    "designerId": "72f08660-ee58-4f32-bd80-5bb7bd1f1663"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Alert Email",
+                        "layout|anchor": "100%",
+                        "name": "alertEmail"
+                    },
+                    "name": "MyTextField13",
+                    "designerId": "5955f5c7-5c25-4026-80e7-84f0ed463df1"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Email From",
+                        "layout|anchor": "100%",
+                        "name": "fromAddress"
+                    },
+                    "name": "MyTextField14",
+                    "designerId": "72e36348-5320-44c1-bc02-0c7452154cd1"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "SMTP Host",
+                        "layout|anchor": "100%",
+                        "name": "smtpHost"
+                    },
+                    "name": "MyTextField8",
+                    "designerId": "6b66da40-21ba-4d1c-a8be-710960305a7c"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "SMTP Port",
+                        "inputType": null,
+                        "layout|anchor": "100%",
+                        "name": "smtpPort"
+                    },
+                    "name": "MyTextField9",
+                    "designerId": "654be2bc-3485-406d-aa77-e67d84f46ec3"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "SMTP User",
+                        "inputType": null,
+                        "layout|anchor": "100%",
+                        "name": "smtpUsername"
+                    },
+                    "name": "MyTextField11",
+                    "designerId": "2dd29e9b-e74c-41a9-a0a1-eb746b2327a0"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "SMTP Pass",
+                        "inputType": "password",
+                        "layout|anchor": "100%",
+                        "name": "smtpPassword"
+                    },
+                    "name": "MyTextField12",
+                    "designerId": "7765f2b5-0fe2-4cae-97ca-12abecf434e6"
+                },
+                {
+                    "type": "Ext.form.field.Checkbox",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "boxLabel": "",
+                        "fieldLabel": "SMTP Use SSL",
+                        "inputValue": "1",
+                        "layout|anchor": "100%",
+                        "name": "smtpUseSSL",
+                        "uncheckedValue": "0"
+                    },
+                    "name": "MyCheckbox",
+                    "designerId": "9b0cc7fa-0ab1-485f-8781-b09e417efc45"
+                }
+            ]
+        },
+        {
+            "type": "Ext.container.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|flex": 1
+            },
+            "name": "MyContainer4",
+            "designerId": "e0cdf6a5-43c3-4654-b427-db1a2ba02d70",
+            "cn": [
+                {
+                    "type": "Ext.form.FieldSet",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "title": "Job Building"
+                    },
+                    "name": "MyFieldSet6",
+                    "designerId": "6e37b2ab-e3d8-4c7c-af58-b95bd0c323c5",
+                    "cn": [
+                        {
+                            "type": "Ext.form.field.Number",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fieldLabel": "Active Job Limit",
+                                "layout|anchor": "100%",
+                                "name": "activeJobLimit"
+                            },
+                            "name": "MyNumberField",
+                            "designerId": "72783be9-5bf8-4f81-9e21-9f30d6116f2e"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.FieldSet",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "title": "Git"
+                    },
+                    "name": "MyFieldSet7",
+                    "designerId": "196ee334-0cd9-4476-b168-96cdd8814fd9",
+                    "cn": [
+                        {
+                            "type": "Ext.form.field.Text",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fieldLabel": "Git Binary",
+                                "layout|anchor": "100%",
+                                "name": "gitBinary"
+                            },
+                            "name": "MyTextField",
+                            "designerId": "83ddb2e7-81dd-4a06-aadf-5b38ee204805"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.FieldSet",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "title": "Subversion"
+                    },
+                    "name": "MyFieldSet8",
+                    "designerId": "fe8c3df0-d353-404d-9c51-d2dbdd52280b",
+                    "cn": [
+                        {
+                            "type": "Ext.form.field.Text",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fieldLabel": "Svn Binary",
+                                "layout|anchor": "100%",
+                                "name": "svnBinary"
+                            },
+                            "name": "MyTextField10",
+                            "designerId": "c8c436d2-c1de-4140-a0cb-46a336141b8a"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

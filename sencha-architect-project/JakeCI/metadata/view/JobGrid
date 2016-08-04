@@ -1,0 +1,266 @@
+{
+    "type": "Ext.grid.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "jobgrid",
+        "designer|userClassName": "JobGrid",
+        "height": 214,
+        "itemId": "jobGrid",
+        "store": [
+            "{JobStore}"
+        ],
+        "title": "Jake CI",
+        "width": 400
+    },
+    "name": "MyGridPanel",
+    "configAlternates": {
+        "store": "binding"
+    },
+    "designerId": "538e278d-3797-4344-89c9-bdd566f35ad0",
+    "viewControllerInstanceId": "65169cc3-6993-441c-bc89-25c4ca13fa89",
+    "viewModelInstanceId": "b2a0b991-ac31-4d24-ab7c-e8e9cb42bc29",
+    "cn": [
+        {
+            "type": "Ext.grid.column.Column",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "buildPassing",
+                "menuDisabled": true,
+                "sortable": false,
+                "text": "",
+                "width": 40
+            },
+            "name": "MyColumn6",
+            "designerId": "1509ab9e-714d-4a56-b7c5-9b3b6124c4e2",
+            "cn": [
+                {
+                    "type": "fixedfunction",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|params": [
+                            "value",
+                            "metaData",
+                            "record",
+                            "rowIndex",
+                            "colIndex",
+                            "store",
+                            "view"
+                        ],
+                        "fn": "renderer",
+                        "implHandler": [
+                            "if(value === true){",
+                            "    return '<i class=\"fa fa-thumbs-up\" aria-hidden=\"true\" style=\"color:green;\"></i>';",
+                            "}",
+                            "return '<i class=\"fa fa-thumbs-down\" aria-hidden=\"true\" style=\"color:red;\"></i>';"
+                        ]
+                    },
+                    "name": "renderer",
+                    "designerId": "7f947545-e25d-412b-b1ad-93bd7d375f01"
+                }
+            ]
+        },
+        {
+            "type": "Ext.grid.column.Column",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "name",
+                "text": "Job Name",
+                "width": 193
+            },
+            "name": "MyColumn",
+            "designerId": "41c26bc4-3bc8-43c4-9f92-20b0048e3c21"
+        },
+        {
+            "type": "Ext.grid.column.Column",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "lastBuildLength",
+                "text": "Last Build Time",
+                "width": 249
+            },
+            "name": "MyColumn2",
+            "designerId": "b5188c34-a0c5-4f34-83a2-f036b39b82e0",
+            "cn": [
+                {
+                    "type": "fixedfunction",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|params": [
+                            "value",
+                            "metaData",
+                            "record",
+                            "rowIndex",
+                            "colIndex",
+                            "store",
+                            "view"
+                        ],
+                        "fn": "renderer",
+                        "implHandler": [
+                            "return Ext.util.Format.number(value/1000.0,'0.###')+\" sec\";"
+                        ]
+                    },
+                    "name": "renderer",
+                    "designerId": "e5122ba7-57c9-48c5-a026-7a29111aca37"
+                }
+            ]
+        },
+        {
+            "type": "Ext.view.Table",
+            "reference": {
+                "name": "viewConfig",
+                "type": "object"
+            },
+            "codeClass": null,
+            "name": "MyTable",
+            "designerId": "28348b03-39d6-4448-8361-f9f8e4a3ccb5"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onJobGridRowDblClick",
+                "implHandler": [
+                    "this.showJobWindow(function(form){",
+                    "    form.loadJob(record.get('name'));",
+                    "    //form.getAllHistory(record.get('name'))",
+                    "});"
+                ],
+                "name": "rowdblclick",
+                "scope": "me"
+            },
+            "name": "onJobGridRowDblClick",
+            "designerId": "faa1254a-444d-439d-878b-b6052b58eef0"
+        },
+        {
+            "type": "Ext.toolbar.Toolbar",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dock": "top"
+            },
+            "name": "MyToolbar",
+            "designerId": "279ec1fc-f1ae-4f12-a4cf-99933eacb6eb",
+            "cn": [
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "cls": null,
+                        "icon": null,
+                        "iconCls": null,
+                        "layout|flex": null,
+                        "text": "<i class=\"fa fa-plus-circle\"></i> Add New Job"
+                    },
+                    "name": "MyButton",
+                    "designerId": "f1b54ea2-0396-4bdf-8c2f-4ca75cdf2c2e",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onButtonClick1",
+                                "implHandler": [
+                                    "this.showJobWindow(function(form){",
+                                    "    form.docFormNew();",
+                                    "});"
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "name": "onButtonClick1",
+                            "designerId": "3b0f8a1a-222d-4346-8982-5269b4f6ae3f"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "emptyText": "Search",
+                        "fieldLabel": "",
+                        "layout|flex": 1
+                    },
+                    "name": "MyTextField18",
+                    "designerId": "2021118c-1654-4d9f-aa34-fb104430545c"
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": null,
+                        "text": "<i class=\"fa fa-wrench\"></i> Jake CI Settings"
+                    },
+                    "name": "MyButton4",
+                    "designerId": "398f54b3-0a6d-434c-93b5-19a6a28f7c1b",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onButtonClick3",
+                                "implHandler": [
+                                    "this.showSettingsWindow();"
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "name": "onButtonClick3",
+                            "designerId": "7d8a5771-9eef-40f8-8b33-2d74b1c15a8f"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

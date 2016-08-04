@@ -1,0 +1,17 @@
+{
+    "type": "Ext.app.Application",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "name": "Login",
+        "views": [
+            "MyWindow",
+            "LoginForm"
+        ]
+    },
+    "name": "Application",
+    "designerId": "application"
+}

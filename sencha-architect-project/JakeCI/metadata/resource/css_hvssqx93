@@ -1,0 +1,14 @@
+{
+    "type": "cssresource",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "css_hvssqx93",
+        "url": "resources/css/buttonColors.css"
+    },
+    "name": "css",
+    "designerId": "cc769fa0-d1d0-46eb-ba86-661648e5860f"
+}

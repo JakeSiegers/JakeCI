@@ -2,6 +2,8 @@ function Jake(){
     //Debug messages, ahoy!
     this.debugMode = true;
 
+    this.Express = require('express');
+
     //Load Helper functions. These are all synchronous. But shouldn't take very long :)
     var Functions = require('./Functions');
     this.functions = new Functions(this);
@@ -46,9 +48,18 @@ function Jake(){
     this.initExpress();
 }
 
+Jake.prototype.checkLogin = function(request, response, next){
+    this.debug(request.url);
+    if(request.url !== '/LoginRequest' && (!request.session || !request.session.authenticated)){
+        response.redirect('/login?url='+encodeURIComponent(request.url));
+        return;
+    }
+    next();
+};
+
 Jake.prototype.initExpress = function () {
-    var Express = require('express');
-    this.app = Express();
+
+    this.app = this.Express();
 
     var BodyParser = require('body-parser');
 
@@ -58,9 +69,13 @@ Jake.prototype.initExpress = function () {
     this.app.use(BodyParser.urlencoded({
         extended: true
     }));
-    
+
+    this.app.use('/login',this.Express.static(__dirname + '/../www/Login'));
+
+    this.app.use(this.checkLogin.bind(this));
+
     //Web Accessible Directory
-    this.app.use('/',Express.static(__dirname + '/../www'));
+    this.app.use('/',this.Express.static(__dirname + '/../www/JakeCI'));
 
     //Loop Over Controller Folder for endpoints ~ ooh magic!
     var controllerFiles = this.fs.readdirSync('./src/controllers');
@@ -78,12 +93,8 @@ Jake.prototype.initExpress = function () {
                 endpoint = '/'+controllerName;
             }
             this.app.post(endpoint,this.controllers[controllerName][controllerFunctions[c]].bind(this.controllers[controllerName]));
-            //For debug!
-            //this.app.get(endpoint,this.controllers[controllerName][controllerFunctions[c]].bind(this.controllers[controllerName]));
-
             this.debug('Loaded Endpoint: '+endpoint);
         }
-
     }
     this.debug('=======================');
     //Loop Over Controller Folder for endpoints ~ ooh magic!

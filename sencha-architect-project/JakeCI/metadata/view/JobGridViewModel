@@ -1,0 +1,13 @@
+{
+    "type": "Ext.app.ViewModel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "jobgrid",
+        "designer|userClassName": "JobGridViewModel"
+    },
+    "designerId": "b2a0b991-ac31-4d24-ab7c-e8e9cb42bc29"
+}

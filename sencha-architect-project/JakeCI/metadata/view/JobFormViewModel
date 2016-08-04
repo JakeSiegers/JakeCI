@@ -1,0 +1,126 @@
+{
+    "type": "Ext.app.ViewModel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "jobform",
+        "designer|userClassName": "JobFormViewModel"
+    },
+    "designerId": "6952602a-04e6-4643-b064-270b31dc0ec2",
+    "cn": [
+        {
+            "type": "Ext.data.Store",
+            "reference": {
+                "name": "stores",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "data": [
+                    "[",
+                    "    {",
+                    "        \"repoType\": \"[ None ]\",",
+                    "        \"repoValue\": \"\"",
+                    "    },",
+                    "    {",
+                    "        \"repoType\": \"Subversion\",",
+                    "        \"repoValue\": \"svn\"",
+                    "    },",
+                    "    {",
+                    "        \"repoType\": \"Git\",",
+                    "        \"repoValue\": \"git\"",
+                    "    }",
+                    "]"
+                ],
+                "name": "RepoTypeStore"
+            },
+            "name": "MyStore1",
+            "designerId": "c8ac96d3-bc89-4dec-8016-5854fb19d8a7",
+            "cn": [
+                {
+                    "type": "Ext.data.field.Field",
+                    "reference": {
+                        "name": "fields",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "repoType"
+                    },
+                    "name": "MyField5",
+                    "designerId": "cfb45970-ffd6-47a1-8b5b-4b1232a89e9c"
+                },
+                {
+                    "type": "Ext.data.field.Field",
+                    "reference": {
+                        "name": "fields",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "repoValue"
+                    },
+                    "name": "MyField12",
+                    "designerId": "aaa19316-c275-4f93-92c1-1d165365b124"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Store",
+            "reference": {
+                "name": "stores",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "CredStore"
+            },
+            "name": "MyStore3",
+            "designerId": "00331b90-47f9-4e73-84e1-94d2cb0d2ae4",
+            "cn": [
+                {
+                    "type": "Ext.data.field.Field",
+                    "reference": {
+                        "name": "fields",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "cred"
+                    },
+                    "name": "MyField9",
+                    "designerId": "a8733494-dbaf-4b6d-aad3-99929681678d"
+                },
+                {
+                    "type": "Ext.data.field.Field",
+                    "reference": {
+                        "name": "fields",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "username"
+                    },
+                    "name": "MyField7",
+                    "designerId": "618129c5-8a86-474c-aa6a-aafd444deb00"
+                },
+                {
+                    "type": "Ext.data.field.Field",
+                    "reference": {
+                        "name": "fields",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "password"
+                    },
+                    "name": "MyField8",
+                    "designerId": "cb64fda8-1fa1-49ba-8e6a-8af0e5b8910a"
+                }
+            ]
+        }
+    ]
+}
