@@ -57,8 +57,7 @@ Ext.define('JakeCI.view.JakeCI', {
     },
 
     onViewportRender: function(component, eOpts) {
-        this.getAllJobs();
-
+        this.queryById('jobGrid').getAllJobs();
 
 
         var sThis = this;
@@ -69,22 +68,6 @@ Ext.define('JakeCI.view.JakeCI', {
                 sThis.updateJobQueue();
             }
         },5000);
-    },
-
-    getAllJobs: function() {
-        this.mask("Loading Jobs...");
-
-        AERP.Ajax.request({
-            url:'/Job/getAllJobs',
-            success:function(result){
-                this.unmask();
-                this.lookupViewModel().getStore('JobStore').loadData(result.data);
-            },
-            failure:function(){
-                this.unmask();
-            },
-            scope:this
-        });
     },
 
     showJobWindow: function(firstFunction) {

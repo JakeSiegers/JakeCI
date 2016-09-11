@@ -2,7 +2,9 @@
     "name": "JakeCI",
     "settings": {
         "cmd": {
-            "license": "commercial"
+            "license": "",
+            "cmdVersion": "",
+            "frameworkVersion": ""
         },
         "canvasControls": {
             "viewportSize": {
@@ -28,7 +30,8 @@
         "displayfield-ExtBox1-1306-inputEl": "a new version of the framework is available",
         "displayfield-ExtBox1-1118-inputEl": "a new version of the framework is available",
         "displayfield-ExtBox1-1204-inputEl": "a new version of the framework is available",
-        "urlPrefixTemplate": "http://localhost:{port}/{path}"
+        "urlPrefixTemplate": "http://localhost:{port}/{path}",
+        "sdkPath": ""
     },
     "xdsVersion": "4.0.0",
     "xdsBuild": 168,

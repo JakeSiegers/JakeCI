@@ -64,34 +64,6 @@
             "masterInstanceId": "c8bc6396-61e5-41c4-90eb-afea42c4fcfb"
         },
         {
-            "type": "basicfunction",
-            "reference": {
-                "name": "items",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "fn": "getAllJobs",
-                "implHandler": [
-                    "this.mask(\"Loading Jobs...\");",
-                    "",
-                    "AERP.Ajax.request({",
-                    "    url:'/Job/getAllJobs',",
-                    "    success:function(result){",
-                    "        this.unmask();",
-                    "        this.lookupViewModel().getStore('JobStore').loadData(result.data);",
-                    "    },",
-                    "    failure:function(){",
-                    "        this.unmask();",
-                    "    },",
-                    "    scope:this",
-                    "});"
-                ]
-            },
-            "name": "getAllJobs",
-            "designerId": "d5a2b767-d088-4744-808f-947272c97f7a"
-        },
-        {
             "type": "basiceventbinding",
             "reference": {
                 "name": "listeners",
@@ -101,8 +73,7 @@
             "userConfig": {
                 "fn": "onViewportRender",
                 "implHandler": [
-                    "this.getAllJobs();",
-                    "",
+                    "this.queryById('jobGrid').getAllJobs();",
                     "",
                     "",
                     "var sThis = this;",

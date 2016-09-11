@@ -27,8 +27,10 @@ Ext.define('Login.view.MyWindow', {
         type: 'mywindow'
     },
     autoShow: true,
+    resizable: false,
     width: 324,
     layout: 'fit',
+    closable: false,
     title: 'Welcome To Jake CI',
 
     items: [

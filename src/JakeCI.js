@@ -68,9 +68,13 @@ Jake.prototype.initExpress = function () {
     //Cookies reset on each server restart
     //TODO: perhaps make this use a secret cookie file, or pull something from the config so we don't have to kill sessions every restart.
     this.app.use(Session({
-        secret:this.uuid.v4(),
+        secret: this.uuid.v4(),
+        resave: true,
+        saveUninitialized: false,
+        rolling: true, //Reset session on each request (Basically idle check)
+        name:'JakeCI Login',
         cookie:{
-            maxAge: 60000
+            maxAge: 1000*60*60*3, //3 Hours
         }
     }));
 
@@ -123,13 +127,7 @@ Jake.prototype.initExpress = function () {
     //Error Handling (Last route)
     var sThis = this;
     this.app.use(function(error, request, response, next) {
-        console.error(error);
-        response.status(500).send(
-            JSON.stringify({
-                success: false,
-                error: "Server Error - Check Console!"//error.toString()
-            })
-        );
+        sThis.sendError(response,error);
     });
 
     var port = 3000;

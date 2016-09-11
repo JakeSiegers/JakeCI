@@ -23,22 +23,6 @@ Ext.define('JakeCI.view.JakeCIViewModel', {
     ],
 
     stores: {
-        JobStore: {
-            fields: [
-                {
-                    name: 'name'
-                },
-                {
-                    name: 'description'
-                },
-                {
-                    name: 'buildPassing'
-                },
-                {
-                    name: 'lastBuildLength'
-                }
-            ]
-        },
         QueueStore: {
             fields: [
                 {

@@ -109,13 +109,27 @@ Ext.define('JakeCI.view.JobGrid', {
     },
 
     onButtonClick1: function(button, e, eOpts) {
-        this.showJobWindow(function(form){
-            form.docFormNew();
-        });
+        this.fireEvent('loadJob',);
     },
 
     onButtonClick3: function(button, e, eOpts) {
         this.showSettingsWindow();
+    },
+
+    getAllJobs: function() {
+        this.mask("Loading Jobs...");
+
+        AERP.Ajax.request({
+            url:'/Job/getAllJobs',
+            success:function(result){
+                this.unmask();
+                this.lookupViewModel().getStore('JobStore').loadData(result.data);
+            },
+            failure:function(){
+                this.unmask();
+            },
+            scope:this
+        });
     }
 
 });

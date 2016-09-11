@@ -15,6 +15,30 @@
 
 Ext.define('JakeCI.view.JobGridViewModel', {
     extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.jobgrid'
+    alias: 'viewmodel.jobgrid',
+
+    requires: [
+        'Ext.data.Store',
+        'Ext.data.field.Field'
+    ],
+
+    stores: {
+        JobStore: {
+            fields: [
+                {
+                    name: 'name'
+                },
+                {
+                    name: 'description'
+                },
+                {
+                    name: 'buildPassing'
+                },
+                {
+                    name: 'lastBuildLength'
+                }
+            ]
+        }
+    }
 
 });

@@ -199,9 +199,7 @@
                             "userConfig": {
                                 "fn": "onButtonClick1",
                                 "implHandler": [
-                                    "this.showJobWindow(function(form){",
-                                    "    form.docFormNew();",
-                                    "});"
+                                    "this.fireEvent('loadJob',);"
                                 ],
                                 "name": "click",
                                 "scope": "me"
@@ -261,6 +259,34 @@
                     ]
                 }
             ]
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "getAllJobs",
+                "implHandler": [
+                    "this.mask(\"Loading Jobs...\");",
+                    "",
+                    "AERP.Ajax.request({",
+                    "    url:'/Job/getAllJobs',",
+                    "    success:function(result){",
+                    "        this.unmask();",
+                    "        this.lookupViewModel().getStore('JobStore').loadData(result.data);",
+                    "    },",
+                    "    failure:function(){",
+                    "        this.unmask();",
+                    "    },",
+                    "    scope:this",
+                    "});"
+                ]
+            },
+            "name": "getAllJobs",
+            "designerId": "78425da8-7b6f-4f6a-839b-ca91a46ef398"
         }
     ]
 }

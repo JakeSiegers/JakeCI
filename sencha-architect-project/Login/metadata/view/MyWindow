@@ -7,15 +7,20 @@
     "codeClass": null,
     "userConfig": {
         "autoShow": true,
+        "closable": false,
         "designer|initialView": true,
         "designer|userAlias": "mywindow",
         "designer|userClassName": "MyWindow",
         "height": null,
         "layout": "fit",
+        "resizable": false,
         "title": "Welcome To Jake CI",
         "width": 324
     },
     "name": "MyWindow",
+    "configAlternates": {
+        "resizable": "boolean"
+    },
     "designerId": "108ecfd0-8ab6-4fa6-826b-271a49106fc5",
     "viewControllerInstanceId": "f9d7649c-dc87-47f3-aafc-2e5938e7377f",
     "viewModelInstanceId": "175d8b7c-6d19-49e8-99fb-90b81fa54a26",
