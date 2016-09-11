@@ -13,7 +13,7 @@
             }
         },
         "urlPrefix": "http://localhost:3000",
-        "exportPath": "C:/Users/Jake/Desktop/JakeCI/www",
+        "exportPath": "C:/Users/Jake/Desktop/JakeCI/www/JakeCI",
         "projectHasEnabledWebServer": false,
         "lockUrlPrefix": false,
         "buildShouldOverwriteIndex": true,
@@ -27,13 +27,14 @@
         "displayfield-ExtBox1-1174-inputEl": "a new version of the framework is available",
         "displayfield-ExtBox1-1306-inputEl": "a new version of the framework is available",
         "displayfield-ExtBox1-1118-inputEl": "a new version of the framework is available",
-        "displayfield-ExtBox1-1204-inputEl": "a new version of the framework is available"
+        "displayfield-ExtBox1-1204-inputEl": "a new version of the framework is available",
+        "urlPrefixTemplate": "http://localhost:{port}/{path}"
     },
     "xdsVersion": "4.0.0",
-    "xdsBuild": 112,
+    "xdsBuild": 168,
     "schemaVersion": 1,
     "upgradeVersion": 310000000001,
-    "framework": "ext60",
+    "framework": "ext62",
     "viewOrderMap": {
         "view": [
             "f0c78d6f-b5da-4b2f-9746-e6c831e349a4",

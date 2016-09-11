@@ -6,7 +6,7 @@
     },
     "codeClass": null,
     "userConfig": {
-        "basePath": null,
+        "basePath": "https://cdn.sencha.com/ext/commercial/6.2.0/build/",
         "designer|userClassName": "Library",
         "theme": null
     },

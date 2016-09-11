@@ -673,11 +673,11 @@
         "openTabs": []
     },
     "canvasState": {
-        "topInstance": "081fcff5-62a2-4369-bd6c-72af652cc70e"
+        "topInstance": "2d62bcac-e0cf-4ff4-be1e-a6cfe9531784"
     },
     "inspectorState": {
-        "topInstance": null,
-        "selectedInstance": null
+        "topInstance": "a625c198-7807-49bf-972b-cf4dc224b195",
+        "selectedInstance": "a625c198-7807-49bf-972b-cf4dc224b195"
     },
     "editMode": "design",
     "userSettings": {
