@@ -20,13 +20,14 @@
         "lineEnding": "CRLF",
         "genTimestamps": false,
         "cacheBust": false,
-        "installStatus": "Not Installed"
+        "installStatus": "Not Installed",
+        "urlPrefixTemplate": "http://localhost:{port}/{path}"
     },
     "xdsVersion": "4.0.0",
-    "xdsBuild": 112,
+    "xdsBuild": 168,
     "schemaVersion": 1,
     "upgradeVersion": 310000000001,
-    "framework": "ext60",
+    "framework": "ext62",
     "viewOrderMap": {
         "view": [
             "108ecfd0-8ab6-4fa6-826b-271a49106fc5",

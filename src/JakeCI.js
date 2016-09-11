@@ -14,6 +14,7 @@ function Jake(){
     this.Promise = require("bluebird");
     this.rmdir = require('rimraf');
     this.nodemailer = require("nodemailer");
+    this.uuid = require("node-uuid");
 
     //this.Promise.promisifyAll(this.fs); //Way too much memory
     this.fs.readdirAsync = this.Promise.promisify(this.fs.readdir);
@@ -50,11 +51,11 @@ function Jake(){
 
 Jake.prototype.checkLogin = function(request, response, next){
     this.debug(request.url);
-    if(request.url !== '/LoginRequest' && (!request.session || !request.session.authenticated)){
-        response.redirect('/login?url='+encodeURIComponent(request.url));
+    if(request.url == '/LoginRequest' || (request.session && request.session.authenticated)){
+        next();
         return;
     }
-    next();
+    response.redirect('/login?url='+encodeURIComponent(request.url));
 };
 
 Jake.prototype.initExpress = function () {
@@ -62,6 +63,16 @@ Jake.prototype.initExpress = function () {
     this.app = this.Express();
 
     var BodyParser = require('body-parser');
+    var Session = require('express-session');
+
+    //Cookies reset on each server restart
+    //TODO: perhaps make this use a secret cookie file, or pull something from the config so we don't have to kill sessions every restart.
+    this.app.use(Session({
+        secret:this.uuid.v4(),
+        cookie:{
+            maxAge: 60000
+        }
+    }));
 
     //to support JSON-encoded bodies
     this.app.use(BodyParser.json());
@@ -70,14 +81,14 @@ Jake.prototype.initExpress = function () {
         extended: true
     }));
 
+    //All users can use this route
     this.app.use('/login',this.Express.static(__dirname + '/../www/Login'));
-
+    //Only /LoginRequest controller and authenticated users get past this check
     this.app.use(this.checkLogin.bind(this));
-
-    //Web Accessible Directory
     this.app.use('/',this.Express.static(__dirname + '/../www/JakeCI'));
 
     //Loop Over Controller Folder for endpoints ~ ooh magic!
+    this.debug('=======================');
     var controllerFiles = this.fs.readdirSync('./src/controllers');
     this.controllers = {};
     for(var i=0;i<controllerFiles.length;i++){
@@ -107,25 +118,23 @@ Jake.prototype.initExpress = function () {
         this.models[modelName] = new modelCls(this);
         this.debug('Loaded Model: '+modelName);
     }
+    this.debug('=======================');
+
+    //Error Handling (Last route)
+    var sThis = this;
+    this.app.use(function(error, request, response, next) {
+        console.error(error);
+        response.status(500).send(
+            JSON.stringify({
+                success: false,
+                error: "Server Error - Check Console!"//error.toString()
+            })
+        );
+    });
 
     var port = 3000;
     this.app.listen(port);
     this.log('info','Listening on port '+port+'...');
-
-    //Error Handling
-    var sThis = this;
-    this.app.use(function(error, request, response, next) {
-        /*
-        response.status(500).send(
-            JSON.stringify({
-                success: false,
-                error: 'Server Error!'
-            })
-        );
-        */
-
-        sThis.sendError(response,error);
-    });
 };
 
 Jake.prototype.sendError = function(response, error){
