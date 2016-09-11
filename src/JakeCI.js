@@ -86,6 +86,7 @@ Jake.prototype.initExpress = function () {
     }));
 
     //All users can use this route
+    this.app.use('/inc',this.Express.static(__dirname + '/../www/inc'));
     this.app.use('/login',this.Express.static(__dirname + '/../www/Login'));
     //Only /LoginRequest controller and authenticated users get past this check
     this.app.use(this.checkLogin.bind(this));

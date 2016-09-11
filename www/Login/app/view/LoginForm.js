@@ -27,6 +27,7 @@ Ext.define('Login.view.LoginForm', {
     viewModel: {
         type: 'loginform'
     },
+    frame: true,
     bodyPadding: 10,
     title: '',
     defaultListenerScope: true,
@@ -66,6 +67,7 @@ Ext.define('Login.view.LoginForm', {
                 {
                     xtype: 'button',
                     padding: '10 30 10 30',
+                    icon: '/inc/img/silk_icons/lock.png',
                     text: 'Login',
                     listeners: {
                         click: 'onButtonClick'

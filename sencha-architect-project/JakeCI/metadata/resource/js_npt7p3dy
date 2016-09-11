@@ -8,7 +8,7 @@
     "userConfig": {
         "defer": false,
         "designer|userClassName": "js_npt7p3dy",
-        "url": "resources\\js\\docForm\\docForm.js",
+        "url": "/inc/js/docForm/docForm.js",
         "x-compile": true
     },
     "name": "js1",

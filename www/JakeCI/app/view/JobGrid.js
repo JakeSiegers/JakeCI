@@ -109,11 +109,11 @@ Ext.define('JakeCI.view.JobGrid', {
     },
 
     onButtonClick1: function(button, e, eOpts) {
-        this.fireEvent('loadJob',);
+        this.fireEvent('addnewjob');
     },
 
     onButtonClick3: function(button, e, eOpts) {
-        this.showSettingsWindow();
+        this.fireEvent('viewsettings');
     },
 
     getAllJobs: function() {

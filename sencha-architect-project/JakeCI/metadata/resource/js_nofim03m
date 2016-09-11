@@ -8,7 +8,7 @@
     "userConfig": {
         "defer": false,
         "designer|userClassName": "js_nofim03m",
-        "url": "resources/js/Ajax.js",
+        "url": "/inc/js/Ajax.js",
         "x-compile": true
     },
     "name": "js",

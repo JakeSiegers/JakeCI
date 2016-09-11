@@ -39,7 +39,10 @@ Ext.define('JakeCI.view.JakeCI', {
     items: [
         {
             xtype: 'jobgrid',
-            flex: 1
+            flex: 1,
+            listeners: {
+                viewsettings: 'onJobGridViewsettings'
+            }
         },
         {
             xtype: 'jobform',
@@ -53,7 +56,11 @@ Ext.define('JakeCI.view.JakeCI', {
         }
     ],
     listeners: {
-        render: 'onViewportRender'
+        afterrender: 'onViewportRender'
+    },
+
+    onJobGridViewsettings: function(gridpanel) {
+        this.showSettingsWindow();
     },
 
     onViewportRender: function(component, eOpts) {

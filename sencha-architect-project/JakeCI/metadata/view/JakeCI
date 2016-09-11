@@ -31,7 +31,30 @@
             },
             "name": "jobgrid",
             "designerId": "ac68cbdf-602b-469c-9644-fad11e2b7251",
-            "masterInstanceId": "538e278d-3797-4344-89c9-bdd566f35ad0"
+            "masterInstanceId": "538e278d-3797-4344-89c9-bdd566f35ad0",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|params": [
+                            "gridpanel"
+                        ],
+                        "fn": "onJobGridViewsettings",
+                        "implHandler": [
+                            "this.showSettingsWindow();"
+                        ],
+                        "name": "viewsettings",
+                        "scope": "me"
+                    },
+                    "name": "onJobGridViewsettings",
+                    "designerId": "8093d3fb-538e-4f99-b441-46e059a2d783"
+                }
+            ]
         },
         {
             "type": "linkedinstance",
@@ -85,7 +108,7 @@
                     "    }",
                     "},5000);"
                 ],
-                "name": "render",
+                "name": "afterrender",
                 "scope": "me"
             },
             "name": "onViewportRender",

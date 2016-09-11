@@ -9,6 +9,7 @@
         "bodyPadding": 10,
         "designer|userAlias": "loginform",
         "designer|userClassName": "LoginForm",
+        "frame": true,
         "title": ""
     },
     "name": "MyForm",
@@ -108,6 +109,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "icon": "/inc/img/silk_icons/lock.png",
                         "padding": "10 30 10 30",
                         "text": "Login"
                     },

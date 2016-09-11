@@ -21,7 +21,7 @@
         "genTimestamps": false,
         "cacheBust": false,
         "installStatus": "Not Installed",
-        "urlPrefixTemplate": "http://localhost:{port}/{path}"
+        "urlPrefixTemplate": "http://localhost:3000"
     },
     "xdsVersion": "4.0.0",
     "xdsBuild": 168,
