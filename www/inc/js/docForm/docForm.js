@@ -11,7 +11,7 @@ Ext.define('DocForm',{
 		}
 
 		var toolbar = this.queryById(config.toolbarId);
-		toolbar.setHeight(26);
+		toolbar.setHeight(29);
 
 		this.btnFunctions = {
 			'newFn':this.docFormNew, //Move into new state
@@ -143,6 +143,8 @@ Ext.define('DocForm',{
 
 		var newSaveArray = [];
 		var hideNewBtn = config.hideNewButton || false;
+
+		console.log(hideNewBtn);
 
 		if(!hideNewBtn && (this.btnFunctions.newFn != this.docFormNew || this.btnFunctions.addFn != Ext.emptyFn)){
 			newSaveArray.push(this.docFormBtns.newBtn);

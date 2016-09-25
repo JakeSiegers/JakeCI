@@ -31,6 +31,7 @@ Ext.define('JakeCI.view.JobHistory', {
 	viewModel: {
 		type: 'jobhistory'
 	},
+	disabled: true,
 	height: 614,
 	width: 953,
 	title: 'Build History',
@@ -44,6 +45,7 @@ Ext.define('JakeCI.view.JobHistory', {
 		{
 			xtype: 'gridpanel',
 			flex: 1,
+			border: false,
 			title: '',
 			bind: {
 				store: '{HistoryStore}'
@@ -104,6 +106,7 @@ Ext.define('JakeCI.view.JobHistory', {
 		{
 			xtype: 'form',
 			flex: 1,
+			border: false,
 			height: 1122,
 			width: 819,
 			layout: 'fit',

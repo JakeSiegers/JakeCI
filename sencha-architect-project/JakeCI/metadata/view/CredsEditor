@@ -10,7 +10,7 @@
         "container|align": "stretch",
         "designer|userAlias": "credseditor",
         "designer|userClassName": "CredsEditor",
-        "frame": null,
+        "frame": true,
         "height": 384,
         "layout": "hbox",
         "mixins": [

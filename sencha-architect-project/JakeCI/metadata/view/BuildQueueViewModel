@@ -1,0 +1,13 @@
+{
+    "type": "Ext.app.ViewModel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "buildqueue",
+        "designer|userClassName": "BuildQueueViewModel"
+    },
+    "designerId": "fcad950a-3424-4710-9b6b-812c495717f7"
+}

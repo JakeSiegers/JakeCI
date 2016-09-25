@@ -44,7 +44,6 @@ Ext.define('JakeCI.view.MyViewport', {
 		var JakeCI = this.queryById('JakeCI');
 		this.getEl().dom.addEventListener('mousemove',function(){
 		    JakeCI.resetIdleTimer();
-		    //console.log(arguments);
 		},true);
 	}
 

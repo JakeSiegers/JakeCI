@@ -32,6 +32,7 @@ Ext.define('JakeCI.view.CredsEditor', {
 	viewModel: {
 		type: 'credseditor'
 	},
+	frame: true,
 	height: 384,
 	width: 551,
 	title: '',

@@ -10,7 +10,7 @@
         "designer|userAlias": "jakeci",
         "designer|userClassName": "JakeCI",
         "height": null,
-        "layout": "hbox",
+        "layout": "vbox",
         "title": "",
         "width": null
     },
@@ -20,39 +20,131 @@
     "viewModelInstanceId": "8a75c16e-5f5b-4134-80aa-088115286083",
     "cn": [
         {
-            "type": "linkedinstance",
+            "type": "Ext.container.Container",
             "reference": {
                 "name": "items",
                 "type": "array"
             },
             "codeClass": null,
             "userConfig": {
+                "container|align": "stretch",
+                "height": null,
+                "layout": "hbox",
                 "layout|flex": 1
             },
-            "name": "jobgrid",
-            "designerId": "ac68cbdf-602b-469c-9644-fad11e2b7251",
-            "masterInstanceId": "538e278d-3797-4344-89c9-bdd566f35ad0",
+            "name": "MyContainer",
+            "designerId": "e055583a-dfba-4f2f-8234-3ff27118cbff",
             "cn": [
                 {
-                    "type": "basiceventbinding",
+                    "type": "linkedinstance",
                     "reference": {
-                        "name": "listeners",
+                        "name": "items",
                         "type": "array"
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "designer|params": [
-                            "gridpanel"
-                        ],
-                        "fn": "onJobGridViewsettings",
-                        "implHandler": [
-                            "this.showSettingsWindow();"
-                        ],
-                        "name": "viewsettings",
-                        "scope": "me"
+                        "layout|flex": 1
                     },
-                    "name": "onJobGridViewsettings",
-                    "designerId": "8093d3fb-538e-4f99-b441-46e059a2d783"
+                    "name": "jobgrid",
+                    "designerId": "ac68cbdf-602b-469c-9644-fad11e2b7251",
+                    "masterInstanceId": "538e278d-3797-4344-89c9-bdd566f35ad0",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "gridpanel"
+                                ],
+                                "fn": "onJobGridViewsettings",
+                                "implHandler": [
+                                    "this.showSettingsWindow();"
+                                ],
+                                "name": "viewsettings",
+                                "scope": "me"
+                            },
+                            "name": "onJobGridViewsettings",
+                            "designerId": "8093d3fb-538e-4f99-b441-46e059a2d783"
+                        },
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "gridpanel"
+                                ],
+                                "fn": "onJobGridAddnewjob",
+                                "implHandler": [
+                                    "this.newJob();"
+                                ],
+                                "name": "addnewjob",
+                                "scope": "me"
+                            },
+                            "name": "onJobGridAddnewjob",
+                            "designerId": "8deea448-4ce6-4869-85d4-087dcff05b18"
+                        }
+                    ]
+                },
+                {
+                    "type": "linkedinstance",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "disabled": false,
+                        "layout|flex": 1
+                    },
+                    "name": "jobform",
+                    "designerId": "01a54864-d392-4174-a324-666498f353cd",
+                    "masterInstanceId": "ab404ff4-4acc-4b7d-80b2-0a233db83bde",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "form"
+                                ],
+                                "fn": "onJobPanelShowcredwindow",
+                                "implHandler": [
+                                    "this.viewCreds();"
+                                ],
+                                "name": "showcredwindow",
+                                "scope": "me"
+                            },
+                            "name": "onJobPanelShowcredwindow",
+                            "designerId": "847e3215-33c5-42d9-9174-66d73d47c41c"
+                        }
+                    ]
+                },
+                {
+                    "type": "linkedinstance",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "disabled": false,
+                        "layout|flex": 1
+                    },
+                    "name": "jobhistory",
+                    "designerId": "fd70260e-10e0-44fe-afe2-fbc61ce5daef",
+                    "masterInstanceId": "c8bc6396-61e5-41c4-90eb-afea42c4fcfb"
                 }
             ]
         },
@@ -64,27 +156,15 @@
             },
             "codeClass": null,
             "userConfig": {
-                "disabled": true,
-                "layout|flex": 1
+                "animCollapse": 0.5,
+                "collapsible": true,
+                "layout|flex": null,
+                "liveDrag": false,
+                "simpleDrag": true
             },
-            "name": "jobform",
-            "designerId": "01a54864-d392-4174-a324-666498f353cd",
-            "masterInstanceId": "ab404ff4-4acc-4b7d-80b2-0a233db83bde"
-        },
-        {
-            "type": "linkedinstance",
-            "reference": {
-                "name": "items",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "disabled": true,
-                "layout|flex": 1
-            },
-            "name": "jobhistory",
-            "designerId": "fd70260e-10e0-44fe-afe2-fbc61ce5daef",
-            "masterInstanceId": "c8bc6396-61e5-41c4-90eb-afea42c4fcfb"
+            "name": "buildqueue",
+            "designerId": "c49ff542-e0db-408b-af6c-c533d1284c52",
+            "masterInstanceId": "08652928-908a-400a-b2f8-dfd75aaae14e"
         },
         {
             "type": "basiceventbinding",
@@ -104,7 +184,7 @@
                     "this.updateJobQueue();",
                     "setInterval(function(){",
                     "    if(!sThis.idle){",
-                    "        sThis.updateJobQueue();",
+                    "        //sThis.updateJobQueue();",
                     "    }",
                     "},5000);"
                 ],
@@ -113,66 +193,6 @@
             },
             "name": "onViewportRender",
             "designerId": "00e4552f-ac00-4d6d-8d57-6e38d95ae141"
-        },
-        {
-            "type": "basicfunction",
-            "reference": {
-                "name": "items",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "designer|params": [
-                    "firstFunction"
-                ],
-                "fn": "showJobWindow",
-                "implHandler": [
-                    "if(!firstFunction){",
-                    "    firstFunction = function(){};",
-                    "}",
-                    "",
-                    "if(!this.jobWindow){",
-                    "    var form = Ext.create('widget.jobform',{",
-                    "        listeners:{",
-                    "            scope:this,",
-                    "            docforminitcomplete:function(docForm){",
-                    "                firstFunction(docForm);",
-                    "            },",
-                    "            addjob:function(){",
-                    "                this.getAllJobs();",
-                    "            },",
-                    "            savejob:function(){",
-                    "                this.getAllJobs();",
-                    "            },",
-                    "            showcredwindow:function(){",
-                    "                this.showCredWindow();",
-                    "            }",
-                    "        }",
-                    "    });",
-                    "    var history = Ext.create('widget.jobhistory',{});",
-                    "    this.jobWindow = Ext.create('Ext.window.Window', {",
-                    "        resizable: false,",
-                    "        layout: 'fit',",
-                    "        closeAction: 'hide',",
-                    "        title: 'Job Editor',",
-                    "        items:  Ext.create('Ext.tab.Panel',{",
-                    "            items: [form,history]",
-                    "        }),",
-                    "        liveDrag:true,",
-                    "        listeners:{",
-                    "            beforeclose: form.docFormWindowBeforeClose",
-                    "        }",
-                    "    });",
-                    "    this.jobWindow.docForm = form;",
-                    "}else{",
-                    "    firstFunction(this.jobWindow.docForm);",
-                    "}",
-                    "this.jobWindow.show();",
-                    "this.jobWindow.focus();"
-                ]
-            },
-            "name": "showJobWindow",
-            "designerId": "5f61b628-2479-43fb-b1a3-60216dd1103c"
         },
         {
             "type": "basicfunction",
@@ -233,11 +253,7 @@
                     "    var panel = Ext.create('widget.settings',{",
                     "        listeners:{",
                     "            scope:this,",
-                    "            showcredwindow:function(){",
-                    "                this.showCredWindow(function(form){",
-                    "\t\t\t\t\tform.docFormSetState('empty');",
-                    "\t\t\t\t});",
-                    "            }",
+                    "            showcredwindow:this.viewCreds",
                     "        }",
                     "    });",
                     "",
@@ -300,6 +316,43 @@
             },
             "name": "updateJobQueue",
             "designerId": "e37831ef-8482-477a-a674-a03535367123"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "newJob",
+                "implHandler": [
+                    "var jobPanel = this.queryById('jobPanel');",
+                    "",
+                    "jobPanel.enable();",
+                    "jobPanel.docFormSetState('new');"
+                ]
+            },
+            "name": "newJob",
+            "designerId": "336a455a-f043-4970-b458-923557a99ac4"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "viewCreds",
+                "implHandler": [
+                    "this.showCredWindow(function(form){",
+                    "\tform.docFormSetState('empty');",
+                    "});"
+                ]
+            },
+            "name": "viewCreds",
+            "designerId": "6e7b296b-d777-478b-8877-85c95dde2ade"
         }
     ]
 }

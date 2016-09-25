@@ -28,7 +28,8 @@ Ext.application({
 		'JobHistory',
 		'OldCredsEditor',
 		'CredsEditor',
-		'JobGrid'
+		'JobGrid',
+		'BuildQueue'
 	],
 	glyphFontFamily: 'FontAwesome',
 	name: 'JakeCI',

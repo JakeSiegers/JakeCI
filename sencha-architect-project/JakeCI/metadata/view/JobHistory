@@ -6,9 +6,11 @@
     },
     "codeClass": null,
     "userConfig": {
+        "border": null,
         "container|align": "stretch",
         "designer|userAlias": "jobhistory",
         "designer|userClassName": "JobHistory",
+        "disabled": true,
         "height": 614,
         "layout": "vbox",
         "title": "Build History",
@@ -27,6 +29,7 @@
             },
             "codeClass": null,
             "userConfig": {
+                "border": false,
                 "layout|flex": 1,
                 "store": [
                     "{HistoryStore}"
@@ -205,6 +208,7 @@
             "codeClass": null,
             "userConfig": {
                 "bodyPadding": 10,
+                "border": false,
                 "height": 1122,
                 "layout": "fit",
                 "layout|flex": 1,

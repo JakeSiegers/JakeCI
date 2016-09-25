@@ -16,7 +16,8 @@
             "JobHistory",
             "OldCredsEditor",
             "CredsEditor",
-            "JobGrid"
+            "JobGrid",
+            "BuildQueue"
         ]
     },
     "name": "Application",

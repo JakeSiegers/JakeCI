@@ -22,6 +22,7 @@ Ext.define('JakeCI.view.JakeCI', {
 		'JakeCI.view.JobGrid',
 		'JakeCI.view.JobForm',
 		'JakeCI.view.JobHistory',
+		'JakeCI.view.BuildQueue',
 		'Ext.grid.Panel',
 		'Ext.form.Panel'
 	],
@@ -33,26 +34,47 @@ Ext.define('JakeCI.view.JakeCI', {
 	defaultListenerScope: true,
 
 	layout: {
-		type: 'hbox',
+		type: 'vbox',
 		align: 'stretch'
 	},
 	items: [
 		{
-			xtype: 'jobgrid',
+			xtype: 'container',
 			flex: 1,
-			listeners: {
-				viewsettings: 'onJobGridViewsettings'
-			}
+			layout: {
+				type: 'hbox',
+				align: 'stretch'
+			},
+			items: [
+				{
+					xtype: 'jobgrid',
+					flex: 1,
+					listeners: {
+						viewsettings: 'onJobGridViewsettings',
+						addnewjob: 'onJobGridAddnewjob'
+					}
+				},
+				{
+					xtype: 'jobform',
+					disabled: false,
+					flex: 1,
+					listeners: {
+						showcredwindow: 'onJobPanelShowcredwindow'
+					}
+				},
+				{
+					xtype: 'jobhistory',
+					disabled: false,
+					flex: 1
+				}
+			]
 		},
 		{
-			xtype: 'jobform',
-			disabled: true,
-			flex: 1
-		},
-		{
-			xtype: 'jobhistory',
-			disabled: true,
-			flex: 1
+			xtype: 'buildqueue',
+			liveDrag: false,
+			animCollapse: 0.5,
+			collapsible: true,
+			simpleDrag: true
 		}
 	],
 	listeners: {
@@ -61,6 +83,14 @@ Ext.define('JakeCI.view.JakeCI', {
 
 	onJobGridViewsettings: function(gridpanel) {
 		this.showSettingsWindow();
+	},
+
+	onJobGridAddnewjob: function(gridpanel) {
+		this.newJob();
+	},
+
+	onJobPanelShowcredwindow: function(form) {
+		this.viewCreds();
 	},
 
 	onViewportRender: function(component, eOpts) {
@@ -72,54 +102,9 @@ Ext.define('JakeCI.view.JakeCI', {
 		this.updateJobQueue();
 		setInterval(function(){
 		    if(!sThis.idle){
-		        sThis.updateJobQueue();
+		        //sThis.updateJobQueue();
 		    }
 		},5000);
-	},
-
-	showJobWindow: function(firstFunction) {
-		if(!firstFunction){
-		    firstFunction = function(){};
-		}
-
-		if(!this.jobWindow){
-		    var form = Ext.create('widget.jobform',{
-		        listeners:{
-		            scope:this,
-		            docforminitcomplete:function(docForm){
-		                firstFunction(docForm);
-		            },
-		            addjob:function(){
-		                this.getAllJobs();
-		            },
-		            savejob:function(){
-		                this.getAllJobs();
-		            },
-		            showcredwindow:function(){
-		                this.showCredWindow();
-		            }
-		        }
-		    });
-		    var history = Ext.create('widget.jobhistory',{});
-		    this.jobWindow = Ext.create('Ext.window.Window', {
-		        resizable: false,
-		        layout: 'fit',
-		        closeAction: 'hide',
-		        title: 'Job Editor',
-		        items:  Ext.create('Ext.tab.Panel',{
-		            items: [form,history]
-		        }),
-		        liveDrag:true,
-		        listeners:{
-		            beforeclose: form.docFormWindowBeforeClose
-		        }
-		    });
-		    this.jobWindow.docForm = form;
-		}else{
-		    firstFunction(this.jobWindow.docForm);
-		}
-		this.jobWindow.show();
-		this.jobWindow.focus();
 	},
 
 	showCredWindow: function(firstFunction) {
@@ -157,11 +142,7 @@ Ext.define('JakeCI.view.JakeCI', {
 		    var panel = Ext.create('widget.settings',{
 		        listeners:{
 		            scope:this,
-		            showcredwindow:function(){
-		                this.showCredWindow(function(form){
-							form.docFormSetState('empty');
-						});
-		            }
+		            showcredwindow:this.viewCreds
 		        }
 		    });
 
@@ -196,6 +177,19 @@ Ext.define('JakeCI.view.JakeCI', {
 		    },
 		    scope:this
 		})
+	},
+
+	newJob: function() {
+		var jobPanel = this.queryById('jobPanel');
+
+		jobPanel.enable();
+		jobPanel.docFormSetState('new');
+	},
+
+	viewCreds: function() {
+		this.showCredWindow(function(form){
+			form.docFormSetState('empty');
+		});
 	}
 
 });

@@ -194,21 +194,17 @@ Ext.define('JakeCI.view.JobForm', {
 	},
 
 	onJobPanelAfterRender: function(component, eOpts) {
-		//this.loadCreds();
-
 		this.docFormInit({
-		    docFormToolbar:{
-		        id:'jobFormToolbar',
-		        addFn:'addNewJob',
-		        saveFn:'saveJob'
-		    }
+		    toolbarId:'jobFormToolbar',
+			addFn:'addNewJob',
+			saveFn:'saveJob',
+			hideNewButton:true
 		});
 
 		AERP.Ajax.request({
 		    url:'/Creds/getAllCreds',
 		    success:function(reply){
 		        this.lookupViewModel().getStore('CredStore').setData(reply.data);
-
 		        this.fireEvent('docforminitcomplete',this);
 		    },
 		    scope:this
