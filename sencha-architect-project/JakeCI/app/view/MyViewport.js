@@ -14,38 +14,38 @@
  */
 
 Ext.define('JakeCI.view.MyViewport', {
-    extend: 'Ext.container.Viewport',
-    alias: 'widget.myviewport',
+	extend: 'Ext.container.Viewport',
+	alias: 'widget.myviewport',
 
-    requires: [
-        'JakeCI.view.MyViewportViewModel',
-        'JakeCI.view.JakeCI',
-        'Ext.panel.Panel'
-    ],
+	requires: [
+		'JakeCI.view.MyViewportViewModel',
+		'JakeCI.view.JakeCI',
+		'Ext.panel.Panel'
+	],
 
-    viewModel: {
-        type: 'myviewport'
-    },
-    layout: 'fit',
-    defaultListenerScope: true,
+	viewModel: {
+		type: 'myviewport'
+	},
+	layout: 'fit',
+	defaultListenerScope: true,
 
-    items: [
-        {
-            xtype: 'jakeci',
-            itemId: 'JakeCI'
-        }
-    ],
-    listeners: {
-        render: 'onViewportRender'
-    },
+	items: [
+		{
+			xtype: 'jakeci',
+			itemId: 'JakeCI'
+		}
+	],
+	listeners: {
+		render: 'onViewportRender'
+	},
 
-    onViewportRender: function(component, eOpts) {
-        var sThis = this;
-        var JakeCI = this.queryById('JakeCI');
-        this.getEl().dom.addEventListener('mousemove',function(){
-            JakeCI.resetIdleTimer();
-            //console.log(arguments);
-        },true);
-    }
+	onViewportRender: function(component, eOpts) {
+		var sThis = this;
+		var JakeCI = this.queryById('JakeCI');
+		this.getEl().dom.addEventListener('mousemove',function(){
+		    JakeCI.resetIdleTimer();
+		    //console.log(arguments);
+		},true);
+	}
 
 });

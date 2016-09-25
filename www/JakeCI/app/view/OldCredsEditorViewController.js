@@ -14,6 +14,6 @@
  */
 
 Ext.define('JakeCI.view.OldCredsEditorViewController', {
-    extend: 'Ext.app.ViewController',
-    alias: 'controller.oldcredseditor'
+	extend: 'Ext.app.ViewController',
+	alias: 'controller.oldcredseditor'
 });

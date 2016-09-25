@@ -14,6 +14,6 @@
  */
 
 Ext.define('JakeCI.view.JobFormViewController', {
-    extend: 'Ext.app.ViewController',
-    alias: 'controller.jobform'
+	extend: 'Ext.app.ViewController',
+	alias: 'controller.jobform'
 });

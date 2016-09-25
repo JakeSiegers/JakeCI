@@ -14,122 +14,124 @@
  */
 
 Ext.define('JakeCI.view.JobGrid', {
-    extend: 'Ext.grid.Panel',
-    alias: 'widget.jobgrid',
+	extend: 'Ext.grid.Panel',
+	alias: 'widget.jobgrid',
 
-    requires: [
-        'JakeCI.view.JobGridViewModel',
-        'Ext.grid.column.Column',
-        'Ext.view.Table',
-        'Ext.toolbar.Toolbar',
-        'Ext.button.Button',
-        'Ext.form.field.Text'
-    ],
+	requires: [
+		'JakeCI.view.JobGridViewModel',
+		'Ext.grid.column.Column',
+		'Ext.view.Table',
+		'Ext.toolbar.Toolbar',
+		'Ext.button.Button',
+		'Ext.form.field.Text'
+	],
 
-    viewModel: {
-        type: 'jobgrid'
-    },
-    height: 214,
-    itemId: 'jobGrid',
-    width: 400,
-    title: 'Jake CI',
-    defaultListenerScope: true,
+	viewModel: {
+		type: 'jobgrid'
+	},
+	height: 214,
+	itemId: 'jobGrid',
+	width: 400,
+	title: 'Jake CI',
+	defaultListenerScope: true,
 
-    bind: {
-        store: '{JobStore}'
-    },
-    columns: [
-        {
-            xtype: 'gridcolumn',
-            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                if(value === true){
-                    return '<i class="fa fa-thumbs-up" aria-hidden="true" style="color:green;"></i>';
-                }
-                return '<i class="fa fa-thumbs-down" aria-hidden="true" style="color:red;"></i>';
-            },
-            width: 40,
-            sortable: false,
-            dataIndex: 'buildPassing',
-            menuDisabled: true,
-            text: ''
-        },
-        {
-            xtype: 'gridcolumn',
-            width: 193,
-            dataIndex: 'name',
-            text: 'Job Name'
-        },
-        {
-            xtype: 'gridcolumn',
-            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                return Ext.util.Format.number(value/1000.0,'0.###')+" sec";
-            },
-            width: 249,
-            dataIndex: 'lastBuildLength',
-            text: 'Last Build Time'
-        }
-    ],
-    listeners: {
-        rowdblclick: 'onJobGridRowDblClick'
-    },
-    dockedItems: [
-        {
-            xtype: 'toolbar',
-            dock: 'top',
-            items: [
-                {
-                    xtype: 'button',
-                    text: '<i class="fa fa-plus-circle"></i> Add New Job',
-                    listeners: {
-                        click: 'onButtonClick1'
-                    }
-                },
-                {
-                    xtype: 'textfield',
-                    flex: 1,
-                    fieldLabel: '',
-                    emptyText: 'Search'
-                },
-                {
-                    xtype: 'button',
-                    text: '<i class="fa fa-wrench"></i> Jake CI Settings',
-                    listeners: {
-                        click: 'onButtonClick3'
-                    }
-                }
-            ]
-        }
-    ],
+	bind: {
+		store: '{JobStore}'
+	},
+	columns: [
+		{
+			xtype: 'gridcolumn',
+			renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+				if(value === true){
+					return '<i class="fa fa-thumbs-up" aria-hidden="true" style="color:green;"></i>';
+				}
+				return '<i class="fa fa-thumbs-down" aria-hidden="true" style="color:red;"></i>';
+			},
+			width: 40,
+			sortable: false,
+			dataIndex: 'buildPassing',
+			menuDisabled: true,
+			text: ''
+		},
+		{
+			xtype: 'gridcolumn',
+			width: 193,
+			dataIndex: 'name',
+			text: 'Job Name'
+		},
+		{
+			xtype: 'gridcolumn',
+			renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+				return Ext.util.Format.number(value/1000.0,'0.###')+" sec";
+			},
+			width: 249,
+			dataIndex: 'lastBuildLength',
+			text: 'Last Build Time'
+		}
+	],
+	listeners: {
+		rowdblclick: 'onJobGridRowDblClick'
+	},
+	dockedItems: [
+		{
+			xtype: 'toolbar',
+			dock: 'top',
+			items: [
+				{
+					xtype: 'button',
+					glyph: 'f067',
+					text: 'Add New Job',
+					listeners: {
+						click: 'onButtonClick1'
+					}
+				},
+				{
+					xtype: 'textfield',
+					flex: 1,
+					fieldLabel: '',
+					emptyText: 'Search'
+				},
+				{
+					xtype: 'button',
+					glyph: 'f1de',
+					text: 'Jake CI Settings',
+					listeners: {
+						click: 'onButtonClick3'
+					}
+				}
+			]
+		}
+	],
 
-    onJobGridRowDblClick: function(tableview, record, tr, rowIndex, e, eOpts) {
-        this.showJobWindow(function(form){
-            form.loadJob(record.get('name'));
-            //form.getAllHistory(record.get('name'))
-        });
-    },
+	onJobGridRowDblClick: function(tableview, record, tr, rowIndex, e, eOpts) {
+		this.showJobWindow(function(form){
+		    form.loadJob(record.get('name'));
+		    //form.getAllHistory(record.get('name'))
+		});
+	},
 
-    onButtonClick1: function(button, e, eOpts) {
-        this.fireEvent('addnewjob');
-    },
+	onButtonClick1: function(button, e, eOpts) {
+		this.fireEvent('addnewjob');
+	},
 
-    onButtonClick3: function(button, e, eOpts) {
-        this.fireEvent('viewsettings');
-    },
+	onButtonClick3: function(button, e, eOpts) {
+		this.fireEvent('viewsettings');
+	},
 
-    getAllJobs: function() {
-        this.mask("Loading Jobs...");
+	getAllJobs: function() {
+		this.mask("Loading Jobs...");
 
-        AERP.Ajax.request({
-            url:'/Job/getAllJobs',
-            success:function(result){
-                this.unmask();
-                this.lookupViewModel().getStore('JobStore').loadData(result.data);
-            },
-            failure:function(){
-                this.unmask();
-            },
-            scope:this
-        });
-    }
+		AERP.Ajax.request({
+		    url:'/Job/getAllJobs',
+		    success:function(result){
+		        this.unmask();
+		        this.lookupViewModel().getStore('JobStore').loadData(result.data);
+		    },
+		    failure:function(){
+		        this.unmask();
+		    },
+		    scope:this
+		});
+	}
 
 });

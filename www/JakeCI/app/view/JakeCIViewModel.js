@@ -14,28 +14,28 @@
  */
 
 Ext.define('JakeCI.view.JakeCIViewModel', {
-    extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.jakeci',
+	extend: 'Ext.app.ViewModel',
+	alias: 'viewmodel.jakeci',
 
-    requires: [
-        'Ext.data.Store',
-        'Ext.data.field.Field'
-    ],
+	requires: [
+		'Ext.data.Store',
+		'Ext.data.field.Field'
+	],
 
-    stores: {
-        QueueStore: {
-            fields: [
-                {
-                    name: 'job'
-                },
-                {
-                    name: 'active'
-                },
-                {
-                    name: 'percentDone'
-                }
-            ]
-        }
-    }
+	stores: {
+		QueueStore: {
+			fields: [
+				{
+					name: 'job'
+				},
+				{
+					name: 'active'
+				},
+				{
+					name: 'percentDone'
+				}
+			]
+		}
+	}
 
 });

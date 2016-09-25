@@ -14,210 +14,210 @@
  */
 
 Ext.define('JakeCI.view.Settings', {
-    extend: 'Ext.form.Panel',
-    alias: 'widget.settings',
+	extend: 'Ext.form.Panel',
+	alias: 'widget.settings',
 
-    requires: [
-        'JakeCI.view.SettingsViewModel',
-        'Ext.toolbar.Toolbar',
-        'Ext.button.Button',
-        'Ext.toolbar.Spacer',
-        'Ext.form.FieldSet',
-        'Ext.form.field.Checkbox',
-        'Ext.form.field.Number'
-    ],
+	requires: [
+		'JakeCI.view.SettingsViewModel',
+		'Ext.toolbar.Toolbar',
+		'Ext.button.Button',
+		'Ext.toolbar.Spacer',
+		'Ext.form.FieldSet',
+		'Ext.form.field.Checkbox',
+		'Ext.form.field.Number'
+	],
 
-    viewModel: {
-        type: 'settings'
-    },
-    frame: true,
-    itemId: 'settingsPanel',
-    width: 677,
-    bodyPadding: 10,
-    title: '',
-    defaultListenerScope: true,
+	viewModel: {
+		type: 'settings'
+	},
+	frame: true,
+	itemId: 'settingsPanel',
+	width: 677,
+	bodyPadding: 10,
+	title: '',
+	defaultListenerScope: true,
 
-    layout: {
-        type: 'hbox',
-        align: 'stretch'
-    },
-    dockedItems: [
-        {
-            xtype: 'toolbar',
-            dock: 'top',
-            items: [
-                {
-                    xtype: 'button',
-                    text: '<i class="fa fa-floppy-o"></i> Save',
-                    listeners: {
-                        click: 'onButtonClick1'
-                    }
-                },
-                {
-                    xtype: 'tbspacer',
-                    flex: 1
-                },
-                {
-                    xtype: 'button',
-                    text: 'Edit Creds',
-                    listeners: {
-                        click: 'onButtonClick'
-                    }
-                }
-            ]
-        }
-    ],
-    listeners: {
-        render: 'onSettingsPanelRender'
-    },
-    items: [
-        {
-            xtype: 'fieldset',
-            flex: 1,
-            title: 'Email / SMTP',
-            items: [
-                {
-                    xtype: 'checkboxfield',
-                    anchor: '100%',
-                    fieldLabel: 'Send Emails',
-                    name: 'sendEmails',
-                    boxLabel: '',
-                    inputValue: '1',
-                    uncheckedValue: '0'
-                },
-                {
-                    xtype: 'textfield',
-                    anchor: '100%',
-                    fieldLabel: 'Alert Email',
-                    name: 'alertEmail'
-                },
-                {
-                    xtype: 'textfield',
-                    anchor: '100%',
-                    fieldLabel: 'Email From',
-                    name: 'fromAddress'
-                },
-                {
-                    xtype: 'textfield',
-                    anchor: '100%',
-                    fieldLabel: 'SMTP Host',
-                    name: 'smtpHost'
-                },
-                {
-                    xtype: 'textfield',
-                    anchor: '100%',
-                    fieldLabel: 'SMTP Port',
-                    name: 'smtpPort'
-                },
-                {
-                    xtype: 'textfield',
-                    anchor: '100%',
-                    fieldLabel: 'SMTP User',
-                    name: 'smtpUsername'
-                },
-                {
-                    xtype: 'textfield',
-                    anchor: '100%',
-                    fieldLabel: 'SMTP Pass',
-                    name: 'smtpPassword',
-                    inputType: 'password'
-                },
-                {
-                    xtype: 'checkboxfield',
-                    anchor: '100%',
-                    fieldLabel: 'SMTP Use SSL',
-                    name: 'smtpUseSSL',
-                    boxLabel: '',
-                    inputValue: '1',
-                    uncheckedValue: '0'
-                }
-            ]
-        },
-        {
-            xtype: 'container',
-            flex: 1,
-            items: [
-                {
-                    xtype: 'fieldset',
-                    title: 'Job Building',
-                    items: [
-                        {
-                            xtype: 'numberfield',
-                            anchor: '100%',
-                            fieldLabel: 'Active Job Limit',
-                            name: 'activeJobLimit'
-                        }
-                    ]
-                },
-                {
-                    xtype: 'fieldset',
-                    title: 'Git',
-                    items: [
-                        {
-                            xtype: 'textfield',
-                            anchor: '100%',
-                            fieldLabel: 'Git Binary',
-                            name: 'gitBinary'
-                        }
-                    ]
-                },
-                {
-                    xtype: 'fieldset',
-                    title: 'Subversion',
-                    items: [
-                        {
-                            xtype: 'textfield',
-                            anchor: '100%',
-                            fieldLabel: 'Svn Binary',
-                            name: 'svnBinary'
-                        }
-                    ]
-                }
-            ]
-        }
-    ],
+	layout: {
+		type: 'hbox',
+		align: 'stretch'
+	},
+	dockedItems: [
+		{
+			xtype: 'toolbar',
+			dock: 'top',
+			items: [
+				{
+					xtype: 'button',
+					text: '<i class="fa fa-floppy-o"></i> Save',
+					listeners: {
+						click: 'onButtonClick1'
+					}
+				},
+				{
+					xtype: 'tbspacer',
+					flex: 1
+				},
+				{
+					xtype: 'button',
+					text: 'Edit Creds',
+					listeners: {
+						click: 'onButtonClick'
+					}
+				}
+			]
+		}
+	],
+	listeners: {
+		render: 'onSettingsPanelRender'
+	},
+	items: [
+		{
+			xtype: 'fieldset',
+			flex: 1,
+			title: 'Email / SMTP',
+			items: [
+				{
+					xtype: 'checkboxfield',
+					anchor: '100%',
+					fieldLabel: 'Send Emails',
+					name: 'sendEmails',
+					boxLabel: '',
+					inputValue: '1',
+					uncheckedValue: '0'
+				},
+				{
+					xtype: 'textfield',
+					anchor: '100%',
+					fieldLabel: 'Alert Email',
+					name: 'alertEmail'
+				},
+				{
+					xtype: 'textfield',
+					anchor: '100%',
+					fieldLabel: 'Email From',
+					name: 'fromAddress'
+				},
+				{
+					xtype: 'textfield',
+					anchor: '100%',
+					fieldLabel: 'SMTP Host',
+					name: 'smtpHost'
+				},
+				{
+					xtype: 'textfield',
+					anchor: '100%',
+					fieldLabel: 'SMTP Port',
+					name: 'smtpPort'
+				},
+				{
+					xtype: 'textfield',
+					anchor: '100%',
+					fieldLabel: 'SMTP User',
+					name: 'smtpUsername'
+				},
+				{
+					xtype: 'textfield',
+					anchor: '100%',
+					fieldLabel: 'SMTP Pass',
+					name: 'smtpPassword',
+					inputType: 'password'
+				},
+				{
+					xtype: 'checkboxfield',
+					anchor: '100%',
+					fieldLabel: 'SMTP Use SSL',
+					name: 'smtpUseSSL',
+					boxLabel: '',
+					inputValue: '1',
+					uncheckedValue: '0'
+				}
+			]
+		},
+		{
+			xtype: 'container',
+			flex: 1,
+			items: [
+				{
+					xtype: 'fieldset',
+					title: 'Job Building',
+					items: [
+						{
+							xtype: 'numberfield',
+							anchor: '100%',
+							fieldLabel: 'Active Job Limit',
+							name: 'activeJobLimit'
+						}
+					]
+				},
+				{
+					xtype: 'fieldset',
+					title: 'Git',
+					items: [
+						{
+							xtype: 'textfield',
+							anchor: '100%',
+							fieldLabel: 'Git Binary',
+							name: 'gitBinary'
+						}
+					]
+				},
+				{
+					xtype: 'fieldset',
+					title: 'Subversion',
+					items: [
+						{
+							xtype: 'textfield',
+							anchor: '100%',
+							fieldLabel: 'Svn Binary',
+							name: 'svnBinary'
+						}
+					]
+				}
+			]
+		}
+	],
 
-    onButtonClick1: function(button, e, eOpts) {
-        this.saveSettings();
-    },
+	onButtonClick1: function(button, e, eOpts) {
+		this.saveSettings();
+	},
 
-    onButtonClick: function(button, e, eOpts) {
-        this.fireEvent('showcredwindow');
-    },
+	onButtonClick: function(button, e, eOpts) {
+		this.fireEvent('showcredwindow');
+	},
 
-    onSettingsPanelRender: function(component, eOpts) {
-        this.loadSettings();
-    },
+	onSettingsPanelRender: function(component, eOpts) {
+		this.loadSettings();
+	},
 
-    loadSettings: function() {
-        this.mask('Loading Settings...');
-        AERP.Ajax.request({
-            url:'/Settings/getAllSettings',
-            success:function(reply){
-                this.getForm().setValues(reply.data);
-                this.unmask();
-            },
-            failure:function(){
-                this.unmask();
-            },
-            scope:this
-        });
-    },
+	loadSettings: function() {
+		this.mask('Loading Settings...');
+		AERP.Ajax.request({
+		    url:'/Settings/getAllSettings',
+		    success:function(reply){
+		        this.getForm().setValues(reply.data);
+		        this.unmask();
+		    },
+		    failure:function(){
+		        this.unmask();
+		    },
+		    scope:this
+		});
+	},
 
-    saveSettings: function() {
-        this.mask('Saving...');
-        AERP.Ajax.request({
-            url:'/Settings/saveSettings',
-            params:this.getForm().getValues(false,false,true,false),
-            success:function(reply){
-                this.getForm().setValues(reply.data);
-                this.unmask();
-            },
-            failure:function(){
-                this.unmask();
-            },
-            scope:this
-        });
-    }
+	saveSettings: function() {
+		this.mask('Saving...');
+		AERP.Ajax.request({
+		    url:'/Settings/saveSettings',
+		    params:this.getForm().getValues(false,false,true,false),
+		    success:function(reply){
+		        this.getForm().setValues(reply.data);
+		        this.unmask();
+		    },
+		    failure:function(){
+		        this.unmask();
+		    },
+		    scope:this
+		});
+	}
 
 });

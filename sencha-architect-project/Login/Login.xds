@@ -13,18 +13,18 @@
                 "width": null
             }
         },
-        "exportPath": "C:/Users/Jake/Desktop/JakeCI/www/Login",
+        "exportPath": "/Users/jake/PhpstormProjects/JakeCI/www/Login",
         "buildShouldOverwriteIndex": true,
         "generateArchitectVersion": false,
-        "spacesToIndent": 4,
-        "lineEnding": "CRLF",
+        "spacesToIndent": "tab",
+        "lineEnding": "LF",
         "genTimestamps": false,
         "cacheBust": false,
         "installStatus": "Not Installed",
         "urlPrefixTemplate": "http://localhost:3000"
     },
-    "xdsVersion": "4.0.0",
-    "xdsBuild": 168,
+    "xdsVersion": "4.0.1",
+    "xdsBuild": 190,
     "schemaVersion": 1,
     "upgradeVersion": 310000000001,
     "framework": "ext62",
@@ -42,7 +42,8 @@
         "model": [],
         "resource": [
             "f28aed9e-aba1-492d-af91-b5b66c08c5d6",
-            "c78f5a7c-b0df-4ff6-aab8-a219f7f9ae71"
+            "c78f5a7c-b0df-4ff6-aab8-a219f7f9ae71",
+            "c2d904b9-b239-4292-81a2-e9b62918c595"
         ],
         "app": [
             "application"

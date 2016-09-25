@@ -14,57 +14,57 @@
  */
 
 Ext.define('JakeCI.view.JobHistoryViewModel', {
-    extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.jobhistory',
+	extend: 'Ext.app.ViewModel',
+	alias: 'viewmodel.jobhistory',
 
-    requires: [
-        'Ext.data.Store',
-        'Ext.data.field.Date',
-        'Ext.data.proxy.Ajax',
-        'Ext.data.reader.Array'
-    ],
+	requires: [
+		'Ext.data.Store',
+		'Ext.data.field.Date',
+		'Ext.data.proxy.Ajax',
+		'Ext.data.reader.Array'
+	],
 
-    stores: {
-        HistoryStore: {
-            pageSize: 10,
-            fields: [
-                {
-                    name: 'buildNumber'
-                },
-                {
-                    name: 'passed'
-                },
-                {
-                    type: 'date',
-                    name: 'started',
-                    dateReadFormat: 'Y-m-d H:i:s'
-                },
-                {
-                    type: 'date',
-                    name: 'finished',
-                    dateReadFormat: 'Y-m-d H:i:s'
-                },
-                {
-                    name: 'log'
-                }
-            ],
-            proxy: {
-                type: 'ajax',
-                noCache: false,
-                simpleSortMode: true,
-                url: 'History/getAllHistoryForJob',
-                actionMethods: {
-                    create: 'POST',
-                    read: 'POST',
-                    update: 'POST',
-                    destroy: 'POST'
-                },
-                reader: {
-                    type: 'array',
-                    totalProperty: 'total'
-                }
-            }
-        }
-    }
+	stores: {
+		HistoryStore: {
+			pageSize: 10,
+			fields: [
+				{
+					name: 'buildNumber'
+				},
+				{
+					name: 'passed'
+				},
+				{
+					type: 'date',
+					name: 'started',
+					dateReadFormat: 'Y-m-d H:i:s'
+				},
+				{
+					type: 'date',
+					name: 'finished',
+					dateReadFormat: 'Y-m-d H:i:s'
+				},
+				{
+					name: 'log'
+				}
+			],
+			proxy: {
+				type: 'ajax',
+				noCache: false,
+				simpleSortMode: true,
+				url: 'History/getAllHistoryForJob',
+				actionMethods: {
+					create: 'POST',
+					read: 'POST',
+					update: 'POST',
+					destroy: 'POST'
+				},
+				reader: {
+					type: 'array',
+					totalProperty: 'total'
+				}
+			}
+		}
+	}
 
 });

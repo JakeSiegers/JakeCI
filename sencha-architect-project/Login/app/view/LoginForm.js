@@ -14,125 +14,125 @@
  */
 
 Ext.define('Login.view.LoginForm', {
-    extend: 'Ext.form.Panel',
-    alias: 'widget.loginform',
+	extend: 'Ext.form.Panel',
+	alias: 'widget.loginform',
 
-    requires: [
-        'Login.view.LoginFormViewModel',
-        'Ext.form.field.Text',
-        'Ext.container.Container',
-        'Ext.button.Button'
-    ],
+	requires: [
+		'Login.view.LoginFormViewModel',
+		'Ext.form.field.Text',
+		'Ext.container.Container',
+		'Ext.button.Button'
+	],
 
-    viewModel: {
-        type: 'loginform'
-    },
-    frame: true,
-    bodyPadding: 10,
-    title: '',
-    defaultListenerScope: true,
+	viewModel: {
+		type: 'loginform'
+	},
+	frame: true,
+	bodyPadding: 10,
+	title: '',
+	defaultListenerScope: true,
 
-    items: [
-        {
-            xtype: 'textfield',
-            anchor: '100%',
-            fieldLabel: '',
-            labelAlign: 'right',
-            name: 'email',
-            emptyText: 'Email'
-        },
-        {
-            xtype: 'textfield',
-            anchor: '100%',
-            fieldLabel: '',
-            labelAlign: 'right',
-            name: 'password',
-            emptyText: 'Password',
-            enableKeyEvents: true,
-            listeners: {
-                keypress: 'onTextfieldKeypress'
-            }
-        },
-        {
-            xtype: 'container',
-            layout: {
-                type: 'hbox',
-                align: 'stretch'
-            },
-            items: [
-                {
-                    xtype: 'container',
-                    flex: 1
-                },
-                {
-                    xtype: 'button',
-                    padding: '10 30 10 30',
-                    icon: '/inc/img/silk_icons/lock.png',
-                    text: 'Login',
-                    listeners: {
-                        click: 'onButtonClick'
-                    }
-                },
-                {
-                    xtype: 'container',
-                    flex: 1
-                }
-            ]
-        }
-    ],
+	items: [
+		{
+			xtype: 'textfield',
+			anchor: '100%',
+			fieldLabel: '',
+			labelAlign: 'right',
+			name: 'email',
+			emptyText: 'Email'
+		},
+		{
+			xtype: 'textfield',
+			anchor: '100%',
+			fieldLabel: '',
+			labelAlign: 'right',
+			name: 'password',
+			emptyText: 'Password',
+			enableKeyEvents: true,
+			listeners: {
+				keypress: 'onTextfieldKeypress'
+			}
+		},
+		{
+			xtype: 'container',
+			layout: {
+				type: 'hbox',
+				align: 'stretch'
+			},
+			items: [
+				{
+					xtype: 'container',
+					flex: 1
+				},
+				{
+					xtype: 'button',
+					padding: '10 30 10 30',
+					glyph: 'f023',
+					text: 'Login',
+					listeners: {
+						click: 'onButtonClick'
+					}
+				},
+				{
+					xtype: 'container',
+					flex: 1
+				}
+			]
+		}
+	],
 
-    onTextfieldKeypress: function(textfield, e, eOpts) {
-        if(e.keyCode == Ext.event.Event.ENTER){
-            this.login();
-        }
-    },
+	onTextfieldKeypress: function(textfield, e, eOpts) {
+		if(e.keyCode == Ext.event.Event.ENTER){
+		    this.login();
+		}
+	},
 
-    onButtonClick: function(button, e, eOpts) {
-        this.login();
-    },
+	onButtonClick: function(button, e, eOpts) {
+		this.login();
+	},
 
-    login: function() {
-        this.mask('Logging In...');
-        AERP.Ajax.request({
-            url:'/LoginRequest',
-            params:this.getValues(),
-            success:function(reply){
-                this.unmask();
-                var vars = this.queryString();
-                if(vars.hasOwnProperty('url')){
-                    window.location = vars.url;
-                }else{
-                    window.location = '/';
-                }
-            },
-            failure:function(){
-                this.unmask();
-            },
-            scope:this
-        });
+	login: function() {
+		this.mask('Logging In...');
+		AERP.Ajax.request({
+		    url:'/LoginRequest',
+		    params:this.getValues(),
+		    success:function(reply){
+		        this.unmask();
+		        var vars = this.queryString();
+		        if(vars.hasOwnProperty('url')){
+		            window.location = vars.url;
+		        }else{
+		            window.location = '/';
+		        }
+		    },
+		    failure:function(){
+		        this.unmask();
+		    },
+		    scope:this
+		});
 
-    },
+	},
 
-    queryString: function() {
+	queryString: function() {
 
-        var query_string = {};
-        var query = window.location.search.substring(1);
-        var vars = query.split("&");
-        for (var i=0;i<vars.length;i++) {
-            var pair = vars[i].split("=");
-            // If first entry with this name
-            if (typeof query_string[pair[0]] === "undefined") {
-                query_string[pair[0]] = decodeURIComponent(pair[1]);
-                // If second entry with this name
-            } else if (typeof query_string[pair[0]] === "string") {
-                var arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
-                query_string[pair[0]] = arr;
-                // If third or later entry with this name
-            } else {
-                query_string[pair[0]].push(decodeURIComponent(pair[1]));
-            }
-        }
-        return query_string;
-    }
+		var query_string = {};
+		var query = window.location.search.substring(1);
+		var vars = query.split("&");
+		for (var i=0;i<vars.length;i++) {
+		    var pair = vars[i].split("=");
+		    // If first entry with this name
+		    if (typeof query_string[pair[0]] === "undefined") {
+		        query_string[pair[0]] = decodeURIComponent(pair[1]);
+		        // If second entry with this name
+		    } else if (typeof query_string[pair[0]] === "string") {
+		        var arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
+		        query_string[pair[0]] = arr;
+		        // If third or later entry with this name
+		    } else {
+		        query_string[pair[0]].push(decodeURIComponent(pair[1]));
+		    }
+		}
+		return query_string;
+	}
 
 });

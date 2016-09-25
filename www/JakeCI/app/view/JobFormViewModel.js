@@ -14,52 +14,52 @@
  */
 
 Ext.define('JakeCI.view.JobFormViewModel', {
-    extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.jobform',
+	extend: 'Ext.app.ViewModel',
+	alias: 'viewmodel.jobform',
 
-    requires: [
-        'Ext.data.Store',
-        'Ext.data.field.Field'
-    ],
+	requires: [
+		'Ext.data.Store',
+		'Ext.data.field.Field'
+	],
 
-    stores: {
-        RepoTypeStore: {
-            data: [
-                {
-                    repoType: '[ None ]',
-                    repoValue: ''
-                },
-                {
-                    repoType: 'Subversion',
-                    repoValue: 'svn'
-                },
-                {
-                    repoType: 'Git',
-                    repoValue: 'git'
-                }
-            ],
-            fields: [
-                {
-                    name: 'repoType'
-                },
-                {
-                    name: 'repoValue'
-                }
-            ]
-        },
-        CredStore: {
-            fields: [
-                {
-                    name: 'cred'
-                },
-                {
-                    name: 'username'
-                },
-                {
-                    name: 'password'
-                }
-            ]
-        }
-    }
+	stores: {
+		RepoTypeStore: {
+			data: [
+				{
+					repoType: '[ None ]',
+					repoValue: ''
+				},
+				{
+					repoType: 'Subversion',
+					repoValue: 'svn'
+				},
+				{
+					repoType: 'Git',
+					repoValue: 'git'
+				}
+			],
+			fields: [
+				{
+					name: 'repoType'
+				},
+				{
+					name: 'repoValue'
+				}
+			]
+		},
+		CredStore: {
+			fields: [
+				{
+					name: 'cred'
+				},
+				{
+					name: 'username'
+				},
+				{
+					name: 'password'
+				}
+			]
+		}
+	}
 
 });

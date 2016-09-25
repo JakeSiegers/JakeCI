@@ -14,6 +14,6 @@
  */
 
 Ext.define('JakeCI.view.JobGridViewController', {
-    extend: 'Ext.app.ViewController',
-    alias: 'controller.jobgrid'
+	extend: 'Ext.app.ViewController',
+	alias: 'controller.jobgrid'
 });

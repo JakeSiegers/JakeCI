@@ -109,7 +109,8 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "icon": "/inc/img/silk_icons/lock.png",
+                        "glyph": "f023",
+                        "icon": null,
                         "padding": "10 30 10 30",
                         "text": "Login"
                     },

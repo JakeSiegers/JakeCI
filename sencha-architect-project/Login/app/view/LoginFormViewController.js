@@ -14,6 +14,6 @@
  */
 
 Ext.define('Login.view.LoginFormViewController', {
-    extend: 'Ext.app.ViewController',
-    alias: 'controller.loginform'
+	extend: 'Ext.app.ViewController',
+	alias: 'controller.loginform'
 });

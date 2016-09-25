@@ -14,174 +14,174 @@
  */
 
 Ext.define('JakeCI.view.CredsEditor', {
-    extend: 'Ext.form.Panel',
-    alias: 'widget.credseditor',
+	extend: 'Ext.form.Panel',
+	alias: 'widget.credseditor',
 
-    mixins: [
-        DocForm
-    ],
-    requires: [
-        'JakeCI.view.CredsEditorViewModel',
-        'Ext.toolbar.Toolbar',
-        'Ext.grid.Panel',
-        'Ext.grid.column.Column',
-        'Ext.view.Table',
-        'Ext.form.field.Text'
-    ],
+	mixins: [
+		DocForm
+	],
+	requires: [
+		'JakeCI.view.CredsEditorViewModel',
+		'Ext.toolbar.Toolbar',
+		'Ext.grid.Panel',
+		'Ext.grid.column.Column',
+		'Ext.view.Table',
+		'Ext.form.field.Text'
+	],
 
-    viewModel: {
-        type: 'credseditor'
-    },
-    frame: true,
-    height: 384,
-    width: 551,
-    title: '',
-    defaultListenerScope: true,
+	viewModel: {
+		type: 'credseditor'
+	},
+	frame: true,
+	height: 384,
+	width: 551,
+	title: '',
+	defaultListenerScope: true,
 
-    layout: {
-        type: 'hbox',
-        align: 'stretch'
-    },
-    dockedItems: [
-        {
-            xtype: 'toolbar',
-            flex: 1,
-            dock: 'top',
-            itemId: 'credToolbar'
-        }
-    ],
-    items: [
-        {
-            xtype: 'gridpanel',
-            flex: 1,
-            itemId: 'credGrid',
-            title: '',
-            bind: {
-                store: '{CredStore}'
-            },
-            columns: [
-                {
-                    xtype: 'gridcolumn',
-                    width: 164,
-                    dataIndex: 'name',
-                    text: 'Name'
-                }
-            ],
-            listeners: {
-                rowdblclick: 'onCredGridRowDblClick'
-            }
-        },
-        {
-            xtype: 'container',
-            frame: false,
-            padding: 10,
-            layout: {
-                type: 'vbox',
-                align: 'stretch'
-            },
-            items: [
-                {
-                    xtype: 'textfield',
-                    itemId: 'name',
-                    fieldLabel: 'Name'
-                },
-                {
-                    xtype: 'textfield',
-                    itemId: 'username',
-                    fieldLabel: 'Username'
-                },
-                {
-                    xtype: 'textfield',
-                    itemId: 'password',
-                    fieldLabel: 'Password'
-                }
-            ]
-        }
-    ],
-    listeners: {
-        afterrender: 'onFormAfterRender'
-    },
+	layout: {
+		type: 'hbox',
+		align: 'stretch'
+	},
+	dockedItems: [
+		{
+			xtype: 'toolbar',
+			flex: 1,
+			dock: 'top',
+			itemId: 'credToolbar'
+		}
+	],
+	items: [
+		{
+			xtype: 'gridpanel',
+			flex: 1,
+			itemId: 'credGrid',
+			title: '',
+			bind: {
+				store: '{CredStore}'
+			},
+			columns: [
+				{
+					xtype: 'gridcolumn',
+					width: 164,
+					dataIndex: 'name',
+					text: 'Name'
+				}
+			],
+			listeners: {
+				rowdblclick: 'onCredGridRowDblClick'
+			}
+		},
+		{
+			xtype: 'container',
+			frame: false,
+			padding: 10,
+			layout: {
+				type: 'vbox',
+				align: 'stretch'
+			},
+			items: [
+				{
+					xtype: 'textfield',
+					itemId: 'name',
+					fieldLabel: 'Name'
+				},
+				{
+					xtype: 'textfield',
+					itemId: 'username',
+					fieldLabel: 'Username'
+				},
+				{
+					xtype: 'textfield',
+					itemId: 'password',
+					fieldLabel: 'Password'
+				}
+			]
+		}
+	],
+	listeners: {
+		afterrender: 'onFormAfterRender'
+	},
 
-    onCredGridRowDblClick: function(tableview, record, tr, rowIndex, e, eOpts) {
-        this.loadCred(record.get('name'));
-    },
+	onCredGridRowDblClick: function(tableview, record, tr, rowIndex, e, eOpts) {
+		this.loadCred(record.get('name'));
+	},
 
-    onFormAfterRender: function(component, eOpts) {
-        this.docFormInit({
-            docFormToolbar:{
-                id:'credToolbar',
-                addFn:'addCred',
-                saveFn:'editCred',
-                deleteFn:'deleteCred'
-            }
-        });
+	onFormAfterRender: function(component, eOpts) {
+		this.docFormInit({
+		    docFormToolbar:{
+		        id:'credToolbar',
+		        addFn:'addCred',
+		        saveFn:'editCred',
+		        deleteFn:'deleteCred'
+		    }
+		});
 
-        AERP.Ajax.request({
-            url:'/Creds/getCredEditorInitData',
-            success:function(reply){
-                this.lookupViewModel().getStore('CredStore').setData(reply.data);
+		AERP.Ajax.request({
+		    url:'/Creds/getCredEditorInitData',
+		    success:function(reply){
+		        this.lookupViewModel().getStore('CredStore').setData(reply.data);
 
-                this.fireEvent('docforminitcomplete',this);
-            },
-            scope:this
-        });
+		        this.fireEvent('docforminitcomplete',this);
+		    },
+		    scope:this
+		});
 
-    },
+	},
 
-    addCred: function() {
-        this.mask('Adding...');
-        AERP.Ajax.request({
-            url:'/Creds/addCred',
-            params:this.getValues(),
-            success:function(reply){
-                this.unmask();
-                this.loadCred(reply.newCredName);
-                this.reloadGrid();
-            },
-            failure:function(){
-                this.unmask();
-            },
-            scope:this
-        });
-    },
+	addCred: function() {
+		this.mask('Adding...');
+		AERP.Ajax.request({
+		    url:'/Creds/addCred',
+		    params:this.getValues(),
+		    success:function(reply){
+		        this.unmask();
+		        this.loadCred(reply.newCredName);
+		        this.reloadGrid();
+		    },
+		    failure:function(){
+		        this.unmask();
+		    },
+		    scope:this
+		});
+	},
 
-    reloadGrid: function() {
-        AERP.Ajax.request({
-            url:'/Creds/getCredEditorInitData',
-            params:this.getValues(),
-            success:function(reply){
-                this.lookupViewModel().getStore('CredStore').setData(reply.data);
-            },
-            scope:this
-        });
-    },
+	reloadGrid: function() {
+		AERP.Ajax.request({
+		    url:'/Creds/getCredEditorInitData',
+		    params:this.getValues(),
+		    success:function(reply){
+		        this.lookupViewModel().getStore('CredStore').setData(reply.data);
+		    },
+		    scope:this
+		});
+	},
 
-    loadCred: function(name) {
-        AERP.Ajax.request({
-            url:'/Creds/getCred',
-            params:{name:name},
-            success:function(reply){
-                this.docFormLoadFormData(reply);
-            },
-            scope:this
-        });
-    },
+	loadCred: function(name) {
+		AERP.Ajax.request({
+		    url:'/Creds/getCred',
+		    params:{name:name},
+		    success:function(reply){
+		        this.docFormLoadFormData(reply);
+		    },
+		    scope:this
+		});
+	},
 
-    editCred: function() {
-        this.mask('Saving...');
-        AERP.Ajax.request({
-            url:'/Creds/updateCred',
-            params:this.getValues(),
-            success:function(reply){
-                this.unmask();
-                this.loadCred(reply.updatedCredName);
-                this.reloadGrid();
-            },
-            failure:function(){
-                this.unmask();
-            },
-            scope:this
-        });
-    }
+	editCred: function() {
+		this.mask('Saving...');
+		AERP.Ajax.request({
+		    url:'/Creds/updateCred',
+		    params:this.getValues(),
+		    success:function(reply){
+		        this.unmask();
+		        this.loadCred(reply.updatedCredName);
+		        this.reloadGrid();
+		    },
+		    failure:function(){
+		        this.unmask();
+		    },
+		    scope:this
+		});
+	}
 
 });

@@ -181,10 +181,11 @@
                     "codeClass": null,
                     "userConfig": {
                         "cls": null,
+                        "glyph": "f067",
                         "icon": null,
                         "iconCls": null,
                         "layout|flex": null,
-                        "text": "<i class=\"fa fa-plus-circle\"></i> Add New Job"
+                        "text": "Add New Job"
                     },
                     "name": "MyButton",
                     "designerId": "f1b54ea2-0396-4bdf-8c2f-4ca75cdf2c2e",
@@ -232,8 +233,9 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "glyph": "f1de",
                         "layout|flex": null,
-                        "text": "<i class=\"fa fa-wrench\"></i> Jake CI Settings"
+                        "text": "Jake CI Settings"
                     },
                     "name": "MyButton4",
                     "designerId": "398f54b3-0a6d-434c-93b5-19a6a28f7c1b",

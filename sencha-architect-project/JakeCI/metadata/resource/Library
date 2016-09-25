@@ -6,9 +6,9 @@
     },
     "codeClass": null,
     "userConfig": {
-        "basePath": "https://cdn.sencha.com/ext/commercial/6.2.0/build/",
+        "basePath": "https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/",
         "designer|userClassName": "Library",
-        "theme": "classic"
+        "theme": null
     },
     "name": "Library",
     "designerId": "a625c198-7807-49bf-972b-cf4dc224b195"

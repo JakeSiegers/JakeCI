@@ -14,6 +14,6 @@
  */
 
 Ext.define('JakeCI.view.MyViewportViewController', {
-    extend: 'Ext.app.ViewController',
-    alias: 'controller.myviewport'
+	extend: 'Ext.app.ViewController',
+	alias: 'controller.myviewport'
 });

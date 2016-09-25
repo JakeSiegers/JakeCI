@@ -15,13 +15,13 @@
             }
         },
         "urlPrefix": "http://localhost:3000",
-        "exportPath": "C:/Users/Jake/Desktop/JakeCI/www/JakeCI",
+        "exportPath": "/Users/jake/PhpstormProjects/JakeCI/www/JakeCI",
         "projectHasEnabledWebServer": false,
         "lockUrlPrefix": false,
         "buildShouldOverwriteIndex": true,
         "generateArchitectVersion": false,
-        "spacesToIndent": 4,
-        "lineEnding": "CRLF",
+        "spacesToIndent": "tab",
+        "lineEnding": "LF",
         "genTimestamps": false,
         "cacheBust": false,
         "installStatus": "Not Installed",
@@ -30,11 +30,11 @@
         "displayfield-ExtBox1-1306-inputEl": "a new version of the framework is available",
         "displayfield-ExtBox1-1118-inputEl": "a new version of the framework is available",
         "displayfield-ExtBox1-1204-inputEl": "a new version of the framework is available",
-        "urlPrefixTemplate": "http://localhost:{port}/{path}",
+        "urlPrefixTemplate": "http://localhost:3000",
         "sdkPath": ""
     },
-    "xdsVersion": "4.0.0",
-    "xdsBuild": 168,
+    "xdsVersion": "4.0.1",
+    "xdsBuild": 190,
     "schemaVersion": 1,
     "upgradeVersion": 310000000001,
     "framework": "ext62",
@@ -73,7 +73,7 @@
             "e19ca938-9b9a-4c0e-aca0-16ad129307a8",
             "bba78c44-60af-438f-901e-07224fa314d5",
             "443a214d-8700-4842-8fa5-214ffda5b498",
-            "fb6919f2-a8a5-4e58-bc64-e17862b5850f"
+            "6d487d82-fe53-48ea-8412-593949721cc8"
         ],
         "app": [
             "application"

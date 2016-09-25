@@ -14,28 +14,28 @@
  */
 
 Ext.define('JakeCI.view.CredsEditorViewModel', {
-    extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.credseditor',
+	extend: 'Ext.app.ViewModel',
+	alias: 'viewmodel.credseditor',
 
-    requires: [
-        'Ext.data.Store',
-        'Ext.data.field.Field'
-    ],
+	requires: [
+		'Ext.data.Store',
+		'Ext.data.field.Field'
+	],
 
-    stores: {
-        CredStore: {
-            fields: [
-                {
-                    name: 'name'
-                },
-                {
-                    name: 'username'
-                },
-                {
-                    name: 'password'
-                }
-            ]
-        }
-    }
+	stores: {
+		CredStore: {
+			fields: [
+				{
+					name: 'name'
+				},
+				{
+					name: 'username'
+				},
+				{
+					name: 'password'
+				}
+			]
+		}
+	}
 
 });

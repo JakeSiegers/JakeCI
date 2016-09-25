@@ -14,6 +14,6 @@
  */
 
 Ext.define('JakeCI.view.JobHistoryViewController', {
-    extend: 'Ext.app.ViewController',
-    alias: 'controller.jobhistory'
+	extend: 'Ext.app.ViewController',
+	alias: 'controller.jobhistory'
 });
