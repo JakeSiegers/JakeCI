@@ -32,7 +32,7 @@ Ext.define('DocForm',{
 
 		this.docFormBtns.newBtn = Ext.create({
 			xtype: 'button',
-			icon: '/inc/img/silk_icons/add.png',
+			glyph:'f067',
 			text: 'New',
 			listeners: {
 				click: this.btnFunctions.newFn,
@@ -42,7 +42,7 @@ Ext.define('DocForm',{
 
 		this.docFormBtns.saveBtn = Ext.create({
 			xtype: 'button',
-			icon: '/inc/img/silk_icons/disk.png',
+			glyph:'f0c7',
 			text: 'Save',
 			listeners: {
 				click: function(){
@@ -60,7 +60,7 @@ Ext.define('DocForm',{
 
 		this.docFormBtns.cancelBtn = Ext.create({
 			xtype: 'button',
-			icon: '/inc/img/silk_icons/cross.png',
+			glyph:'f053',
 			text: 'Cancel',
 			listeners: {
 				click: this.btnFunctions.cancelFn,
@@ -70,7 +70,7 @@ Ext.define('DocForm',{
 
 		this.docFormBtns.deleteBtn = Ext.create({
 			xtype: 'button',
-			icon: '/inc/img/silk_icons/delete.png',
+			glyph:'f1f8',
 			text: 'Delete',
 			listeners: {
 				click: function(){
@@ -93,7 +93,7 @@ Ext.define('DocForm',{
 
 		this.docFormBtns.searchBtn = Ext.create({
 			xtype: 'button',
-			icon: '/inc/img/silk_icons/magnifier.png',
+			glyph:'f002',
 			text: 'Search',
 			listeners: {
 				click: function(){
@@ -112,7 +112,7 @@ Ext.define('DocForm',{
 
 		this.docFormBtns.browseBtn = Ext.create({
 			xtype: 'button',
-			icon: '/inc/img/silk_icons/table_multiple.png',
+			glyph:'f03a',
 			text: 'Browse',
 			listeners: {
 				click: this.btnFunctions.browseFn,

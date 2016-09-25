@@ -122,14 +122,17 @@ Ext.define('JakeCI.view.JakeCI', {
 		this.jobWindow.focus();
 	},
 
-	showCredWindow: function() {
+	showCredWindow: function(firstFunction) {
+		if(!firstFunction){
+			firstFunction = function(){};
+		}
+
 		if(!this.credWindow){
-		    var grid = Ext.create('widget.credseditor',{
+		    var form = Ext.create('widget.credseditor',{
 		        listeners:{
 		            scope:this,
 		        }
 		    });
-
 
 		    this.credWindow = Ext.create('Ext.window.Window', {
 		        resizable: true,
@@ -137,11 +140,16 @@ Ext.define('JakeCI.view.JakeCI', {
 		        closeAction: 'hide',
 		        title: 'Saved Credentials',
 		        liveDrag:true,
-		        items: grid
+		        items: form,
+				listeners:{
+					beforeclose: form.docFormWindowBeforeClose
+				}
 		    });
-		    this.credWindow.credGrid = grid;
+		    this.credWindow.docForm = form;
 		}
 		this.credWindow.show();
+		this.credWindow.focus();
+		firstFunction(this.credWindow.docForm);
 	},
 
 	showSettingsWindow: function() {
@@ -150,7 +158,9 @@ Ext.define('JakeCI.view.JakeCI', {
 		        listeners:{
 		            scope:this,
 		            showcredwindow:function(){
-		                this.showCredWindow();
+		                this.showCredWindow(function(form){
+							form.docFormSetState('empty');
+						});
 		            }
 		        }
 		    });

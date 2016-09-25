@@ -671,13 +671,13 @@
         "openTabs": []
     },
     "canvasState": {
-        "topInstance": "538e278d-3797-4344-89c9-bdd566f35ad0"
+        "topInstance": "49658fc3-d650-4e98-bec6-731a3c2d619f"
     },
     "inspectorState": {
-        "topInstance": "6d487d82-fe53-48ea-8412-593949721cc8",
-        "selectedInstance": "6d487d82-fe53-48ea-8412-593949721cc8"
+        "topInstance": "49658fc3-d650-4e98-bec6-731a3c2d619f",
+        "selectedInstance": "49658fc3-d650-4e98-bec6-731a3c2d619f"
     },
-    "editMode": "code",
+    "editMode": "design",
     "userSettings": {
         "no-cmd": true
     }

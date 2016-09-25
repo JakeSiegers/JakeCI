@@ -32,7 +32,6 @@ Ext.define('JakeCI.view.CredsEditor', {
 	viewModel: {
 		type: 'credseditor'
 	},
-	frame: true,
 	height: 384,
 	width: 551,
 	title: '',
@@ -107,23 +106,23 @@ Ext.define('JakeCI.view.CredsEditor', {
 	},
 
 	onFormAfterRender: function(component, eOpts) {
+		console.log('docFormInit');
+
 		this.docFormInit({
-		    docFormToolbar:{
-		        id:'credToolbar',
-		        addFn:'addCred',
-		        saveFn:'editCred',
-		        deleteFn:'deleteCred'
-		    }
+			toolbarId:'credToolbar',
+			addFn:'addCred',
+			saveFn:'editCred',
+			deleteFn:'deleteCred'
 		});
 
 		AERP.Ajax.request({
-		    url:'/Creds/getCredEditorInitData',
-		    success:function(reply){
-		        this.lookupViewModel().getStore('CredStore').setData(reply.data);
+			url:'/Creds/getCredEditorInitData',
+			success:function(reply){
+				this.lookupViewModel().getStore('CredStore').setData(reply.data);
 
-		        this.fireEvent('docforminitcomplete',this);
-		    },
-		    scope:this
+				this.fireEvent('docforminitcomplete',this);
+			},
+			scope:this
 		});
 
 	},
