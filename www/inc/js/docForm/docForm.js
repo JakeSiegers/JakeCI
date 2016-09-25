@@ -60,7 +60,7 @@ Ext.define('DocForm',{
 
 		this.docFormBtns.cancelBtn = Ext.create({
 			xtype: 'button',
-			glyph:'f053',
+			glyph:'f05e',
 			text: 'Cancel',
 			listeners: {
 				click: this.btnFunctions.cancelFn,
