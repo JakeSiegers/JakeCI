@@ -29,9 +29,9 @@ Ext.define('JakeCI.view.JobGrid', {
 	viewModel: {
 		type: 'jobgrid'
 	},
-	height: 214,
+	height: 446,
 	itemId: 'jobGrid',
-	width: 400,
+	width: 679,
 	title: 'Jake CI',
 	defaultListenerScope: true,
 
@@ -52,7 +52,7 @@ Ext.define('JakeCI.view.JobGrid', {
 
 				}
 			},
-			width: 40,
+			width: 20,
 			sortable: false,
 			dataIndex: 'buildPassing',
 			menuDisabled: true,

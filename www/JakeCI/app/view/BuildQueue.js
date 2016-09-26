@@ -18,7 +18,8 @@ Ext.define('JakeCI.view.BuildQueue', {
 	alias: 'widget.buildqueue',
 
 	requires: [
-		'JakeCI.view.BuildQueueViewModel'
+		'JakeCI.view.BuildQueueViewModel',
+		'Ext.ProgressBar'
 	],
 
 	viewModel: {
@@ -26,6 +27,27 @@ Ext.define('JakeCI.view.BuildQueue', {
 	},
 	height: 94,
 	width: 400,
-	title: 'Build Queue'
+	title: 'Build Queue',
+	defaultListenerScope: true,
+
+	items: [
+		{
+			xtype: 'progressbar',
+			itemId: 'progress',
+			value: 0.4
+		}
+	],
+	listeners: {
+		afterrender: 'onPanelAfterRender'
+	},
+
+	onPanelAfterRender: function(component, eOpts) {
+		var p = this.queryById('progress');
+		setInterval(function(){
+			var v = Math.random();
+			var t = Math.floor(v*100)+1+'%';
+			p.updateProgress(v,t,true);
+		},1000);
+	}
 
 });

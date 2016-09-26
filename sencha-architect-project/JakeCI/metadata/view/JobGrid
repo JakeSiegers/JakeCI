@@ -9,13 +9,13 @@
         "border": null,
         "designer|userAlias": "jobgrid",
         "designer|userClassName": "JobGrid",
-        "height": 214,
+        "height": 446,
         "itemId": "jobGrid",
         "store": [
             "{JobStore}"
         ],
         "title": "Jake CI",
-        "width": 400
+        "width": 679
     },
     "name": "MyGridPanel",
     "configAlternates": {
@@ -37,7 +37,7 @@
                 "menuDisabled": true,
                 "sortable": false,
                 "text": "",
-                "width": 40
+                "width": 20
             },
             "name": "MyColumn6",
             "designerId": "1509ab9e-714d-4a56-b7c5-9b3b6124c4e2",

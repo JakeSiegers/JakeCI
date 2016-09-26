@@ -15,5 +15,44 @@
     "name": "MyPanel",
     "designerId": "08652928-908a-400a-b2f8-dfd75aaae14e",
     "viewControllerInstanceId": "b500ed52-1276-4f66-b183-21cf310c4095",
-    "viewModelInstanceId": "fcad950a-3424-4710-9b6b-812c495717f7"
+    "viewModelInstanceId": "fcad950a-3424-4710-9b6b-812c495717f7",
+    "cn": [
+        {
+            "type": "Ext.ProgressBar",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "itemId": "progress",
+                "value": 0.4
+            },
+            "name": "MyProgressBar",
+            "designerId": "ac76056a-45eb-4f7b-b2d4-34294d9e485b"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onPanelAfterRender",
+                "implHandler": [
+                    "var p = this.queryById('progress');",
+                    "setInterval(function(){",
+                    "\tvar v = Math.random();",
+                    "\tvar t = Math.floor(v*100)+1+'%';",
+                    "\tp.updateProgress(v,t,true);",
+                    "},1000);"
+                ],
+                "name": "afterrender",
+                "scope": "me"
+            },
+            "name": "onPanelAfterRender",
+            "designerId": "fbc56425-bc72-44ad-b143-5f319c6ee4c4"
+        }
+    ]
 }
