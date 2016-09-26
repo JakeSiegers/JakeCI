@@ -42,10 +42,15 @@ Ext.define('JakeCI.view.JobGrid', {
 		{
 			xtype: 'gridcolumn',
 			renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-				if(value === true){
+				switch(value){
+					case null:
+					return '<i class="fa fa-minus" aria-hidden="true" style="color:gray;"></i>';
+					case true:
 					return '<i class="fa fa-thumbs-up" aria-hidden="true" style="color:green;"></i>';
+					case false:
+					return '<i class="fa fa-thumbs-down" aria-hidden="true" style="color:red;"></i>';
+
 				}
-				return '<i class="fa fa-thumbs-down" aria-hidden="true" style="color:red;"></i>';
 			},
 			width: 40,
 			sortable: false,
@@ -62,6 +67,9 @@ Ext.define('JakeCI.view.JobGrid', {
 		{
 			xtype: 'gridcolumn',
 			renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+				if(value === null){
+					return '[Never Run]';
+				}
 				return Ext.util.Format.number(value/1000.0,'0.###')+" sec";
 			},
 			width: 249,
@@ -104,10 +112,7 @@ Ext.define('JakeCI.view.JobGrid', {
 	],
 
 	onJobGridRowDblClick: function(tableview, record, tr, rowIndex, e, eOpts) {
-		this.showJobWindow(function(form){
-		    form.loadJob(record.get('name'));
-		    //form.getAllHistory(record.get('name'))
-		});
+		this.fireEvent('viewjob',record.get('name'));
 	},
 
 	onButtonClick1: function(button, e, eOpts) {

@@ -213,19 +213,22 @@ Ext.define('JakeCI.view.JobForm', {
 	},
 
 	loadJob: function(jobName) {
-		this.mask('Loading Job...');
-		AERP.Ajax.request({
-		    url:'/Job/getJob',
-		    params:{jobName:jobName},
-		    success:function(reply){
-		        this.unmask();
-		        this.docFormLoadFormData(reply);
-		        this.currentJob = reply.data.name;
-		    },
-		    failure:function(){
-		        this.unmask();
-		    },
-		    scope:this
+		this.docFormUnsavedChangesConfirmContinue(function(){
+			this.mask('Loading Job...');
+			AERP.Ajax.request({
+				url:'/Job/getJob',
+				params:{jobName:jobName},
+				success:function(reply){
+					this.unmask();
+					this.docFormLoadFormData(reply);
+					this.currentJob = reply.data.name;
+					this.fireEvent('jobloaded',this.currentJob);
+				},
+				failure:function(){
+					this.unmask();
+				},
+				scope:this
+			});
 		});
 	},
 
@@ -238,7 +241,7 @@ Ext.define('JakeCI.view.JobForm', {
 		    success:function(reply){
 		        this.unmask();
 		        this.loadJob(reply.data.jobName);
-		        this.fireEvent('addjob');
+				this.fireEvent('updatejobgrid');
 		    },
 		    failure:function(){
 		        this.unmask();
@@ -259,7 +262,7 @@ Ext.define('JakeCI.view.JobForm', {
 		        this.unmask();
 		        this.docFormLoadFormData(reply);
 		        this.currentJob = reply.data.name;
-		        this.fireEvent('savejob');
+		        this.fireEvent('updatejobgrid');
 		    },
 		    failure:function(){
 		        this.unmask();

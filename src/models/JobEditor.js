@@ -67,25 +67,20 @@ JobEditor.prototype.saveJob = function(params){
     var jobData = JSON.parse(params.data.jobData);
 
     //Check job data required fields
-    var errors = this.JakeCI.functions.verifyRequiredPostFields(jobData,['name']);
-    if(errors !== ''){
-        params.error.call(params.scope,errors);
-        return;
-    }
+    this.JakeCI.functions.verifyRequiredPostFields(jobData,['name']);
 
     if(/[^a-zA-Z0-9 ]/.test(jobData.name) || jobData.name.length > 20){
-        params.error.call(params.scope,"Job Name Must Be less than <= 20 characters and only contain alpha-numeric characters, plus spaces and dashes.");
-        return;
+        throw new Error("Job Name Must Be less than <= 20 characters and only contain alpha-numeric characters, plus spaces and dashes.");
     }
 
-    var sThis = this;
+    //var sThis = this;
     //TODO: change this from a loop over valid jobs to just grabbing the job we want with some error checking (Check for config file)
-    this.JakeCI.fs.readdirAsync(this.JakeCI.config.jobPath)
+    this.JakeCI.fs.readdirAsync(this.JakeCI.config.jobPath).bind(this)
         .map(function(fileName){
             //Get A list of all the valid jobs
-            var stats = sThis.JakeCI.fs.statAsync(sThis.JakeCI.config.jobPath+'/'+fileName);
-            var configContents = sThis.JakeCI.fs.readFileAsync(sThis.JakeCI.config.jobPath+'/'+fileName+'/config.json','utf8').catch(function(){return null;});
-            return sThis.JakeCI.Promise.join(stats,configContents,function(statsResponse,configContentsResponse){
+            var stats = this.JakeCI.fs.statAsync(this.JakeCI.config.jobPath+'/'+fileName);
+            var configContents = this.JakeCI.fs.readFileAsync(this.JakeCI.config.jobPath+'/'+fileName+'/config.json','utf8').catch(function(){return null;});
+            return this.JakeCI.Promise.join(stats,configContents,function(statsResponse,configContentsResponse){
                 return {
                     jobName: fileName,
                     stats: statsResponse, //Do we even need stats? you will for isDirectory() to check for sub job folders recursively. Version 2!
@@ -111,11 +106,11 @@ JobEditor.prototype.saveJob = function(params){
             var rename = function (){}; //Do Nothing!
             if (jobData.hasOwnProperty('name') && jobData.name !== foundJob.name) {
                 //Okay, we need to rename the job folder
-                rename = sThis.JakeCI.fs.renameAsync(sThis.JakeCI.path.join(sThis.JakeCI.config.jobPath, foundJob.name),sThis.JakeCI.path.join(sThis.JakeCI.config.jobPath, jobData.name));
+                rename = this.JakeCI.fs.renameAsync(this.JakeCI.path.join(this.JakeCI.config.jobPath, foundJob.name),this.JakeCI.path.join(this.JakeCI.config.jobPath, jobData.name));
                 //Update jobName to be accurate
                 jobName = jobData.name;
             }
-            return sThis.JakeCI.Promise.join(rename,function(renameResponse){
+            return this.JakeCI.Promise.join(rename,function(renameResponse){
                 //Always return the found job.
                 return foundJob;
             });
@@ -129,10 +124,10 @@ JobEditor.prototype.saveJob = function(params){
                     delete foundJob[key];
                 }
             }
-            return sThis.JakeCI.fs.writeFileAsync(sThis.JakeCI.path.join(sThis.JakeCI.config.jobPath, foundJob.name,'config.json'),JSON.stringify(foundJob));
+            return this.JakeCI.fs.writeFileAsync(this.JakeCI.path.join(this.JakeCI.config.jobPath, foundJob.name,'config.json'),JSON.stringify(foundJob));
         }).then(function(){
             //Re-grab config file.
-            return sThis.JakeCI.fs.readFileAsync(sThis.JakeCI.path.join(sThis.JakeCI.config.jobPath,jobName,'config.json'),'utf8');
+            return this.JakeCI.fs.readFileAsync(this.JakeCI.path.join(this.JakeCI.config.jobPath,jobName,'config.json'),'utf8');
         }).then(function(updatedConfig){
             params.success.call(params.scope,JSON.parse(updatedConfig));
         }).catch(function(e){

@@ -51,7 +51,8 @@ Ext.define('JakeCI.view.JakeCI', {
 					flex: 1,
 					listeners: {
 						viewsettings: 'onJobGridViewsettings',
-						addnewjob: 'onJobGridAddnewjob'
+						addnewjob: 'onJobGridAddnewjob',
+						viewjob: 'onJobGridViewjob'
 					}
 				},
 				{
@@ -59,12 +60,15 @@ Ext.define('JakeCI.view.JakeCI', {
 					disabled: false,
 					flex: 1,
 					listeners: {
-						showcredwindow: 'onJobPanelShowcredwindow'
+						showcredwindow: 'onJobPanelShowcredwindow',
+						updatejobgrid: 'onJobPanelUpdatejobgrid',
+						jobloaded: 'onJobPanelJobloaded'
 					}
 				},
 				{
 					xtype: 'jobhistory',
 					disabled: false,
+					itemId: 'historyPanel',
 					flex: 1
 				}
 			]
@@ -86,11 +90,24 @@ Ext.define('JakeCI.view.JakeCI', {
 	},
 
 	onJobGridAddnewjob: function(gridpanel) {
-		this.newJob();
+		var jobPanel = this.queryById('jobPanel');
+		jobPanel.docFormNew();
+	},
+
+	onJobGridViewjob: function(job) {
+		this.viewJob(job);
 	},
 
 	onJobPanelShowcredwindow: function(form) {
 		this.viewCreds();
+	},
+
+	onJobPanelUpdatejobgrid: function(form) {
+		this.queryById('jobGrid').getAllJobs();
+	},
+
+	onJobPanelJobloaded: function(job) {
+		this.queryById('historyPanel').getHistory(job);
 	},
 
 	onViewportRender: function(component, eOpts) {
@@ -179,11 +196,9 @@ Ext.define('JakeCI.view.JakeCI', {
 		})
 	},
 
-	newJob: function() {
+	viewJob: function(job) {
 		var jobPanel = this.queryById('jobPanel');
-
-		jobPanel.enable();
-		jobPanel.docFormSetState('new');
+		jobPanel.loadJob(job)
 	},
 
 	viewCreds: function() {

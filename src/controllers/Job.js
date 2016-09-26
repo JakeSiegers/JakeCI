@@ -90,11 +90,8 @@ Job.prototype.saveJob = function(request, response){
 //TODO: this needs to be moved to a model....
 Job.prototype.newJob = function(request, response){
 
-    var errors = this.JakeCI.functions.verifyRequiredPostFields(request.body,['name']);
-    if(errors !== ''){
-        this.JakeCI.sendError(response,errors);
-        return;
-    }
+    this.JakeCI.functions.verifyRequiredPostFields(request.body,['name']);
+
     var data = request.body;
 
     var sThis = this;

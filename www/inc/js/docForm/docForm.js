@@ -144,8 +144,6 @@ Ext.define('DocForm',{
 		var newSaveArray = [];
 		var hideNewBtn = config.hideNewButton || false;
 
-		console.log(hideNewBtn);
-
 		if(!hideNewBtn && (this.btnFunctions.newFn != this.docFormNew || this.btnFunctions.addFn != Ext.emptyFn)){
 			newSaveArray.push(this.docFormBtns.newBtn);
 		}

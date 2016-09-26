@@ -61,10 +61,15 @@
                         ],
                         "fn": "renderer",
                         "implHandler": [
-                            "if(value === true){",
-                            "    return '<i class=\"fa fa-thumbs-up\" aria-hidden=\"true\" style=\"color:green;\"></i>';",
-                            "}",
-                            "return '<i class=\"fa fa-thumbs-down\" aria-hidden=\"true\" style=\"color:red;\"></i>';"
+                            "switch(value){",
+                            "\tcase null:",
+                            "\t\treturn '<i class=\"fa fa-minus\" aria-hidden=\"true\" style=\"color:gray;\"></i>';",
+                            "\tcase true:",
+                            "\t\treturn '<i class=\"fa fa-thumbs-up\" aria-hidden=\"true\" style=\"color:green;\"></i>';",
+                            "\tcase false:",
+                            "\t\treturn '<i class=\"fa fa-thumbs-down\" aria-hidden=\"true\" style=\"color:red;\"></i>';",
+                            "\t\t",
+                            "}"
                         ]
                     },
                     "name": "renderer",
@@ -121,6 +126,9 @@
                         ],
                         "fn": "renderer",
                         "implHandler": [
+                            "if(value === null){",
+                            "\treturn '[Never Run]';",
+                            "}",
                             "return Ext.util.Format.number(value/1000.0,'0.###')+\" sec\";"
                         ]
                     },
@@ -149,10 +157,7 @@
             "userConfig": {
                 "fn": "onJobGridRowDblClick",
                 "implHandler": [
-                    "this.showJobWindow(function(form){",
-                    "    form.loadJob(record.get('name'));",
-                    "    //form.getAllHistory(record.get('name'))",
-                    "});"
+                    "this.fireEvent('viewjob',record.get('name'));"
                 ],
                 "name": "rowdblclick",
                 "scope": "me"

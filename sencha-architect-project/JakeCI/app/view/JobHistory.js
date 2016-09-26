@@ -31,7 +31,6 @@ Ext.define('JakeCI.view.JobHistory', {
 	viewModel: {
 		type: 'jobhistory'
 	},
-	disabled: true,
 	height: 614,
 	width: 953,
 	title: 'Build History',
@@ -46,6 +45,8 @@ Ext.define('JakeCI.view.JobHistory', {
 			xtype: 'gridpanel',
 			flex: 1,
 			border: false,
+			disabled: true,
+			itemId: 'historyGrid',
 			title: '',
 			bind: {
 				store: '{HistoryStore}'
@@ -107,6 +108,7 @@ Ext.define('JakeCI.view.JobHistory', {
 			xtype: 'form',
 			flex: 1,
 			border: false,
+			disabled: true,
 			height: 1122,
 			width: 819,
 			layout: 'fit',
@@ -128,13 +130,14 @@ Ext.define('JakeCI.view.JobHistory', {
 		this.queryById('logTextArea').setValue(record.get('log'));
 	},
 
-	getAllHistory: function(job) {
+	getHistory: function(job) {
 		var historyStore = this.lookupViewModel().getStore('HistoryStore');
+		var historyGrid = this.queryById('historyGrid');
 		historyStore.getProxy().setExtraParams({
 		    job:job
 		});
 		historyStore.load({callback:function(records,operation,success){
-
+			historyGrid.enable();
 		}});
 	}
 

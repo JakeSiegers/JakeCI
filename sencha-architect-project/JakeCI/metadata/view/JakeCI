@@ -83,13 +83,35 @@
                                 ],
                                 "fn": "onJobGridAddnewjob",
                                 "implHandler": [
-                                    "this.newJob();"
+                                    "var jobPanel = this.queryById('jobPanel');",
+                                    "jobPanel.docFormNew();"
                                 ],
                                 "name": "addnewjob",
                                 "scope": "me"
                             },
                             "name": "onJobGridAddnewjob",
                             "designerId": "8deea448-4ce6-4869-85d4-087dcff05b18"
+                        },
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "job"
+                                ],
+                                "fn": "onJobGridViewjob",
+                                "implHandler": [
+                                    "this.viewJob(job);"
+                                ],
+                                "name": "viewjob",
+                                "scope": "me"
+                            },
+                            "name": "onJobGridViewjob",
+                            "designerId": "53a36195-623e-4159-816a-41010ca1bd2f"
                         }
                     ]
                 },
@@ -128,6 +150,48 @@
                             },
                             "name": "onJobPanelShowcredwindow",
                             "designerId": "847e3215-33c5-42d9-9174-66d73d47c41c"
+                        },
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "form"
+                                ],
+                                "fn": "onJobPanelUpdatejobgrid",
+                                "implHandler": [
+                                    "this.queryById('jobGrid').getAllJobs();"
+                                ],
+                                "name": "updatejobgrid",
+                                "scope": "me"
+                            },
+                            "name": "onJobPanelUpdatejobgrid",
+                            "designerId": "ec2cc0ca-baa0-4168-8cc5-31f9590cc4a7"
+                        },
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "job"
+                                ],
+                                "fn": "onJobPanelJobloaded",
+                                "implHandler": [
+                                    "this.queryById('historyPanel').getHistory(job);"
+                                ],
+                                "name": "jobloaded",
+                                "scope": "me"
+                            },
+                            "name": "onJobPanelJobloaded",
+                            "designerId": "e5d2eabf-0732-4fd2-af6a-efacd98c7baf"
                         }
                     ]
                 },
@@ -140,6 +204,7 @@
                     "codeClass": null,
                     "userConfig": {
                         "disabled": false,
+                        "itemId": "historyPanel",
                         "layout|flex": 1
                     },
                     "name": "jobhistory",
@@ -325,16 +390,17 @@
             },
             "codeClass": null,
             "userConfig": {
-                "fn": "newJob",
+                "designer|params": [
+                    "job"
+                ],
+                "fn": "viewJob",
                 "implHandler": [
                     "var jobPanel = this.queryById('jobPanel');",
-                    "",
-                    "jobPanel.enable();",
-                    "jobPanel.docFormSetState('new');"
+                    "jobPanel.loadJob(job)"
                 ]
             },
-            "name": "newJob",
-            "designerId": "336a455a-f043-4970-b458-923557a99ac4"
+            "name": "viewJob",
+            "designerId": "ec82a772-b191-49a1-9e25-dbed65f1eb82"
         },
         {
             "type": "basicfunction",

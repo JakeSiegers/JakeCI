@@ -10,7 +10,7 @@
         "container|align": "stretch",
         "designer|userAlias": "jobhistory",
         "designer|userClassName": "JobHistory",
-        "disabled": true,
+        "disabled": null,
         "height": 614,
         "layout": "vbox",
         "title": "Build History",
@@ -30,6 +30,8 @@
             "codeClass": null,
             "userConfig": {
                 "border": false,
+                "disabled": true,
+                "itemId": "historyGrid",
                 "layout|flex": 1,
                 "store": [
                     "{HistoryStore}"
@@ -209,6 +211,7 @@
             "userConfig": {
                 "bodyPadding": 10,
                 "border": false,
+                "disabled": true,
                 "height": 1122,
                 "layout": "fit",
                 "layout|flex": 1,
@@ -246,18 +249,19 @@
                 "designer|params": [
                     "job"
                 ],
-                "fn": "getAllHistory",
+                "fn": "getHistory",
                 "implHandler": [
                     "var historyStore = this.lookupViewModel().getStore('HistoryStore');",
+                    "var historyGrid = this.queryById('historyGrid');",
                     "historyStore.getProxy().setExtraParams({",
                     "    job:job",
                     "});",
                     "historyStore.load({callback:function(records,operation,success){",
-                    "",
+                    "\thistoryGrid.enable();",
                     "}});"
                 ]
             },
-            "name": "getAllHistory",
+            "name": "getHistory",
             "designerId": "f31385c7-abd9-46cb-8749-50e51b0db3b2"
         }
     ]
